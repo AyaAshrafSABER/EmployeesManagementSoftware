@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">EmployeesManagementSoftware</string>
+    <string name="department_drop_down">Department</string>
+    <string-array name="department_array">
+        <item>Alpha</item>
+        <item>Beta</item>
+        <item>Gamma</item>
+    </string-array>
+
 </resources>
