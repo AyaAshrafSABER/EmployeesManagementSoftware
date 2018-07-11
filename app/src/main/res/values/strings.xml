@@ -1,10 +1,20 @@
 <resources>
     <string name="app_name">EmployeesManagementSoftware</string>
     <string name="department_drop_down">Department</string>
-    <string-array name="department_array">
-        <item>Alpha</item>
-        <item>Beta</item>
-        <item>Gamma</item>
+    <string name="choose_department">Choose Department</string>
+    <string-array name="departments_array">
+        <item>engineering</item>
+        <item>accounting</item>
+        </string-array>
+    <string-array name="engineering_employees">
+        <item>Omar</item>
+        <item>Ahmed</item>
+        <item>Aly</item>
+    </string-array>
+    <string-array name="accounting_employees">
+        <item>Sara</item>
+        <item>Mohammad</item>
+        <item>Karim</item>
     </string-array>
 
 </resources>
