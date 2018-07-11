@@ -32,17 +32,13 @@ public class taskCreation extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "onItemSelected: "+parent.getSelectedItem().toString());
-                //TODO pass name of department to send it to the adapter inorder to get the coressponding employees
                 //TODO retrieve chosen employees from the checkboxes
-
                 initListView(parent.getSelectedItem().toString());
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                System.out.println("nothing");
 
             }
         });
@@ -50,9 +46,11 @@ public class taskCreation extends AppCompatActivity {
 
 
     public void initListView(String dep){
+
         ListView employeesList=(ListView) findViewById(R.id.employees_List);
         int res =dep.compareTo("engineering")==0?R.array.engineering_employees
                 :R.array.accounting_employees;
+        //Adapter to take the string array and display it in the list
         ArrayAdapter<String> adapter= new CustomAdapter(this,getResources().
                 getStringArray(res));
 

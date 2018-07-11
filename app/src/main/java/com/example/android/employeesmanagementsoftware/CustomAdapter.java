@@ -24,11 +24,10 @@ class CustomAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater=LayoutInflater.from(getContext());//get context of adapter
         View customView= inflater.inflate(R.layout.cutom_row,parent,false);
 
+        //getting references to widgets
         TextView employeeText=(TextView) customView.findViewById(R.id.employee_name_text);
-
-
         CheckBox employeeCheckBox=(CheckBox) customView.findViewById(R.id.employee_check_box);
-
+        //setting the the text of each row in the list according to its position
         employeeText.setText(getItem(position));
         return customView;
 
