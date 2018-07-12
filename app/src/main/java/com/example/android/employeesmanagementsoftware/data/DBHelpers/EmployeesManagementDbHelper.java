@@ -32,10 +32,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String SQL_CREATE_EMPLOYEE_TABLE = "CREATE TABLE " + EmployeeContract.TABLE_NAME + "("
                 + EmployeeEntry._ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_NAME + " VARCHAR(70) NOT NULL, "
-                + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " VARCHAR(15),"
+                + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " INTEGER,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_EMAIL + " VARCHAR(255),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE + " DATE NOT NULL,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
+                + EmployeeEntry.COLUMN_EMPLOYEE_JOB + " VARCHAR(50) NOT NULL,"
+                + EmployeeEntry.COLUMN_EMPLOYEE_PHOTO + " VARCHAR(255), "
                 + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" + DepartmentEntry._ID + ")"
                 + ");";
 
