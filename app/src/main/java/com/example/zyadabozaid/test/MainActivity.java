@@ -1,5 +1,6 @@
 package com.example.zyadabozaid.test;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         date_select =findViewById(R.id.editText4);
         submit=findViewById(R.id.button);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "robotomono_medium.otf");
+        submit.setTypeface(custom_font);
         date_select.setInputType(InputType.TYPE_NULL);
         date_select.setOnClickListener(new View.OnClickListener() {
             @Override
