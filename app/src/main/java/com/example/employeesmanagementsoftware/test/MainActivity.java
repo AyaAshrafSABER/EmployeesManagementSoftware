@@ -1,5 +1,8 @@
-package com.example.zyadabozaid.test;
+package com.example.employeesmanagementsoftware.test;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,13 +16,23 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import java.util.Calendar;
+import com.example.employeesmanagementsoftware.test.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry ;
+import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 
 public class MainActivity extends AppCompatActivity {
     DatePickerDialog picker;
     EditText date_select;
     Button submit;
+    String employee_name , employee_email ; //to be read from input fields
+
+
+    EmployeesManagementDbHelper emdb = new EmployeesManagementDbHelper(this); //dbhelper to use for connecting to db
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +52,13 @@ public class MainActivity extends AppCompatActivity {
                 int day = cldr.get(Calendar.DAY_OF_MONTH);
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
+
                 // date picker dialog
                 picker = new DatePickerDialog(MainActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                date_select.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                                date_select.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                             }
                         }, year, month, day);
                 picker.show();
@@ -80,5 +94,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean addEmployeeToDb(){
+        //adds an employee entry to employee table
+
+        SQLiteDatabase db = emdb.getWritableDatabase(); //gets writeable instance of database
+        ContentValues cv  = new ContentValues(); //used for inserting an entry
+        cv.put(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE,date_select.toString());
+        cv.put(EmployeeEntry.COLUMN_EMPLOYEE_NAME,employee_name);
+        cv.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,employee_email);
+        long flag = db.insert(EmployeeContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
+
+        if(flag==-1) return false; //-1 if insert fails
+
+        employee_name=null; //resets the variables
+        employee_email=null;
+        date_select = null;
+        return true;
+
     }
 }

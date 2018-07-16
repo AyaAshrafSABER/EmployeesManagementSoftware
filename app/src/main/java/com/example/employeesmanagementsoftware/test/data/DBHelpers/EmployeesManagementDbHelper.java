@@ -36,7 +36,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + EmployeeEntry.COLUMN_EMPLOYEE_EMAIL + " VARCHAR(255),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE + " DATE NOT NULL,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
-                + EmployeeEntry.COLUMN_EMPLOYEE_JOB + " VARCHAR(50) NOT NULL,"
+                + EmployeeEntry.COLUMN_EMPLOYEE_JOB + " VARCHAR(50) /*NOT NULL*/,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHOTO + " VARCHAR(255), "
                 + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" + DepartmentEntry._ID + ")"
                 + ");";
