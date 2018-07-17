@@ -9,7 +9,7 @@
     <string-array name="departments_array">
         <item>engineering</item>
         <item>accounting</item>
-        </string-array>
+    </string-array>
     <string-array name="engineering_employees">
         <item>Omar</item>
         <item>Ahmed</item>
@@ -20,4 +20,6 @@
         <item>Mohammad</item>
         <item>Karim</item>
     </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_employee_creation">EmployeeCreation</string>
 </resources>
