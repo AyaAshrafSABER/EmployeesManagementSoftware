@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-
     <Button
         android:id="@+id/emp"
         android:layout_width="0dp"
@@ -16,7 +14,6 @@
         android:text="Employee layout"
 
         />
-
     <Button
         android:id="@+id/dep"
         android:layout_width="0dp"
@@ -24,5 +21,4 @@
         android:layout_weight="1"
         android:text="Departement layout"
         />
-
 </LinearLayout>

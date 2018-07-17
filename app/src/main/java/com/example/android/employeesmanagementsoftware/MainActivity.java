@@ -13,7 +13,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//         TasksFragment fragment = new TasksFragment();
+//         getSupportFragmentManager()
+//                 .beginTransaction()
+//                 .replace(R.id.frame, fragment)
+//                 .commit();
         Button emp = (Button)findViewById(R.id.emp);
         emp.setOnClickListener(new View.OnClickListener() {
             @Override
