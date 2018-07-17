@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">EmployeesManagementSoftware</string>
+    <string-array name="types">
+        <item>Mistake</item>
+        <item>Compliment</item>
+    </string-array>
     <string name="department_drop_down">Department</string>
     <string name="choose_department">Choose Department</string>
     <string-array name="departments_array">
@@ -16,5 +20,4 @@
         <item>Mohammad</item>
         <item>Karim</item>
     </string-array>
-
 </resources>
