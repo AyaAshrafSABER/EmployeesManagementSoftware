@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#d3d3d3</item>
+        <item name="colorControlActivated">#ffd700</item>
+    </style>
+
+    <style name="icon">
+        <item name="android:background">#FFF7DA</item>
+    </style>
+
 </resources>
