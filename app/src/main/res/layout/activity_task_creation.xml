@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/taskCreationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="0dp"
+    android:layout_marginStart="0dp"
+    tools:context="com.example.android.employeesmanagementsoftware.taskCreation">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/choose_department"
+        android:textColor="@android:color/background_dark"
+        android:textSize="17sp" />
+
+    <Spinner
+        android:id="@+id/departmentDropDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="86dp"
+        android:contentDescription="@string/department_drop_down" />
+
+    <ListView
+        android:id="@+id/employees_List"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/departmentDropDown"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="49dp"
+        android:theme="@android:style/Widget.ListView" />
+
+</RelativeLayout>
