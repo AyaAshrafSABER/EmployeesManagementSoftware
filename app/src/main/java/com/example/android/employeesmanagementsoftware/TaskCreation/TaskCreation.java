@@ -9,10 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
 import com.example.android.employeesmanagementsoftware.R;
+import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 import java.util.List;
@@ -22,6 +25,7 @@ public class TaskCreation extends AppCompatActivity {
     private static final String TAG="spinner";
     private TaskCreationAdapter listViewAdapter;
     private List<String> employees;
+    private EmployeesManagementDbHelper employeeDBHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +34,20 @@ public class TaskCreation extends AppCompatActivity {
         //object of drop down menu
         Spinner spinner=(Spinner) findViewById(R.id.departmentDropDown);
 
+
+        employeeDBHelper = new EmployeesManagementDbHelper(this);
+        Cursor cursor=employeeDBHelper.getAllDepartments();
+
         //adapter to hold values in the menu
-        //takes as input the an array defined in the resource strings.xml
-        //and a default spinner defined by the platform
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.departments_array, android.R.layout.simple_spinner_item);
+        //takes as input the cursor,a default spinner defined by the platform
+        // the column needed o be displayed from the cursor to the UI
+        //the view of each row "a text view",a flag to determine the brhaviour of the adapter
+        SimpleCursorAdapter adapter=new SimpleCursorAdapter(
+                this,android.R.layout.simple_spinner_item,cursor,
+               new String[]{ DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME},
+                new int[]{android.R.id.text1},0);
+        //TODO use cursor.getPosition() to check if at each spinner choice the position is correct
+        //TODO otherwise you'll have to loop through the data. Costly ??
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -42,7 +55,9 @@ public class TaskCreation extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                initListView(parent.getSelectedItem().toString());
+
+
+                initListView(parent.getSelectedItem().toString(),employeeDBHelper);
 
             }
 
@@ -54,12 +69,11 @@ public class TaskCreation extends AppCompatActivity {
     }
 
 
-    public void initListView(String dep){
+    public void initListView(String dep,EmployeesManagementDbHelper employeeDBHelper){
 
         ListView employeesList=(ListView) findViewById(R.id.employees_List);
 
 
-        EmployeesManagementDbHelper employeeDBHelper=new EmployeesManagementDbHelper(this);
 
         //TODO initialize cursor with the required query using the dbhelper methods
         Cursor cursor;
