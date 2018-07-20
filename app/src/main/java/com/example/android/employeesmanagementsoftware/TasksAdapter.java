@@ -94,4 +94,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
             deadlinetask=(TextView)itemView.findViewById(R.id.deadline);
         }
     }
+
+
 }

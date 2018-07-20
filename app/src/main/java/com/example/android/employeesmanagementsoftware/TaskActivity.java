@@ -1,12 +1,17 @@
 package com.example.android.employeesmanagementsoftware;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
+
 public class TaskActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,4 +37,6 @@ public class TaskActivity extends AppCompatActivity {
         deadlinetext.setText("Deadline: "+deadline);
 
 }
+
+
 }
