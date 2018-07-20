@@ -114,7 +114,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getSpecifiTaskCursor(int task_id){
+    public Cursor getSpecifiTaskCursor(long task_id){
 
         //gets specific task by its id
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
@@ -138,6 +138,50 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return cursor; //don't forget to close the cursor after usage
 
     }
+
+    public Cursor getAllDepartments()
+    {
+        //gets all departments
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+
+        //specify the columns to be read
+        String [] columns = {
+               DepartmentEntry._ID,
+                DepartmentEntry.COLUMN_DEPARTMENT_NAME
+        };
+
+        String orderBy = DepartmentEntry.COLUMN_DEPARTMENT_NAME + " ASC "; //order by statement
+
+        //cursor is a table containing the rows returned form the query
+        Cursor cursor =  db.query(DepartmentContract.TABLE_NAME,columns,null,null,null,null,orderBy);
+        db.close();
+        return cursor; //don't forget to close the cursor after usage
+
+    }
+
+    public Cursor getEmployessOfDepartment(long department_id)
+    {
+        //gets all employees of a given department
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+
+        //specify the columns to be read
+        String [] columns = {
+                EmployeeEntry._ID,
+                EmployeeEntry.COLUMN_EMPLOYEE_NAME,
+                EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID
+        };
+
+        String selection = DepartmentEntry._ID + " =?"; //where statement
+        String selectionArgs[] = { String.valueOf(department_id)  };
+        String orderBy = EmployeeEntry.COLUMN_EMPLOYEE_NAME + " ASC";
+
+
+        //cursor is a table containing the rows returned form the query
+        Cursor cursor =  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy);
+        db.close();
+        return cursor; //don't forget to close the cursor after usage
+    }
+
 
     public boolean addDepartment(String department_name , String department_description)
     {
