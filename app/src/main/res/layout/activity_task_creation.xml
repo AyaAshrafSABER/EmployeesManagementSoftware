@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="0dp"
     android:layout_marginStart="0dp"
-    tools:context="com.example.android.employeesmanagementsoftware.taskCreation">
+    tools:context="com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation">
 
 
     <TextView
@@ -40,8 +40,20 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/departmentDropDown"
+        android:layout_marginBottom="60dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="49dp"
         android:theme="@android:style/Widget.ListView" />
+
+    <Button
+        android:id="@+id/addEmployeeInTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="ADD"
+        android:onClick="OnAddButtonClick"
+
+        />
 
 </RelativeLayout>

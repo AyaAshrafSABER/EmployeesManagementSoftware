@@ -1,4 +1,4 @@
-package com.example.android.employeesmanagementsoftware;
+package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,11 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.example.android.employeesmanagementsoftware.R;
+
 class CustomAdapter extends ArrayAdapter<String> {
 
 
     public CustomAdapter(@NonNull Context context, String []strings) {
-        super(context,R.layout.cutom_row ,strings);
+        super(context, R.layout.task_creation_row,strings);
     }
 
     @NonNull
@@ -22,7 +24,7 @@ class CustomAdapter extends ArrayAdapter<String> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         LayoutInflater inflater=LayoutInflater.from(getContext());//get context of adapter
-        View customView= inflater.inflate(R.layout.cutom_row,parent,false);
+        View customView= inflater.inflate(R.layout.task_creation_row,parent,false);
 
         //getting references to widgets
         TextView employeeText=(TextView) customView.findViewById(R.id.employee_name_text);
