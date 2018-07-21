@@ -44,12 +44,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + EmployeeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_NAME + " VARCHAR(70) NOT NULL, "
                 + EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE + " DATE NOT NULL,"
-                + DepartmentContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
+                + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_JOB + " VARCHAR(50) NOT NULL,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " INTEGER,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_EMAIL + " VARCHAR(255),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHOTO + " VARCHAR(255), "
-                + "FOREIGN KEY(" + DepartmentContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" +DepartmentEntry._ID + ")"
+                + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" +DepartmentEntry._ID + ")"
                 + ");";
 
         // Create a String that contains the SQL statement to create the department table
