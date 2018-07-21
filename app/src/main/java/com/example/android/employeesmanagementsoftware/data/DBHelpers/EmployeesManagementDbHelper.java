@@ -44,7 +44,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + EmployeeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_NAME + " VARCHAR(70) NOT NULL, "
                 + EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE + " DATE NOT NULL,"
-                + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
+                 +EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_JOB + " VARCHAR(50) NOT NULL,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " INTEGER,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_EMAIL + " VARCHAR(255),"
@@ -70,10 +70,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 ;
         // Create a String that contains the SQL statement to create the employee_task table
         String SQL_CREATE_EMPLOYEE_TASK_TABLE = "CREATE TABLE " + "employee_task " + "( "
-                + EmployeeEntry._ID + " INTEGER NOT NULL, "
-                + TaskEntry._ID+ " INTEGER NOT NULL, "
-                + "FOREIGN KEY (" + EmployeeEntry._ID + ") REFERENCES " + EmployeeContract.TABLE_NAME + "(" + EmployeeEntry._ID + "), "
-                + "FOREIGN KEY (" + TaskEntry._ID + ") REFERENCES " + TaskContract.TABLE_NAME +"(" + TaskEntry._ID + ") "
+                + EmployeeContract.TABLE_NAME+EmployeeEntry._ID + " INTEGER NOT NULL, "
+                + TaskContract.TABLE_NAME+TaskEntry._ID+ " INTEGER NOT NULL, "
+                + "FOREIGN KEY (" + EmployeeContract.TABLE_NAME+EmployeeEntry._ID + ") REFERENCES " + EmployeeContract.TABLE_NAME + "(" + EmployeeEntry._ID + "), "
+                + "FOREIGN KEY (" + TaskContract.TABLE_NAME+TaskEntry._ID + ") REFERENCES " + TaskContract.TABLE_NAME +"(" + TaskEntry._ID + ") "
                 +");"
                 ;
 
