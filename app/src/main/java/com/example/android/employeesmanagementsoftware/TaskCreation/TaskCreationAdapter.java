@@ -15,23 +15,26 @@ import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeCo
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Set;
 
 
 public class TaskCreationAdapter extends CursorAdapter{
 
-    private List<String> employees;
-    public TaskCreationAdapter(Context context, Cursor c) {
+    private Set<String> employees;
+
+    TaskCreationAdapter(Context context, Cursor c, Set<String> employees) {
         super(context, c, 0);
+        this.employees=employees;
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        employees=new ArrayList<>();
         return LayoutInflater.from(context).inflate(R.layout.task_creation_row, parent, false);
     }
 
     @Override
-    public void bindView(final View view, final Context context, Cursor cursor) {
+    public void bindView(final View view, final Context context, final Cursor cursor) {
 
         final TextView employeeText=(TextView) view.findViewById(R.id.employee_name_text);
         final CheckBox employeeCheckBox=(CheckBox) view.findViewById(R.id.employee_check_box);
@@ -42,10 +45,10 @@ public class TaskCreationAdapter extends CursorAdapter{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-
-                    addEmployee(employeeText.getVerticalScrollbarPosition(),employeeText.getText().toString());
+                    //TODO get index from cursor. conflict??
+                    employees.add(employeeText.getText().toString());
                 }else{
-                    removeEmployee(employeeText.getVerticalScrollbarPosition());
+                    employees.remove(employeeText.getText().toString());
                 }
             }
         });
@@ -54,21 +57,16 @@ public class TaskCreationAdapter extends CursorAdapter{
 
 
     // method to add an employee checked to the list at specific index
-    public void addEmployee(int index,String employee_name){
+    public void addEmployee(String employeeName){
 
-    employees.add(index,employee_name);
+    employees.add(employeeName);
 
     }
     // remove an employee from the list with its index to prevent searching in the list
-    public void removeEmployee(int index){
+    public void removeEmployee(String employeeName){
 
-        employees.remove(index);
-
-    }
-    //called when the add button is clicked to return the checked employees
-    public List<String> getEmployees(){
-        return employees;
-
+        employees.remove(employeeName);
 
     }
+
 }
