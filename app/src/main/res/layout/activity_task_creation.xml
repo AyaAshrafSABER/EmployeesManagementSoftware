@@ -1,24 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
     android:id="@+id/taskCreationLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
     android:layout_marginStart="0dp"
     tools:context="com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation">
 
+    <TextView
+        android:id="@+id/task_name_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Task Name:"
+        android:textColor="@android:color/background_dark"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/task_name_edit"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_name_text"
+        android:layout_marginTop="7dp"
+        android:inputType="text"
+
+        />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:id="@+id/department_description_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="106dp"
+        android:text="Enter description:"
+        android:textSize="17sp"
+        android:textColor="@android:color/background_dark"
+
+        />
+
+    <EditText
+        android:id="@+id/department_description_edit_text"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+
+
+        android:layout_above="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="21dp"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/choose_department_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/departmentDropDown"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
         android:text="@string/choose_department"
         android:textColor="@android:color/background_dark"
         android:textSize="17sp" />
@@ -27,33 +70,20 @@
         android:id="@+id/departmentDropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/employees_List"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="86dp"
+        android:layout_marginBottom="29dp"
         android:contentDescription="@string/department_drop_down" />
 
     <ListView
         android:id="@+id/employees_List"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/departmentDropDown"
-        android:layout_marginBottom="60dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="49dp"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
         android:theme="@android:style/Widget.ListView" />
 
-    <Button
-        android:id="@+id/addEmployeeInTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="ADD"
-        android:onClick="OnAddButtonClick"
 
-        />
+
 
 </RelativeLayout>

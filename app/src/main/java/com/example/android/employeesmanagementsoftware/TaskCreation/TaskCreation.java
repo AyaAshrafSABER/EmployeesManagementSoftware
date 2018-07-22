@@ -3,6 +3,7 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskCreation extends AppCompatActivity {
@@ -30,13 +32,15 @@ public class TaskCreation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
-
+        employees=new ArrayList<>();
         //object of drop down menu
         Spinner spinner=(Spinner) findViewById(R.id.departmentDropDown);
 
-
         employeeDBHelper = new EmployeesManagementDbHelper(this);
-        Cursor cursor=employeeDBHelper.getAllDepartments();
+      // employeeDBHelper.addEmployee("omar","123",1,"engineer",
+        //       "aa",5,"fds");
+        final Cursor cursor=employeeDBHelper.getAllDepartments();
+
 
         //adapter to hold values in the menu
         //takes as input the cursor,a default spinner defined by the platform
@@ -50,6 +54,9 @@ public class TaskCreation extends AppCompatActivity {
         //TODO otherwise you'll have to loop through the data. Costly ??
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        Log.i(TAG, "Cursor position:"+cursor.getPosition());
+
+
 
         //when a department is chosen a list of its employees would appear under the spinner
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -57,7 +64,9 @@ public class TaskCreation extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
-                initListView(parent.getSelectedItem().toString(),employeeDBHelper);
+
+                initListView(cursor.getLong(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID))
+                        ,employeeDBHelper);
 
             }
 
@@ -69,30 +78,24 @@ public class TaskCreation extends AppCompatActivity {
     }
 
 
-    public void initListView(String dep,EmployeesManagementDbHelper employeeDBHelper){
+    public void initListView(long depID,EmployeesManagementDbHelper employeeDBHelper){
 
         ListView employeesList=(ListView) findViewById(R.id.employees_List);
 
 
 
         //TODO initialize cursor with the required query using the dbhelper methods
-        Cursor cursor;
+        Cursor cursor=employeeDBHelper.getEmployessOfDepartment(depID);
          //TODO send the cursor to the adapter's constructor
 
-        listViewAdapter = new TaskCreationAdapter(this,null);
+        listViewAdapter = new TaskCreationAdapter(this,cursor);
 
         //set the adapter that handles the contents of the employees list view
         employeesList.setAdapter(listViewAdapter);
 
 
     }
-    //method to handle the add button click
-    public void OnAddButtonClick(View view){
-        //append any new employees chosen to the employees list
-        employees.addAll(listViewAdapter.getEmployees());
 
-
-    }
     //method to inflate the view of the save button in the action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

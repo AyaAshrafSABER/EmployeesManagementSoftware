@@ -154,7 +154,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(DepartmentContract.TABLE_NAME,columns,null,null,null,null,orderBy);
-        db.close();
+
         return cursor; //don't forget to close the cursor after usage
 
     }
@@ -178,7 +178,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy);
-        db.close();
+        //removed db.close()
         return cursor; //don't forget to close the cursor after usage
     }
 
