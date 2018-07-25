@@ -3,11 +3,13 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -16,14 +18,14 @@ import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class TaskCreation extends AppCompatActivity  {
 
     private static final String TAG="spinner";
-    private TaskCreationAdapter listViewAdapter;
-    private Set<String> employees;
+    private Set<Long> employees;
     private EmployeesManagementDbHelper employeeDBHelper;
     private TaskCreationAdapterPool adapterPool;
     @Override
@@ -38,6 +40,26 @@ public class TaskCreation extends AppCompatActivity  {
         employeeDBHelper = new EmployeesManagementDbHelper(this);
 
         adapterPool=new TaskCreationAdapterPool(employeeDBHelper,this,employees);
+        employeeDBHelper.addDepartment("engineering","en");
+        employeeDBHelper.addDepartment("marketing","mk");
+        employeeDBHelper.addDepartment("accounting","ac");
+        employeeDBHelper.addDepartment("medical","md");
+
+        employeeDBHelper.addEmployee("aly","55",1,
+                "engineer","bvfs",555,null);
+        employeeDBHelper.addEmployee("omar","55",1,
+                "engineer","bvfg",565,null);
+        employeeDBHelper.addEmployee("ahmad","55",1,
+                "engineer","bvfg",565,null);
+        employeeDBHelper.addEmployee("youssef","55",1,
+                "engineer","bvfg",565,null);
+        employeeDBHelper.addEmployee("yassin","55",1,
+                "engineer","bvfg",565,null);
+        employeeDBHelper.addEmployee("mohamed","55",1,
+                "engineer","bvfg",565,null);
+        employeeDBHelper.addEmployee("hassan","55",1,
+                "engineer","bvfg",565,null);
+
 
         final Cursor cursor=employeeDBHelper.getAllDepartments();
 
@@ -52,6 +74,7 @@ public class TaskCreation extends AppCompatActivity  {
 
         //when a department is chosen a list of its employees would appear under the spinner
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 initListView(cursor.getLong(cursor.getColumnIndex(DepartmentContract.
@@ -70,6 +93,7 @@ public class TaskCreation extends AppCompatActivity  {
 
         ListView employeesList=(ListView) findViewById(R.id.employees_List);
 
+
         //set the adapter that handles the contents of the employees list view
         employeesList.setAdapter(adapterPool.getAdapter((int)depID));
 
@@ -86,13 +110,25 @@ public class TaskCreation extends AppCompatActivity  {
     //method to handle the save button click
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //get refrences to all edit texts
+        EditText taskName=findViewById(R.id.task_name_edit);
+        EditText taskDescp=findViewById(R.id.department_description_edit_text);
+        EditText taskDeadline=findViewById(R.id.task_deadline_edit);
+        for (long l :
+                employees) {
+            Log.i(TAG, "onOptionsItemSelected: "+l+"\n");
+        }
+        ArrayList<Long> emp= new ArrayList<>();
+        emp.addAll(employees);
         if(item.getItemId()==R.id.save_task_creation_button){
-            //TODO call the method to create a new task with the selected employees
+            //add a new task with the extracted data
+            employeeDBHelper.addTask(taskName.getText().toString(),5,taskDescp.getText().toString(),
+                    taskDeadline.getText().toString(),emp);
+
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    //TODO add a new method to return a new task with the available data
 
 }

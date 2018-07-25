@@ -171,7 +171,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID
         };
 
-        String selection = DepartmentEntry._ID + " =?"; //where statement
+        String selection = EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = EmployeeEntry.COLUMN_EMPLOYEE_NAME + " ASC";
 
