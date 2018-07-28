@@ -2,6 +2,7 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -92,11 +93,11 @@ public class TaskCreation extends AppCompatActivity  {
     public void initListView(long depID,EmployeesManagementDbHelper employeeDBHelper){
 
         ListView employeesList=(ListView) findViewById(R.id.employees_List);
-
+        Parcelable state = employeesList.onSaveInstanceState();
 
         //set the adapter that handles the contents of the employees list view
         employeesList.setAdapter(adapterPool.getAdapter((int)depID));
-
+        employeesList.onRestoreInstanceState(state);
 
     }
 
@@ -114,12 +115,15 @@ public class TaskCreation extends AppCompatActivity  {
         EditText taskName=findViewById(R.id.task_name_edit);
         EditText taskDescp=findViewById(R.id.department_description_edit_text);
         EditText taskDeadline=findViewById(R.id.task_deadline_edit);
+        Log.i(TAG, "size=: "+employees.size());
         for (long l :
                 employees) {
-            Log.i(TAG, "onOptionsItemSelected: "+l+"\n");
+            Log.i(TAG, "elements: "+l+"  ");
         }
+
         ArrayList<Long> emp= new ArrayList<>();
         emp.addAll(employees);
+
         if(item.getItemId()==R.id.save_task_creation_button){
             //add a new task with the extracted data
             employeeDBHelper.addTask(taskName.getText().toString(),5,taskDescp.getText().toString(),
