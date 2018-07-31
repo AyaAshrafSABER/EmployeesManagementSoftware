@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,7 +28,7 @@
 
     <EditText
         android:id="@+id/task_name_edit"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/task_name_text"
         android:layout_marginTop="7dp"
@@ -92,8 +95,11 @@
     <ListView
         android:id="@+id/employees_List"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@android:style/Widget.ListView" />
+        android:layout_height="200dp"
+        android:theme="@android:style/Widget.ListView"
+        android:nestedScrollingEnabled="true"
+        />
 
 
 </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
