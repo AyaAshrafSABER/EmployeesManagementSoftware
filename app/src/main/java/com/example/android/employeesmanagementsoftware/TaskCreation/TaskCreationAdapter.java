@@ -18,7 +18,9 @@ import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeCo
 import java.util.ArrayList;
 import java.util.Set;
 
-
+/*
+made by omar
+ */
 public class TaskCreationAdapter extends CursorAdapter{
 
     private Set<Long> employees;
