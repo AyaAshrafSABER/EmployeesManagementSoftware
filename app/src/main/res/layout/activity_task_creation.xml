@@ -1,24 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/taskCreationLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="0dp"
-    android:layout_marginStart="0dp"
-    tools:context="com.example.android.employeesmanagementsoftware.taskCreation">
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginStart="10dp"
 
+
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/task_name_text"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Task Name:"
+        android:textColor="@android:color/background_dark"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/task_name_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="24dp"
+        android:layout_below="@id/task_name_text"
+        android:layout_marginTop="7dp"
+        android:inputType="text"
+
+        />
+
+    <TextView
+        android:id="@+id/task_deadline_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deadline:"
+        android:textColor="@android:color/background_dark"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/task_deadline_edit"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_name_text"
+        android:layout_marginTop="7dp"
+        android:inputType="text"
+
+        />
+
+    <TextView
+        android:id="@+id/department_description_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Enter description:"
+        android:textColor="@android:color/background_dark"
+        android:textSize="17sp"
+
+        />
+
+    <EditText
+        android:id="@+id/department_description_edit_text"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="21dp"
+        android:gravity="top|start"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/choose_department_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="@string/choose_department"
         android:textColor="@android:color/background_dark"
         android:textSize="17sp" />
@@ -27,21 +86,20 @@
         android:id="@+id/departmentDropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="86dp"
-        android:contentDescription="@string/department_drop_down" />
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/department_drop_down"
+        android:gravity="start"
+        android:saveEnabled="false"
+        android:textAlignment="textStart" />
 
     <ListView
         android:id="@+id/employees_List"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/departmentDropDown"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="49dp"
-        android:theme="@android:style/Widget.ListView" />
+        android:layout_height="200dp"
+        android:theme="@android:style/Widget.ListView"
+        android:nestedScrollingEnabled="true"
+        />
 
-</RelativeLayout>
+
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

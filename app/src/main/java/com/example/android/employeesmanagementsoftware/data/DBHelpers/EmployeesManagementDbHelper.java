@@ -41,7 +41,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the employee table
         String SQL_CREATE_EMPLOYEE_TABLE = "CREATE TABLE " + EmployeeContract.TABLE_NAME + "("
-                + EmployeeEntry._ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + EmployeeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_NAME + " VARCHAR(70) NOT NULL, "
                 + EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE + " DATE NOT NULL,"
                  +EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
@@ -49,7 +49,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " INTEGER,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_EMAIL + " VARCHAR(255),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHOTO + " VARCHAR(255), "
-                + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" + DepartmentEntry._ID + ")"
+                + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" +DepartmentEntry._ID + ")"
                 + ");";
 
         // Create a String that contains the SQL statement to create the department table
@@ -154,7 +154,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(DepartmentContract.TABLE_NAME,columns,null,null,null,null,orderBy);
-        db.close();
+
         return cursor; //don't forget to close the cursor after usage
 
     }
@@ -171,14 +171,14 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID
         };
 
-        String selection = DepartmentEntry._ID + " =?"; //where statement
+        String selection = EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = EmployeeEntry.COLUMN_EMPLOYEE_NAME + " ASC";
 
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy);
-        db.close();
+        //removed db.close()
         return cursor; //don't forget to close the cursor after usage
     }
 
