@@ -17,26 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EmployeeActivity"
-            android:label="Employee"
-            android:parentActivityName=".MainActivity">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".DepartmentActivity"
-            android:label="Department"
-            android:parentActivityName=".MainActivity">
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
             android:name=".TaskCreation.TaskCreation"
             android:label="Task Creation" >
 
@@ -52,6 +32,16 @@
             android:name=".EmployeeCreation"
             android:label="@string/title_activity_employee_creation"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".EmployeeDB.EmployeeActivity"
+            android:label="Employee"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity android:name=".DepartmentDB.DepartmentActivity"
+            android:label="Department"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>
