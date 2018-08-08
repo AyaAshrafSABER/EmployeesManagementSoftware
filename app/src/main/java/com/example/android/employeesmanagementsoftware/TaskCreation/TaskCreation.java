@@ -1,7 +1,9 @@
 package com.example.android.employeesmanagementsoftware.TaskCreation;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,7 +29,7 @@ public class TaskCreation extends AppCompatActivity  {
 
     private static final String TAG="spinner";
     private Set<Long> employees;
-    private EmployeesManagementDbHelper employeeDBHelper;
+    private final EmployeesManagementDbHelper employeeDBHelper=new EmployeesManagementDbHelper(this);;
     private TaskCreationAdapterPool adapterPool;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,38 +38,39 @@ public class TaskCreation extends AppCompatActivity  {
         employees=new TreeSet<>();
 
         //object of drop down menu
-        Spinner spinner=(Spinner) findViewById(R.id.departmentDropDown);
+       Spinner spinner= findViewById(R.id.departmentDropDown);
 
-        employeeDBHelper = new EmployeesManagementDbHelper(this);
+
 
         adapterPool=new TaskCreationAdapterPool(employeeDBHelper,this,employees);
-        employeeDBHelper.addDepartment("engineering","en");
-        employeeDBHelper.addDepartment("marketing","mk");
-        employeeDBHelper.addDepartment("accounting","ac");
-        employeeDBHelper.addDepartment("medical","md");
 
-        employeeDBHelper.addEmployee("aly","55",1,
-                "engineer","bvfs",555,null);
-        employeeDBHelper.addEmployee("omar","55",1,
-                "engineer","bvfg",565,null);
-        employeeDBHelper.addEmployee("ahmad","55",1,
-                "engineer","bvfg",565,null);
-        employeeDBHelper.addEmployee("youssef","55",1,
-                "engineer","bvfg",565,null);
-        employeeDBHelper.addEmployee("yassin","55",1,
-                "engineer","bvfg",565,null);
-        employeeDBHelper.addEmployee("mohamed","55",1,
-                "engineer","bvfg",565,null);
-        employeeDBHelper.addEmployee("hassan","55",1,
-                "engineer","bvfg",565,null);
+                employeeDBHelper.addDepartment("engineering","en");
+                employeeDBHelper.addDepartment("marketing","mk");
+                employeeDBHelper.addDepartment("accounting","ac");
+                employeeDBHelper.addDepartment("medical","md");
+
+                employeeDBHelper.addEmployee("aly","55",1,
+                        "engineer","bvfs",555,null);
+                employeeDBHelper.addEmployee("omar","55",1,
+                        "engineer","bvfg",565,null);
+                employeeDBHelper.addEmployee("ahmad","55",1,
+                        "engineer","bvfg",565,null);
+                employeeDBHelper.addEmployee("youssef","55",1,
+                        "engineer","bvfg",565,null);
+                employeeDBHelper.addEmployee("yassin","55",1,
+                        "engineer","bvfg",565,null);
+                employeeDBHelper.addEmployee("mohamed","55",1,
+                        "engineer","bvfg",565,null);
+                employeeDBHelper.addEmployee("hassan","55",1,
+                        "engineer","bvfg",565,null);
 
 
-        final Cursor cursor=employeeDBHelper.getAllDepartments();
+       final Cursor cursor=employeeDBHelper.getAllDepartments();
 
-        //an adapter to handle data viewed by the spinner
-         SimpleCursorAdapter adapter=new SimpleCursorAdapter(
+       //an adapter to handle data viewed by the spinner
+        SimpleCursorAdapter adapter=new SimpleCursorAdapter(
                 this,android.R.layout.simple_spinner_item,cursor,
-               new String[]{ DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME},
+                new String[]{ DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME},
                 new int[]{android.R.id.text1},0);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -90,14 +93,20 @@ public class TaskCreation extends AppCompatActivity  {
     }
 
     //method to bind the list view of the employees with a cursor adapter
-    public void initListView(long depID,EmployeesManagementDbHelper employeeDBHelper){
+    public void initListView(final long depID,EmployeesManagementDbHelper employeeDBHelper){
 
-        ListView employeesList=(ListView) findViewById(R.id.employees_List);
-        Parcelable state = employeesList.onSaveInstanceState();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ListView employeesList=(ListView) findViewById(R.id.employees_List);
+                Parcelable state = employeesList.onSaveInstanceState();
 
-        //set the adapter that handles the contents of the employees list view
-        employeesList.setAdapter(adapterPool.getAdapter((int)depID));
-        employeesList.onRestoreInstanceState(state);
+                //set the adapter that handles the contents of the employees list view
+                employeesList.setAdapter(adapterPool.getAdapter((int)depID));
+                employeesList.onRestoreInstanceState(state);
+            }
+        });
+
 
     }
 
