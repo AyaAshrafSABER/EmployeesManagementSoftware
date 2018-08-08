@@ -1,10 +1,11 @@
 package com.example.android.employeesmanagementsoftware;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 
 public class StartingPageActivity extends AppCompatActivity {
 
@@ -53,8 +56,11 @@ public class StartingPageActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), TaskCreation.class);
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                startActivity(intent);
+
             }
         });
 
@@ -133,7 +139,7 @@ public class StartingPageActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 0 ) {
+            if (position == 0) {
                 return new TasksFragment();
             } else {
                   return  PlaceholderFragment.newInstance(position + 1);
