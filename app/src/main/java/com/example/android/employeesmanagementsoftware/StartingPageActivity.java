@@ -45,7 +45,6 @@ public class StartingPageActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -95,6 +94,7 @@ public class StartingPageActivity extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
+
         }
 
         /**
@@ -133,7 +133,11 @@ public class StartingPageActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            if (position == 0 ) {
+                return new TasksFragment();
+            } else {
+                  return  PlaceholderFragment.newInstance(position + 1);
+                }
         }
 
         @Override
