@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.app.DatePickerDialog;
 import android.text.InputType;
@@ -25,21 +26,23 @@ public class EmployeeCreation extends AppCompatActivity {
 
 
 
-    EmployeesManagementDbHelper emdb = new EmployeesManagementDbHelper(this); //dbhelper to use for connecting to db
+    EmployeesManagementDbHelper emdb ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+       emdb  = new EmployeesManagementDbHelper(this); //dbhelper to use for connecting to db
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_employee_creation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        date_select =findViewById(R.id.editDate);
+        date_select = (EditText) findViewById(R.id.editDate);
+       // if(date_select==null) Log.i("take ---", "onCreate: " + "error null ... ");
         submit=findViewById(R.id.submitButton);
         employee_name=findViewById(R.id.editName);
         employee_email=findViewById(R.id.editEmail);
         employee_phone=findViewById(R.id.editPhone);
-        date_select.setInputType(InputType.TYPE_NULL);
+        //date_select.setInputType(InputType.TYPE_CLASS_DATETIME);
         date_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +58,7 @@ public class EmployeeCreation extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 date_select.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                             }
-                        }, year, month, day);
+                        }, day, month, year);
                 picker.show();
             }
         });
@@ -66,7 +69,7 @@ public class EmployeeCreation extends AppCompatActivity {
                 if (matchFields()!= 4)
                     Snackbar.make(v, "FAILED TO ENTER CURRENT EMPLOYEE. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else {
-                    if (emdb.addEmployee(employee_name.getText().toString(), date_select.getText().toString(), 0, null, employee_email.getText().toString(), Integer.valueOf(employee_phone.getText().toString()), null)) {
+                    if (emdb.addEmployee(employee_name.getText().toString(), date_select.getText().toString(), 0, null, employee_email.getText().toString(), employee_phone.getText().toString(), null)) {
                         Snackbar.make(v, "CURRENT EMPLOYEE ENTERED SUCCESSFULLY.", Snackbar.LENGTH_LONG).setAction("", null).show();
                     } else {
                         Snackbar.make(v, "FAILED TO ENTER CURRENT EMPLOYEE. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
