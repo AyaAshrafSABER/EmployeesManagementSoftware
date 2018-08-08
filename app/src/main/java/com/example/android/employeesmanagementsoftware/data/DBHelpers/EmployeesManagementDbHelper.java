@@ -55,7 +55,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         // Create a String that contains the SQL statement to create the department table
         String SQL_CREATE_DEPARTMENT_TABLE = "CREATE TABLE " + DepartmentContract.TABLE_NAME+"("
                 +DepartmentEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +DepartmentEntry.COLUMN_DEPARTMENT_NAME + " VARCHAR(255) NOT NULL, "
+                +DepartmentEntry.COLUMN_DEPARTMENT_NAME + " VARCHAR(255) NOT NULL UNIQUE, "
                 +DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION + "  VARCHAR(300) "
                 +");";
 
@@ -188,8 +188,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
        SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
         ContentValues cv  = new ContentValues(); //used for inserting an entry
 
-        if(department_name!=null && department_name!="") // to be edited
+
         cv.put(TaskEntry.COLUMN_TASK_NAME,department_name);
+
+        if(department_description!=null && !department_description.isEmpty()&&!department_description.trim().isEmpty()) // to be edited
         cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,department_description);
 
         long flag = db.insert(DepartmentContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
@@ -198,6 +200,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         return true;
     }
+
 
 
 
@@ -214,11 +217,11 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         cv.put(EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,department_id);
         cv.put(EmployeeEntry.COLUMN_EMPLOYEE_JOB,employee_job);
 
-        if (!employee_email.isEmpty() && employee_email!= null) //checks if field is provided if not it is not added in the query
+        if(employee_email!=null && !employee_email.isEmpty()&&!employee_email.trim().isEmpty()) // to be edited //checks if field is provided if not it is not added in the query
         cv.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,employee_email);
-        if (!employee_phone.isEmpty() && employee_phone != null)
+        if(employee_phone!=null && !employee_phone.isEmpty()&&!employee_phone.trim().isEmpty()) // to be edited
         cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHONE,employee_phone);
-        if (!employee_photo.isEmpty() && employee_photo != null)
+        if(employee_photo!=null && !employee_photo.isEmpty()&&!employee_photo.trim().isEmpty())
         cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,employee_photo);
 
 
@@ -239,10 +242,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
 
-        if(task_deadline!=null)
+        if(task_description!=null && !task_description.isEmpty()&&!task_description.trim().isEmpty())
         cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
 
-        if(task_deadline!=null)
+        if(task_deadline!=null && !task_deadline.isEmpty()&&!task_deadline.trim().isEmpty())
         cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
 
         long task_id = db.insert(TaskContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
@@ -262,4 +265,42 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         else return false;
         return true;
     }
+
+    public boolean deleteEmployee(long employee_id){
+        SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
+        db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+employee_id,null);
+       int flag =  db.delete(EmployeeContract.TABLE_NAME,EmployeeEntry._ID + "=" + employee_id,null) ;
+       return flag>0;
+
+
+    }
+
+    public boolean deleteTask(long task_id){
+        SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
+        db.delete("employee_task",TaskContract.TABLE_NAME+TaskEntry._ID+ "="+task_id,null);
+        int flag = db.delete(TaskContract.TABLE_NAME,TaskEntry._ID + "=" + task_id,null);
+        return flag>0;
+
+    }
+
+
+    public boolean deleteDepartment(long department_id){
+        SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
+
+        Cursor c = getEmployessOfDepartment(department_id);
+        while(c.moveToNext()) {
+            db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID + "  = "+c.getString(0),null);
+        }
+        c.close();
+
+        db.delete(EmployeeContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null);
+        int flag = db.delete(DepartmentContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null) ;
+
+
+
+
+
+        return flag>0;
+    }
+
 }

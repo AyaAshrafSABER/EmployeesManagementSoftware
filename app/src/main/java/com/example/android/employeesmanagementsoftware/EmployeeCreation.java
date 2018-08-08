@@ -58,7 +58,7 @@ public class EmployeeCreation extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                                 date_select.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                             }
-                        }, year, month, day);
+                        }, day, month, year);
                 picker.show();
             }
         });
