@@ -37,8 +37,12 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".taskCreation"
-            android:label="Task Creation" />
+            android:name=".TaskCreation.TaskCreation"
+            android:label="Task Creation" >
+
+            </activity>
+
+
         <activity android:name=".TaskActivity" />
         <activity
             android:name=".DepartmentCreation"

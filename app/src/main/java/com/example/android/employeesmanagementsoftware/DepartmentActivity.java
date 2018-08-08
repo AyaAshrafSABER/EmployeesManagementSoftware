@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by User on 7/11/2018.
+ * Created by Monica  on 7/11/2018.
  */
-
+//need to attach her job with database
+    // convert actvity to fregment
 public class DepartmentActivity extends AppCompatActivity {
 
     @Override
