@@ -65,7 +65,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".StartingPageActivity"
             android:label="@string/title_activity_starting_page"
