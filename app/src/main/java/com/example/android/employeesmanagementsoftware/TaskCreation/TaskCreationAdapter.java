@@ -23,6 +23,7 @@ made by omar
  */
 public class TaskCreationAdapter extends CursorAdapter{
 
+
     private final String TAG = "adapter";
     private Set<Long> employees;
     private ArrayList<Boolean> checkBoxState;
