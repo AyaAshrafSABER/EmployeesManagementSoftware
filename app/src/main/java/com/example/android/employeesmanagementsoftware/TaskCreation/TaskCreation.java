@@ -38,25 +38,25 @@ public class TaskCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
 
-        employeeDBHelper.addDepartment("engineering", "en");
-        employeeDBHelper.addDepartment("marketing", "mk");
-        employeeDBHelper.addDepartment("accounting", "ac");
-        employeeDBHelper.addDepartment("medical", "md");
-
-        employeeDBHelper.addEmployee("aly", "55", 1,
-                "engineer", "bvfs", 555, null);
-        employeeDBHelper.addEmployee("omar", "55", 1,
-                "engineer", "bvfg", 565, null);
-        employeeDBHelper.addEmployee("ahmad", "55", 1,
-                "engineer", "bvfg", 565, null);
-        employeeDBHelper.addEmployee("youssef", "55", 1,
-                "engineer", "bvfg", 565, null);
-        employeeDBHelper.addEmployee("yassin", "55", 1,
-                "engineer", "bvfg", 565, null);
-        employeeDBHelper.addEmployee("mohamed", "55", 1,
-                "engineer", "bvfg", 565, null);
-        employeeDBHelper.addEmployee("hassan", "55", 1,
-                "engineer", "bvfg", 565, null);
+//        employeeDBHelper.addDepartment("engineering", "en");
+//        employeeDBHelper.addDepartment("marketing", "mk");
+//        employeeDBHelper.addDepartment("accounting", "ac");
+//        employeeDBHelper.addDepartment("medical", "md");
+//
+//        employeeDBHelper.addEmployee("aly", "55", 1,
+//                "engineer", "bvfs", 555, null);
+//        employeeDBHelper.addEmployee("omar", "55", 1,
+//                "engineer", "bvfg", 565, null);
+//        employeeDBHelper.addEmployee("ahmad", "55", 1,
+//                "engineer", "bvfg", 565, null);
+//        employeeDBHelper.addEmployee("youssef", "55", 1,
+//                "engineer", "bvfg", 565, null);
+//        employeeDBHelper.addEmployee("yassin", "55", 1,
+//                "engineer", "bvfg", 565, null);
+//        employeeDBHelper.addEmployee("mohamed", "55", 1,
+//                "engineer", "bvfg", 565, null);
+//        employeeDBHelper.addEmployee("hassan", "55", 1,
+//                "engineer", "bvfg", 565, null);
 
 
 

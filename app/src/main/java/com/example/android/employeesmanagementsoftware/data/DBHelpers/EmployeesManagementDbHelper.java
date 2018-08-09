@@ -218,8 +218,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
             cv.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,employee_email);
         if (!employee_phone.isEmpty() && employee_phone != null)
             cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHONE,employee_phone);
-        if (!employee_photo.isEmpty() && employee_photo != null)
-            cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,employee_photo);
+//        if (!employee_photo.isEmpty() && employee_photo != null)
+//            cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,employee_photo);
 
 
         long flag = db.insert(EmployeeContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
