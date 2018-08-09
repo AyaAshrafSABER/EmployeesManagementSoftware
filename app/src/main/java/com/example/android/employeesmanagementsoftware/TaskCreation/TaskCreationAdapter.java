@@ -28,6 +28,7 @@ public class TaskCreationAdapter extends CursorAdapter {
     TaskCreationAdapter(Context context, Cursor c, Set<Long> employees) {
         super(context, c, 0);
         this.employees = employees;
+        checkBoxState = new ArrayList<>(c.getCount());
     }
 
     @Override
@@ -35,21 +36,19 @@ public class TaskCreationAdapter extends CursorAdapter {
         //TODO onCreate is called when switching to landscape
         //TODO too much on main thread !!!!!!!!!
 
-        checkBoxState = new ArrayList<>(cursor.getCount());
         View view = LayoutInflater.from(context).inflate(R.layout.task_creation_row, parent, false);
         ListViewHolder holder = new ListViewHolder(view);
-        holder.employeeName=view.findViewById(R.id.employee_name_text);
-        holder.checkBox=view.findViewById(R.id.employee_check_box);
+        holder.employeeName = view.findViewById(R.id.employee_name_text);
+        holder.checkBox = view.findViewById(R.id.employee_check_box);
         view.setTag(holder);
         view.setTag(R.id.employee_name_text, holder.employeeName);
         view.setTag(R.id.employee_check_box, holder.checkBox);
 
-
-
-       //initialize the array with false as a value
-        for (int i = 0; i < cursor.getCount(); i++) {
-            checkBoxState.add(false);
-        }
+        if (checkBoxState.isEmpty())
+            //initialize the array with false as a value
+            for (int i = 0; i < cursor.getCount(); i++) {
+                checkBoxState.add(false);
+            }
 
         return view;
     }
@@ -58,7 +57,7 @@ public class TaskCreationAdapter extends CursorAdapter {
     @Override
     public void bindView(final View view, final Context context, final Cursor cursor) {
         //retrieve the view holder object created in new view
-        ListViewHolder holder= (ListViewHolder) view.getTag();
+        ListViewHolder holder = (ListViewHolder) view.getTag();
 
         //get the employee names from the cursor
         final String employeeName = cursor.getString(cursor.getColumnIndexOrThrow(EmployeeContract.EmployeeEntry.COLUMN_EMPLOYEE_NAME));
@@ -68,15 +67,12 @@ public class TaskCreationAdapter extends CursorAdapter {
 
         holder.employeeName.setText(employeeName);//set the text view with the employee names
 
-
         //handle the changing in the check box
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                checkBoxState.set((Integer) buttonView.getTag(),buttonView.isChecked()); //set the state of the check box
-                Log.i(TAG, "onCheckedChanged: position "+position+" "+ ((Integer) buttonView.getTag())
-                        +" checked state "+isChecked+" "+checkBoxState.get((Integer) buttonView.getTag()));
+                checkBoxState.set((Integer) buttonView.getTag(), buttonView.isChecked()); //set the state of the check box
 
                 if (buttonView.isChecked()) {
                     employees.add(ID);
@@ -95,14 +91,13 @@ public class TaskCreationAdapter extends CursorAdapter {
     }
 
 
-
     //custom implementation ViewHolder class
     class ListViewHolder extends RecyclerView.ViewHolder {
 
         TextView employeeName;
         CheckBox checkBox;
 
-         ListViewHolder(View itemView) {
+        ListViewHolder(View itemView) {
             super(itemView);
 
             employeeName = itemView.findViewById(R.id.employee_name_text);
