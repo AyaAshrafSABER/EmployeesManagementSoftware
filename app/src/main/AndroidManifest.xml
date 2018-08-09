@@ -34,8 +34,9 @@
         </activity>
         <activity
             android:name=".TaskCreation.TaskCreation"
-            android:label="Task Creation">
-            android:label="Task Creation" >
+            android:label="Task Creation"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,11 +58,7 @@
             android:name=".StartingPageActivity"
             android:label="@string/title_activity_starting_page"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
