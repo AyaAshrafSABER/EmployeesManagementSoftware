@@ -171,16 +171,17 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID
         };
 
-        String selection = DepartmentEntry._ID + " =?"; //where statement
+        String selection = EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = EmployeeEntry.COLUMN_EMPLOYEE_NAME + " ASC";
 
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy);
-
+        //removed db.close()
         return cursor; //don't forget to close the cursor after usage
     }
+
 
 
     public boolean addDepartment(String department_name , String department_description)
