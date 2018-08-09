@@ -46,12 +46,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + EmployeeEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_NAME + " VARCHAR(70) NOT NULL, "
                 + EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE + " DATE NOT NULL,"
-                 +EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
+                +EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " INTEGER NOT NULL,"
                 + EmployeeEntry.COLUMN_EMPLOYEE_JOB + " VARCHAR(50) NOT NULL,"
-                + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " INTEGER,"
+                + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " VARCHAR(20),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_EMAIL + " VARCHAR(255),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHOTO + " VARCHAR(255), "
-                + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" +DepartmentEntry._ID + ")"
+                + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" + DepartmentEntry._ID + ")"
                 + ");";
 
         // Create a String that contains the SQL statement to create the department table
@@ -119,7 +119,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(TaskContract.TABLE_NAME,columns,null,null,null,null,null);
-        db.close();
+
         return cursor; //don't forget to close the cursor after usage
 
     }
@@ -135,7 +135,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 TaskEntry.COLUMN_TASK_DESCRIPTION,
                 TaskEntry.COLUMN_TASK_EVALUATION,
                 TaskEntry.COLUMN_TASK_DEADLINE
-            };
+        };
 
         //where statement to filter quere
         String selection = TaskEntry._ID + " =?"; //where TaskEntry._ID=task_id
@@ -145,7 +145,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(TaskContract.TABLE_NAME,columns,null,null,null,null,null);
-        db.close();
+
         return cursor; //don't forget to close the cursor after usage
 
     }
@@ -157,7 +157,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //specify the columns to be read
         String [] columns = {
-               DepartmentEntry._ID,
+                DepartmentEntry._ID,
                 DepartmentEntry.COLUMN_DEPARTMENT_NAME
         };
 
@@ -182,14 +182,14 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID
         };
 
-        String selection = EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " =?"; //where statement
+        String selection = DepartmentEntry._ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = EmployeeEntry.COLUMN_EMPLOYEE_NAME + " ASC";
 
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy);
-        //removed db.close()
+
         return cursor; //don't forget to close the cursor after usage
     }
 
@@ -199,7 +199,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
         ContentValues cv  = new ContentValues(); //used for inserting an entry
 
-        cv.put(TaskEntry.COLUMN_TASK_NAME,department_name);
+        if(department_name!=null && department_name!="") // to be edited
+            cv.put(TaskEntry.COLUMN_TASK_NAME,department_name);
         cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,department_description);
 
         long flag = db.insert(DepartmentContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
@@ -211,7 +212,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
 
 
-    public boolean addEmployee(String employee_name, String employee_birthdate ,int department_id,String employee_job,String employee_email,int employee_phone,String employee_photo){
+    public boolean addEmployee(String employee_name, String employee_birthdate ,int department_id,String employee_job,String employee_email,String employee_phone,String employee_photo){
         //adds an employee entry to employee table
 
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
@@ -224,12 +225,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         cv.put(EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,department_id);
         cv.put(EmployeeEntry.COLUMN_EMPLOYEE_JOB,employee_job);
 
-        if(employee_email!=null) //checks if field is provided if not it is not added in the query
-        cv.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,employee_email);
-        if (employee_phone!=0)
-        cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHONE,employee_phone);
-        if(employee_photo!=null)
-        cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,employee_photo);
+        if (!employee_email.isEmpty() && employee_email!= null) //checks if field is provided if not it is not added in the query
+            cv.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,employee_email);
+        if (!employee_phone.isEmpty() && employee_phone != null)
+            cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHONE,employee_phone);
+//        if (!employee_photo.isEmpty() && employee_photo != null)
+//            cv.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,employee_photo);
 
 
         long flag = db.insert(EmployeeContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
@@ -250,10 +251,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
 
         if(task_deadline!=null)
-        cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
+            cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
 
         if(task_deadline!=null)
-        cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
+            cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
 
         long task_id = db.insert(TaskContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
 
