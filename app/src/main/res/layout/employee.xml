@@ -33,7 +33,7 @@
                 android:background="@drawable/employee_icon"
                 android:scaleType="centerCrop" />
 
-            <TextView
+            <EditText
                 android:id="@+id/employee_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -42,13 +42,7 @@
                 android:paddingTop="@dimen/padding_employee"
                 android:text="Employee's Name" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/employee_name"
-                android:layout_centerHorizontal="true"
-                android:paddingTop="@dimen/padding_employee"
-                android:text="Hired in September 2010" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -62,7 +56,8 @@
                 android:src="@mipmap/mail"
                 android:tint="@color/colorPrimary" />
 
-            <TextView
+            <EditText
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -81,7 +76,8 @@
                 android:src="@mipmap/phone"
                 android:tint="@color/colorPrimary" />
 
-            <TextView
+            <EditText
+                android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -100,10 +96,12 @@
                 android:src="@mipmap/calendar"
                 android:tint="@color/colorPrimary" />
 
-            <TextView
+            <EditText
+                android:id="@+id/birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:inputType="date"
                 android:text="7/8/1975" />
 
         </LinearLayout>
@@ -197,7 +195,6 @@
             android:layout_height="match_parent"
             android:drawSelectorOnTop="true"
             android:orientation="vertical"></ListView>
-
 
 
         <LinearLayout

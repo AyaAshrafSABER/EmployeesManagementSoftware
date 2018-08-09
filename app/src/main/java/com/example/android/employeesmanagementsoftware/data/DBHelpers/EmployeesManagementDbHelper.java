@@ -10,6 +10,8 @@ import android.os.Build;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
+import com.example.android.employeesmanagementsoftware.data.Contracts.NoteContract;
+import com.example.android.employeesmanagementsoftware.data.Contracts.NoteContract.NoteEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
@@ -68,6 +70,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_EVALUATION + "INTEGER NOT NULL"
                 +");"
                 ;
+
+
         // Create a String that contains the SQL statement to create the employee_task table
         String SQL_CREATE_EMPLOYEE_TASK_TABLE = "CREATE TABLE " + "employee_task " + "( "
                 + EmployeeContract.TABLE_NAME+EmployeeEntry._ID + " INTEGER NOT NULL, "
@@ -78,11 +82,17 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 ;
 
 
+        String SQL_CREATE_NOTE_TABLE = "CREATE TABLE "+ NoteContract.TABLE_NAME + " ("
+                + NoteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + NoteEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL,"
+                + "FOREIGN KEY (" +  NoteEntry.COLUMN_EMPLOYEE_ID  +" ) REFERENCES  " + NoteContract.TABLE_NAME + "(" + EmployeeEntry._ID + ")"  + ");";
+
         //executes SQL create statements
         db.execSQL(SQL_CREATE_DEPARTMENT_TABLE);
         db.execSQL(SQL_CREATE_EMPLOYEE_TABLE);
         db.execSQL(SQL_CREATE_TASK_TABLE);
         db.execSQL(SQL_CREATE_EMPLOYEE_TASK_TABLE);
+        db.execSQL(SQL_CREATE_NOTE_TABLE);
 
 
     }
@@ -131,6 +141,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String selection = TaskEntry._ID + " =?"; //where TaskEntry._ID=task_id
         String selectionArgs[] = { String.valueOf(task_id)  };
 
+        // TODO a3tkd l parameters ely t7t msh null, b selection w selectionArgs
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor =  db.query(TaskContract.TABLE_NAME,columns,null,null,null,null,null);
@@ -263,4 +274,57 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         else return false;
         return true;
     }
+
+    public Cursor getEmployee(long employeeId){
+
+        //gets specific task by its id
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+
+        //specify the columns to be read
+        String [] columns = {
+               EmployeeEntry.COLUMN_EMPLOYEE_NAME,
+                EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE,
+                EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,
+                EmployeeEntry.COLUMN_EMPLOYEE_PHONE,
+                EmployeeEntry.COLUMN_EMPLOYEE_JOB,
+                EmployeeEntry.COLUMN_EMPLOYEE_PHOTO
+
+        };
+
+        //where statement to filter quere
+        String selection = EmployeeEntry._ID + " =?"; //where TaskEntry._ID=task_id
+        String selectionArgs[] = { String.valueOf(employeeId)  };
+
+
+        //cursor is a table containing the rows returned form the query
+        Cursor cursor =  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null);
+        db.close();
+        return cursor; //don't forget to close the cursor after usage
+
+    }
+
+    public Cursor getDepartment(long departmentId){
+
+        //gets specific task by its id
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+
+        //specify the columns to be read
+        String [] columns = {
+               DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION,
+                DepartmentEntry.COLUMN_DEPARTMENT_NAME
+
+        };
+
+        //where statement to filter quere
+        String selection = EmployeeEntry._ID + " =?"; //where TaskEntry._ID=task_id
+        String selectionArgs[] = { String.valueOf(departmentId)  };
+
+
+        //cursor is a table containing the rows returned form the query
+        Cursor cursor =  db.query(DepartmentContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null);
+        db.close();
+        return cursor; //don't forget to close the cursor after usage
+
+    }
+
 }

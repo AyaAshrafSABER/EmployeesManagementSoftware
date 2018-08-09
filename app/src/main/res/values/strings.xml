@@ -23,6 +23,8 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_employee_creation">EmployeeCreation</string>
     <string name="save_button_task_creation">save</string>
+    <string name="save_menu">save</string>
+    <string name="delete_menu">delete</string>
     <string name="title_activity_starting_page">StartingPageActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
