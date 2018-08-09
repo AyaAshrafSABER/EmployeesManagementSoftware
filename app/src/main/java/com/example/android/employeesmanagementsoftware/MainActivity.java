@@ -21,22 +21,5 @@ public class MainActivity extends AppCompatActivity {
 //                 .beginTransaction()
 //                 .replace(R.id.frame, fragment)
 //                 .commit();
-        Button emp = (Button)findViewById(R.id.emp);
-        emp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent employeeActivity = new Intent(MainActivity.this,EmployeeActivity.class);
-                startActivity(employeeActivity);
-            }
-        });
-
-        Button dep = (Button)findViewById(R.id.dep);
-        dep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent departementActivity = new Intent(MainActivity.this,DepartmentActivity.class);
-                startActivity(departementActivity);
-            }
-        });
     }
 }
