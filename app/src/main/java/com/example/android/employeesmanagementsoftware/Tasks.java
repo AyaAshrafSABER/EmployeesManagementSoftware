@@ -1,5 +1,9 @@
 package com.example.android.employeesmanagementsoftware;
-
+/*
+made by menna
+ */
+// you need to call database helper here
+// you will find your table in SQL_CREATE_EMPLOYEE_TASK_TABLE in EmployeesManagementDbHelper
 public  class Tasks
 {
 

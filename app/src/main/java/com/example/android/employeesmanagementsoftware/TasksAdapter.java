@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-
+/*
+made by menna
+ */
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
 
     private Context context;

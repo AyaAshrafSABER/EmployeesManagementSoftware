@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-
+/*
+made by menna
+ */
+//First you need to show departement and  the employees in this departement who work  in the task
 public class TaskActivity extends AppCompatActivity {
 
 

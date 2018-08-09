@@ -34,6 +34,7 @@
         </activity>
         <activity
             android:name=".TaskCreation.TaskCreation"
+            android:label="Task Creation">
             android:label="Task Creation" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +52,17 @@
         <activity
             android:name=".EmployeeCreation"
             android:label="@string/title_activity_employee_creation"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StartingPageActivity"
+            android:label="@string/title_activity_starting_page"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
