@@ -3,7 +3,6 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +39,7 @@ public class TaskCreationAdapter extends CursorAdapter{
         //TODO too much on main thread !!!!!!!!!
 
         View view = LayoutInflater.from(context).inflate(R.layout.task_creation_row, parent, false);
+        //An object of view holder to hold the widgets data
         ListViewHolder holder = new ListViewHolder(view);
         holder.employeeName = view.findViewById(R.id.employee_name_text);
         holder.checkBox = view.findViewById(R.id.employee_check_box);

@@ -27,6 +27,7 @@ class TaskCreationAdapterPool {
 
     TaskCreationAdapter getAdapter(final int depID) {
 
+        //if the adapter is created before then return it otherwise create a new one and return it
         if (pool.get(depID) == null) {
             Cursor cursor = dbHelper.getEmployessOfDepartment(depID);
             pool.append(depID, new TaskCreationAdapter(context, cursor, employees));
