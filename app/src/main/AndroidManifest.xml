@@ -4,53 +4,39 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/main_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".TaskCreation.TaskCreation"
             android:label="Task Creation"
             android:configChanges="orientation|screenSize|keyboardHidden">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             </activity>
-
-
         <activity android:name=".TaskActivity" />
         <activity
             android:name=".DepartmentCreation"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".EmployeeCreation"
             android:label="@string/title_activity_employee_creation"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".EmployeeDB.EmployeeActivity"
             android:label="Employee"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
         <activity android:name=".DepartmentDB.DepartmentActivity"
             android:label="Department"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -59,7 +45,6 @@
             android:name=".StartingPageActivity"
             android:label="@string/title_activity_starting_page"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
     </application>
 
