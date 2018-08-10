@@ -34,7 +34,7 @@ public class DepartmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.department);
-      helper = new EmployeesManagementDbHelper(this);
+        helper = new EmployeesManagementDbHelper(this);
 
         description = (EditText)findViewById(R.id.description);
 
@@ -43,7 +43,7 @@ public class DepartmentActivity extends AppCompatActivity {
         final long departmentId = intent.getExtras().getLong("departmentId");
 
         //setting name,description of department
-         Cursor cursorDep = helper.getDepartment(departmentId);
+        Cursor cursorDep = helper.getDepartment(departmentId);
         description.setText(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION)));
         setTitle(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_NAME)));
         cursorDep.close();
