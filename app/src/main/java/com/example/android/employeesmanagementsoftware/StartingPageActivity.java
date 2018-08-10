@@ -2,7 +2,6 @@ package com.example.android.employeesmanagementsoftware;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.content.Intent;
@@ -11,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 
 public class StartingPageActivity extends AppCompatActivity {
@@ -37,7 +39,10 @@ public class StartingPageActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    private FloatingActionButton fab;
+    private Fragment mTaskFregmant;
+    private Fragment mDepFregmant;
+    private int section ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,18 +57,21 @@ public class StartingPageActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), TaskCreation.class);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                Intent intent;
+                if (mViewPager.getCurrentItem() == 0) {
+                    Log.v("section" , " zero");
+                     intent = new Intent(getApplicationContext(), TaskCreation.class);
+                } else {
+                    Log.v("section" , " two");
+                    intent = new Intent(getApplicationContext(), DepartmentCreation.class);
+                }
                 startActivity(intent);
-
             }
         });
-
     }
 
 
@@ -119,8 +127,6 @@ public class StartingPageActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_starting_page, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -139,16 +145,18 @@ public class StartingPageActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+             mDepFregmant = new DepFragment();
+             mTaskFregmant = new TasksFragment();
             if (position == 0) {
-                return new TasksFragment();
+                return mTaskFregmant;
             } else {
-                  return  PlaceholderFragment.newInstance(position + 1);
-                }
+                return  mDepFregmant;
+            }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 2 total pages.
             return 2;
         }
     }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment.OnListFragmentInteractionListener;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.dummy.DummyContent.DummyItem;
+import com.example.android.employeesmanagementsoftware.R;
 
 import java.util.List;
 

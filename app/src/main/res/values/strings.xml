@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EmployeesManagementSoftware</string>
+    <string name="app_name">ManagementSystem</string>
     <string-array name="types">
         <item>Mistake</item>
         <item>Compliment</item>
