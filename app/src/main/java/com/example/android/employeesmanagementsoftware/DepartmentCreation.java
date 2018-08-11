@@ -21,7 +21,7 @@ public class DepartmentCreation extends AppCompatActivity {
     EditText Description;
     EditText Name_of_Department;
     EmployeesManagementDbHelper emdb ;
-    private  DepFragment depFragment = DepFragment.newInstance(5);
+    private  DepFragment depFragment = DepFragment.newInstance(0);
     Button save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class DepartmentCreation extends AppCompatActivity {
                   Snackbar.make(v, "ENTERED SUCCESSFULLY", Snackbar.LENGTH_LONG).setAction("", null).show();
                   Description.setText("",TextView.BufferType.EDITABLE);
                   Name_of_Department.setText("",TextView.BufferType.EDITABLE);
-                 // depFragment.updateDepartmentList(emdb);
+                  depFragment.updateDepartmentList(emdb);
               }
             else
                   Snackbar.make(v, "FAILED TO ENTER CURRENT DEPARTMENT. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();

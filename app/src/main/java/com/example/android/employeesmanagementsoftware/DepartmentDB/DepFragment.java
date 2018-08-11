@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
@@ -38,6 +40,7 @@ public class DepFragment extends Fragment {
     private Context context;
     private  List<DepartmentItem> mValues;
     private  MyDepartmentRecyclerViewAdapter mAdapter;
+    private static RecyclerView recyclerView;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -72,7 +75,7 @@ public class DepFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -98,21 +101,27 @@ public class DepFragment extends Fragment {
 
         return view;
     }
-     public void updateDepartmentList(EmployeesManagementDbHelper dataBase){
+     public void updateDepartmentList(EmployeesManagementDbHelper mDataBase){
          mValues = new ArrayList<>();
-         cursor = dataBase.getAllDepartments();
-        if (cursor.moveToFirst()){
-            do{
-                String id,name,description;
+         cursor =  mDataBase.getAllDepartments();
+        if (cursor.moveToFirst()) {
+            do {
+                String id, name, description;
                 id = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID));
                 name = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME));
                 description = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION));
-                DepartmentItem dataProvider = new  DepartmentItem (id,name,description);
+                DepartmentItem dataProvider = new DepartmentItem(id, name, description);
                 mValues.add(dataProvider);
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
-        cursor.close();
-        mAdapter.notifyDataSetChanged();
+            if (mAdapter == null) {
+                mAdapter = new MyDepartmentRecyclerViewAdapter(mValues,mListener);
+                recyclerView.setAdapter(mAdapter);
+            } else {
+                mAdapter.notifyDataSetChanged();
+            }
+            cursor.close();
+
     }
 
     @Override

@@ -40,7 +40,6 @@ public class MyDepartmentRecyclerViewAdapter extends RecyclerView.Adapter<MyDepa
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
         holder.mName.setText(mValues.get(position).name);
         holder.mdescriptionView.setText(mValues.get(position).details);
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +66,6 @@ public class MyDepartmentRecyclerViewAdapter extends RecyclerView.Adapter<MyDepa
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
         public final TextView mName;
         public final TextView mdescriptionView;
         public DepartmentData.DepartmentItem mItem;
@@ -75,7 +73,6 @@ public class MyDepartmentRecyclerViewAdapter extends RecyclerView.Adapter<MyDepa
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.numb_employee);
             mName = (TextView) view.findViewById(R.id.department_name);
             mdescriptionView = (TextView) view.findViewById(R.id.department_description);
         }
