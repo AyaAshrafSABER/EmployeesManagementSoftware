@@ -51,7 +51,7 @@ public class EmployeeActivity  extends AppCompatActivity {
         helper = new EmployeesManagementDbHelper(this);
        Intent intent = getIntent();
         long employeeId = intent.getExtras().getInt("employeeId");
-        Cursor cursor = helper.getEmployee(employeeId);
+        Cursor cursor = helper.getEmployessOfDepartment(employeeId);
 
         //setting data of employee
 

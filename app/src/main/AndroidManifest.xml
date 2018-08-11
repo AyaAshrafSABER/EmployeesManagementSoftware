@@ -37,6 +37,10 @@
             android:name=".EmployeeDB.EmployeeActivity"
             android:label="Employee"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".DepartmentDB.DepartmentActivity"
+            android:label="Department"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity
             android:name=".StartingPageActivity"
             android:label="@string/title_activity_starting_page"

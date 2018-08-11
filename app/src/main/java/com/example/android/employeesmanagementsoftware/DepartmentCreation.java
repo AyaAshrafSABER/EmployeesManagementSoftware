@@ -13,14 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
+import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 public class DepartmentCreation extends AppCompatActivity {
     EditText Description;
     EditText Name_of_Department;
     EmployeesManagementDbHelper emdb ;
-
-Button save;
+    private  DepFragment depFragment = DepFragment.newInstance(5);
+    Button save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
       emdb =  new EmployeesManagementDbHelper(this);
@@ -54,8 +56,7 @@ Button save;
                   Snackbar.make(v, "ENTERED SUCCESSFULLY", Snackbar.LENGTH_LONG).setAction("", null).show();
                   Description.setText("",TextView.BufferType.EDITABLE);
                   Name_of_Department.setText("",TextView.BufferType.EDITABLE);
-                  Cursor c = emdb.getAllDepartments();
-                  Log.i("take ---", "onClick: " + c.getCount());
+                 // depFragment.updateDepartmentList(emdb);
               }
             else
                   Snackbar.make(v, "FAILED TO ENTER CURRENT DEPARTMENT. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();

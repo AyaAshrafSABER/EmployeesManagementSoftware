@@ -34,40 +34,40 @@ public class DepartmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.department);
-        helper = new EmployeesManagementDbHelper(this);
-
-        description = (EditText)findViewById(R.id.description);
-
-        Intent intent = getIntent();
-        //TODO lazm fi list l departments n pass l id k "departmentId"
-        final long departmentId = intent.getExtras().getLong("departmentId");
-
-        //setting name,description of department
-        Cursor cursorDep = helper.getDepartment(departmentId);
-        description.setText(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION)));
-        setTitle(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_NAME)));
-        cursorDep.close();
-
-        //setting list of employees in this department
-        ListView listView = findViewById(R.id.employees_list);
-
-        Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
-        EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
-        listView.setAdapter(adapterEmp);
-
-        RelativeLayout emptyView = (RelativeLayout)findViewById(R.id.empty_view);
-        listView.setEmptyView(emptyView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
-                intent.putExtra("employeeId",id);
-                startActivity(intent);
-
-            }
-        });
-        cursorEmp.close();
+//        helper = new EmployeesManagementDbHelper(this);
+//
+//        description = (EditText)findViewById(R.id.description);
+//
+//        Intent intent = getIntent();
+//        //TODO lazm fi list l departments n pass l id k "departmentId"
+//        final long departmentId = intent.getExtras().getLong("departmentId");
+//
+//        //setting name,description of department
+//        Cursor cursorDep = helper.getDepartment(departmentId);
+//        description.setText(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION)));
+//        setTitle(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_NAME)));
+//        cursorDep.close();
+//
+//        //setting list of employees in this department
+//        ListView listView = findViewById(R.id.employees_list);
+//
+//        Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
+//        EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
+//        listView.setAdapter(adapterEmp);
+//
+//        RelativeLayout emptyView = (RelativeLayout)findViewById(R.id.empty_view);
+//        listView.setEmptyView(emptyView);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//
+//                Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
+//                intent.putExtra("employeeId",id);
+//                startActivity(intent);
+//
+//            }
+//        });
+//        cursorEmp.close();
 
         //TODO need to implement helper meyhod to get tasks per department
 
