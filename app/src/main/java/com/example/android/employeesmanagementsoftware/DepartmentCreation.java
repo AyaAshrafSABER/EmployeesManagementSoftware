@@ -48,7 +48,7 @@ public class DepartmentCreation extends AppCompatActivity {
 
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(Name_of_Department.getText().toString()==null || Description.getText().toString()== null)
+                if(Name_of_Department.getText().toString()=="" || Description.getText().toString()== "")
                     Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else{
               boolean flag =   emdb.addDepartment( Name_of_Department.getText().toString(),Description.getText().toString());
