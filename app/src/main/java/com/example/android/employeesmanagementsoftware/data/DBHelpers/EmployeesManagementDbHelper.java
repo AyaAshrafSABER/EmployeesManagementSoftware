@@ -159,6 +159,20 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return cursor; //don't forget to close the cursor after usage
 
     }
+    public Cursor getDepartment(Long departmentId){
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+        //specify the columns to be read
+        String [] columns = {
+                DepartmentEntry.COLUMN_DEPARTMENT_NAME,
+                DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION
+        };
+        String selection = DepartmentEntry._ID + " =?"; //where statement
+        String selectionArgs[] = { String.valueOf(departmentId)  };
+        Cursor cursor =  db.query(DepartmentContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null);
+
+        return cursor; //don't forget to close the cursor after usage
+
+    }
 
     public Cursor getEmployessOfDepartment(long department_id)
     {

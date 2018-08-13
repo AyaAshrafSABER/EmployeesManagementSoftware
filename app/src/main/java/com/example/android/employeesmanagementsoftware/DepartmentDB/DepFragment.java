@@ -85,8 +85,8 @@ public class DepFragment extends Fragment {
             cursor = mDataBase.getAllDepartments();
             if (cursor.moveToFirst()){
                 do{
-                    String id,name,description;
-                    id = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID));
+                    String name,description;
+                    Long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID)));
                     name = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME));
                     description = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION));
                     DepartmentItem dataProvider = new  DepartmentItem (id,name,description);
@@ -106,8 +106,9 @@ public class DepFragment extends Fragment {
          cursor =  mDataBase.getAllDepartments();
         if (cursor.moveToFirst()) {
             do {
-                String id, name, description;
-                id = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID));
+                String  name, description;
+                Long id ;
+                id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID)));
                 name = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME));
                 description = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION));
                 DepartmentItem dataProvider = new DepartmentItem(id, name, description);

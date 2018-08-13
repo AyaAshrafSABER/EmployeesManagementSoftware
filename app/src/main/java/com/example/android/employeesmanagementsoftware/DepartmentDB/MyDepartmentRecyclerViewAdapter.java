@@ -3,6 +3,7 @@ package com.example.android.employeesmanagementsoftware.DepartmentDB;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,8 @@ public class MyDepartmentRecyclerViewAdapter extends RecyclerView.Adapter<MyDepa
                 }
                 Context context = v.getContext();
                 Intent intent = new Intent(context, DepartmentActivity.class);
-                intent.putExtra("ID",position); // set id to Department activity
+                Log.v("id" , ""+ mValues.get(position).id);
+                intent.putExtra("departmentId",mValues.get(position).id); // set id to Department activity
                 context.startActivity(intent);
 
             }
@@ -68,7 +70,7 @@ public class MyDepartmentRecyclerViewAdapter extends RecyclerView.Adapter<MyDepa
         public final View mView;
         public final TextView mName;
         public final TextView mdescriptionView;
-        public DepartmentData.DepartmentItem mItem;
+        public DepartmentItem mItem;
 
         public ViewHolder(View view) {
             super(view);

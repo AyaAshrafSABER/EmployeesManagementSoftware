@@ -21,7 +21,7 @@ public class DepartmentData {
     /**
      * A map of sample (dummy) items, by ID.
      */
-    private Map<String, DepartmentItem> itemMap = new HashMap<String, DepartmentItem>();
+    private Map<Long, DepartmentItem> itemMap = new HashMap<Long, DepartmentItem>();
 
 
 
@@ -38,11 +38,11 @@ public class DepartmentData {
      * A dummy item representing a piece of content.
      */
     public static class DepartmentItem {
-        public final String id;
+        public final Long id;
         public final String name;
         public final String details;
 
-        public DepartmentItem(String id, String content, String details) {
+        public DepartmentItem(Long id, String content, String details) {
             this.id = id;
             this.name = content;
             this.details = details;
