@@ -77,12 +77,14 @@ public class EmployeeCreation extends AppCompatActivity {
                 else {
                     if (emdb.addEmployee(employee_name.getText().toString(), date_select.getText().toString(), 0, employee_job.getText().toString(), employee_email.getText().toString(), employee_phone.getText().toString(), null)) {
                         Snackbar.make(v, "CURRENT EMPLOYEE ENTERED SUCCESSFULLY.", Snackbar.LENGTH_LONG).setAction("", null).show();
+                        finish();
                     } else {
                         Snackbar.make(v, "FAILED TO ENTER CURRENT EMPLOYEE. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
                     }
                 }
             }
         });
+
 
     }
 

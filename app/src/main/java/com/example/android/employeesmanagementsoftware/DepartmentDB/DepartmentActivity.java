@@ -40,7 +40,7 @@ public class DepartmentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         //TODO lazm fi list l departments n pass l id k "departmentId"
-        final long departmentId = intent.getExtras().getLong("departmentId");
+  /*      final long departmentId = intent.getExtras().getLong("departmentId");
 
         //setting name,description of department
         Cursor cursorDep = helper.getDepartment(departmentId);
@@ -68,7 +68,7 @@ public class DepartmentActivity extends AppCompatActivity {
             }
         });
         cursorEmp.close();
-
+*/
         //TODO need to implement helper meyhod to get tasks per department
 
         //setting list of tasks in this department
@@ -78,21 +78,21 @@ public class DepartmentActivity extends AppCompatActivity {
        tasksList.setAdapter(adapterTask);
         RelativeLayout emptyTasks = (RelativeLayout)findViewById(R.id.empty_tasks);
         tasksList.setEmptyView(emptyTasks);
-
+*/
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeCreation.class);
-              intent.putExtra("departmentId",departmentId);
+         //     intent.putExtra("departmentId",departmentId);
                 startActivity(intent);
 
             }
         });
 
-        cursorTask.close();
-*/
+//        cursorTask.close();
+
     }
 
 }

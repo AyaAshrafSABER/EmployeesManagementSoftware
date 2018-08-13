@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
+
 /*
 made by Aya
  */
@@ -18,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent home = new Intent(MainActivity.this,StartingPageActivity.class);
+                //TODO LAZM arg3 hna startingpage
+                Intent home = new Intent(MainActivity.this,DepartmentActivity.class);
                 startActivity(home);
                 finish();
             }
