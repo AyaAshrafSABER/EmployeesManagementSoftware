@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
@@ -16,6 +17,8 @@ import com.example.android.employeesmanagementsoftware.data.Contracts.Department
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
+
 
 import java.util.ArrayList;
 
@@ -310,12 +313,37 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         db.delete(EmployeeContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null);
         int flag = db.delete(DepartmentContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null) ;
-
-
-
-
-
         return flag>0;
     }
+
+//    public boolean updateEmployee() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COL_1,id);
+//        contentValues.put(COL_2,name);
+//        contentValues.put(COL_3,surname);
+//        contentValues.put(COL_4,marks);
+//        db.update(EmployeeContract.TABLE_NAME, contentValues, "ID = ?",new String[] { id });
+//        return true;
+//    }
+    public boolean updateDepartment(DepartmentItem departmentItem) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DepartmentEntry._ID, departmentItem.id);
+        contentValues.put(DepartmentEntry.COLUMN_DEPARTMENT_NAME, departmentItem.name);
+        contentValues.put(DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION, departmentItem.details);
+        db.update(DepartmentContract.TABLE_NAME, contentValues, DepartmentEntry._ID + "=" + departmentItem.id,null);
+        return true;
+    }
+//    public boolean updateTask() {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(COL_1,id);
+//        contentValues.put(COL_2,name);
+//        contentValues.put(COL_3,surname);
+//        contentValues.put(COL_4,marks);
+//        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
+//        return true;
+//    }
 
 }

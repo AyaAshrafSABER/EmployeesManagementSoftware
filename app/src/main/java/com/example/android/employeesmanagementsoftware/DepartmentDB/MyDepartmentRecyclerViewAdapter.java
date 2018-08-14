@@ -53,7 +53,6 @@ public class MyDepartmentRecyclerViewAdapter extends RecyclerView.Adapter<MyDepa
                 }
                 Context context = v.getContext();
                 Intent intent = new Intent(context, DepartmentActivity.class);
-                Log.v("id" , ""+ mValues.get(position).id);
                 intent.putExtra("departmentId",mValues.get(position).id); // set id to Department activity
                 context.startActivity(intent);
 

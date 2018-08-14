@@ -49,7 +49,6 @@ public class StartingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_starting_page);
         //Add ACTION BAR
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -57,21 +56,44 @@ public class StartingPageActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent;
-                if (mViewPager.getCurrentItem() == 0) {
-                    Log.v("section" , " zero");
-                    toolbar.setTitle("");
-                    intent = new Intent(getApplicationContext(), TaskCreation.class);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    toolbar.setTitle("Tasks");
+                    setSupportActionBar(toolbar);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), TaskCreation.class);
+                            startActivity(intent);
+                        }
+                    });
                 } else {
-                    Log.v("section" , " two");
-                    intent = new Intent(getApplicationContext(), DepartmentCreation.class);
+                    toolbar.setTitle("Departments");
+                    setSupportActionBar(toolbar);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), DepartmentCreation.class);
+                            intent.putExtra("IsEdit", false);
+                            startActivity(intent);
+                        }
+                    });
                 }
-                startActivity(intent);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
+
     }
 
 
