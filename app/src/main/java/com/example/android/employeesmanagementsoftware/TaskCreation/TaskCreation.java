@@ -40,7 +40,8 @@ public class TaskCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
 
-
+            //TODO get intent data, make commander for edit texts, handle checkboxes
+            //TODO handle the employees set add set checkboxes to the set
             employeeDBHelper.addDepartment("engineering", "en");
             employeeDBHelper.addDepartment("marketing", "mk");
             employeeDBHelper.addDepartment("accounting", "ac");
@@ -132,13 +133,13 @@ public class TaskCreation extends AppCompatActivity {
             Log.i(TAG, "elements: " + l + "  ");
         }
 
-        ArrayList<Long> emp = new ArrayList<>();
-        emp.addAll(employees);
-
         if (item.getItemId() == R.id.save_task_creation_button) {
             //add a new task with the extracted data
             employeeDBHelper.addTask(taskName.getText().toString(), 5, taskDescp.getText().toString(),
-                    taskDeadline.getText().toString(), emp);
+                    taskDeadline.getText().toString(), new ArrayList<>(employees));
+            Cursor c=employeeDBHelper.getEmployeesOfTask(0);
+            c.moveToNext();
+            Log.i(TAG, "onOptionsItemSelected: ");
 
         }
         return super.onOptionsItemSelected(item);

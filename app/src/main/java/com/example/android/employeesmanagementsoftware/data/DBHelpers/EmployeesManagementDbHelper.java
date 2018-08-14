@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.util.Log;
 
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
@@ -31,7 +32,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
      * Database version. If you change the database schema, you must increment the database version.
      */
     private static final int DATABASE_VERSION = 1;
-
+    private static final String TAG="helper";
     public EmployeesManagementDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -65,7 +66,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_NAME + " VARCHAR(70) NOT NULL, "
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
                 +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
-                +TaskEntry.COLUMN_TASK_EVALUATION + "INTEGER NOT NULL"
+                +TaskEntry.COLUMN_TASK_EVALUATION + " INTEGER NOT NULL"
                 +");"
                 ;
         // Create a String that contains the SQL statement to create the employee_task table
@@ -95,6 +96,23 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         // DATABASE_VERSION ++;
     }
 
+    //TODO get employees of task
+    public Cursor getEmployeesOfTask(long task_id){
+        SQLiteDatabase db  = this.getReadableDatabase();
+
+        String [] columns = {
+                EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+        };
+        String selection = TaskContract.TABLE_NAME+TaskEntry._ID + " =?"; //where TaskEntry._ID=task_id
+        String selectionArgs[] = { String.valueOf(task_id)  };
+
+
+        //cursor is a table containing the rows returned form the query
+        Cursor cursor =  db.query("employee_task",columns,selection,selectionArgs,null,null,null);
+
+        return cursor; //don't forget to close the cursor after usage
+
+    }
     public Cursor getAllTasksCursor(){
         //gets all tasks
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
@@ -271,8 +289,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         if (emplyee_ids!=null)
         {
             for(long emp_id:emplyee_ids){
-                cv.put(EmployeeEntry._ID,emp_id);
-                cv.put(TaskEntry._ID,task_id);
+                cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
+                cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
                 long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
                 if(flag==-1) return false;
             }
