@@ -68,7 +68,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_NAME + " VARCHAR(70) NOT NULL, "
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
                 +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
-                +TaskEntry.COLUMN_TASK_EVALUATION + "INTEGER NOT NULL"
+                +TaskEntry.COLUMN_TASK_EVALUATION + " INTEGER NOT NULL"
                 +");"
                 ;
         // Create a String that contains the SQL statement to create the employee_task table
@@ -274,8 +274,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         if (emplyee_ids!=null)
         {
             for(long emp_id:emplyee_ids){
-                cv.put(EmployeeEntry._ID,emp_id);
-                cv.put(TaskEntry._ID,task_id);
+                cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
+                cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
                 long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
                 if(flag==-1) return false;
             }
