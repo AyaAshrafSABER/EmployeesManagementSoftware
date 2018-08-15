@@ -3,6 +3,7 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
@@ -17,11 +18,12 @@ class TaskCreationAdapterPool {
     private EmployeesManagementDbHelper dbHelper;
     private Context context;
     private Set<Long> employees;
-
-    TaskCreationAdapterPool(EmployeesManagementDbHelper dbHelper, Context context, Set<Long> employees) {
+    private Set<Long> selectedEmp;
+    TaskCreationAdapterPool(EmployeesManagementDbHelper dbHelper, Context context, Set<Long> employees,Set<Long> selectedEmp) {
         this.dbHelper = dbHelper;
         this.context = context;
         this.employees = employees;
+        this.selectedEmp=selectedEmp;
         pool = new SparseArray<>();
     }
 
@@ -30,7 +32,7 @@ class TaskCreationAdapterPool {
         //if the adapter is created before then return it otherwise create a new one and return it
         if (pool.get(depID) == null) {
             Cursor cursor = dbHelper.getEmployessOfDepartment(depID);
-            pool.append(depID, new TaskCreationAdapter(context, cursor, employees));
+            pool.append(depID, new TaskCreationAdapter(context, cursor, employees, selectedEmp));
 
         }
         return pool.get(depID);

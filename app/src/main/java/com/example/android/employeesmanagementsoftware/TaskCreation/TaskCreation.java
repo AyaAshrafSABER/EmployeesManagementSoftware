@@ -1,9 +1,11 @@
 package com.example.android.employeesmanagementsoftware.TaskCreation;
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
+import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 import java.util.ArrayList;
@@ -31,7 +34,8 @@ public class TaskCreation extends AppCompatActivity {
 
     public TaskCreation() {
         employees = new TreeSet<>();
-        adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees);
+
+
 
     }
 
@@ -42,7 +46,17 @@ public class TaskCreation extends AppCompatActivity {
 
             //TODO get intent data, make commander for edit texts, handle checkboxes
             //TODO handle the employees set add set checkboxes to the set
-            employeeDBHelper.addDepartment("engineering", "en");
+        Bundle taskData=getIntent().getExtras();
+        long task_id=-1;
+        if (taskData!=null)
+            task_id = taskData.getLong("task_id");
+        task_id=1;
+        adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
+
+                new TaskCreationCommandUtil(this,employeeDBHelper).getCommander(task_id)
+                        .execute());
+
+            /*employeeDBHelper.addDepartment("engineering", "en");
             employeeDBHelper.addDepartment("marketing", "mk");
             employeeDBHelper.addDepartment("accounting", "ac");
             employeeDBHelper.addDepartment("medical", "md");
@@ -61,14 +75,14 @@ public class TaskCreation extends AppCompatActivity {
                     "engineer", "bvfg", "565", null);
             employeeDBHelper.addEmployee("hassan", "55", 1,
                     "engineer", "bvfg", "565", null);
-
-        initSpinner(savedInstanceState);
+*/
+        initSpinner();
 
 
 
     }
 
-    public void initSpinner(final Bundle savedInstanceState) {
+    public void initSpinner() {
 
         //object of drop down menu
         Spinner spinner = findViewById(R.id.departmentDropDown);
@@ -90,7 +104,7 @@ public class TaskCreation extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 initListView(cursor.getLong(cursor.getColumnIndex(DepartmentContract.
                                 DepartmentEntry._ID))
-                        , employeeDBHelper, savedInstanceState);
+                        , employeeDBHelper);
             }
 
             @Override
@@ -102,7 +116,7 @@ public class TaskCreation extends AppCompatActivity {
     }
 
     //method to bind the list view of the employees with a cursor adapter
-    public void initListView(final long depID, EmployeesManagementDbHelper employeeDBHelper, Bundle savedInstanceState) {
+    public void initListView(final long depID, EmployeesManagementDbHelper employeeDBHelper) {
 
         ListView employeesList = (ListView) findViewById(R.id.employees_List);
 
@@ -137,9 +151,6 @@ public class TaskCreation extends AppCompatActivity {
             //add a new task with the extracted data
             employeeDBHelper.addTask(taskName.getText().toString(), 5, taskDescp.getText().toString(),
                     taskDeadline.getText().toString(), new ArrayList<>(employees));
-            Cursor c=employeeDBHelper.getEmployeesOfTask(0);
-            c.moveToNext();
-            Log.i(TAG, "onOptionsItemSelected: ");
 
         }
         return super.onOptionsItemSelected(item);

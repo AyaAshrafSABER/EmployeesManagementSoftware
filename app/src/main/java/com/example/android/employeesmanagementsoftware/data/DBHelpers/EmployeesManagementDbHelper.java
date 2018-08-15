@@ -96,7 +96,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         // DATABASE_VERSION ++;
     }
 
-    //TODO get employees of task
+
     public Cursor getEmployeesOfTask(long task_id){
         SQLiteDatabase db  = this.getReadableDatabase();
 
@@ -108,9 +108,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
 
         //cursor is a table containing the rows returned form the query
-        Cursor cursor =  db.query("employee_task",columns,selection,selectionArgs,null,null,null);
 
-        return cursor; //don't forget to close the cursor after usage
+        return db.query("employee_task",columns,selection,selectionArgs,null,null,null); //don't forget to close the cursor after usage
 
     }
     public Cursor getAllTasksCursor(){

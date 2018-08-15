@@ -3,6 +3,7 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +21,18 @@ import java.util.Set;
 /*
 made by omar
  */
-public class TaskCreationAdapter extends CursorAdapter{
+public class TaskCreationAdapter extends CursorAdapter {
 
 
     private final String TAG = "adapter";
     private Set<Long> employees;
     private ArrayList<Boolean> checkBoxState;
+    private Set<Long> selectedEmp;
 
-    TaskCreationAdapter(Context context, Cursor c, Set<Long> employees) {
+    TaskCreationAdapter(Context context, Cursor c, Set<Long> employees, Set<Long> selectedEmp) {
         super(context, c, 0);
         this.employees = employees;
+        this.selectedEmp = selectedEmp;
         checkBoxState = new ArrayList<>(c.getCount());
     }
 
@@ -67,6 +70,14 @@ public class TaskCreationAdapter extends CursorAdapter{
         final long ID = cursor.getLong(cursor.getColumnIndex(EmployeeContract.EmployeeEntry._ID));
 
         final int position = cursor.getPosition();
+
+        //if the activity is in edit mode, set the checkboxes with the employees selected in the being edited task
+        if (selectedEmp != null && selectedEmp.contains(ID)) {
+            holder.checkBox.setChecked(true);
+            holder.checkBox.setTag(position);
+            checkBoxState.set((Integer) holder.checkBox.getTag(), true);
+
+        }
 
         holder.employeeName.setText(employeeName);//set the text view with the employee names
 
