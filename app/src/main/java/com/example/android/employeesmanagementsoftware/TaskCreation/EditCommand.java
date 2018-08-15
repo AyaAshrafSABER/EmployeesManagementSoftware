@@ -31,6 +31,7 @@ public class EditCommand implements TaskCreationCommand {
         EditText taskName=activity.findViewById(R.id.task_name_edit);
         EditText taskDescription=activity.findViewById(R.id.department_description_edit_text);
         EditText taskDeadline=activity.findViewById(R.id.task_deadline_edit);
+        Cursor textCursor=employeeDBHelper.getSpecifiTaskCursor(task_id);
 
         Cursor cursor=employeeDBHelper.getEmployeesOfTask(task_id);
         cursor.moveToNext();
@@ -42,6 +43,7 @@ public class EditCommand implements TaskCreationCommand {
                             (EmployeeContract.TABLE_NAME + EmployeeContract.EmployeeEntry._ID)));
             cursor.moveToNext();
         }
+        cursor.close();
         return selectedEmp;
     }
 }
