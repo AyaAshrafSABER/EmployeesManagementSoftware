@@ -1,6 +1,7 @@
 package com.example.android.employeesmanagementsoftware.DepartmentDB;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,11 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
 import com.example.android.employeesmanagementsoftware.R;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.dummy.DummyContent;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.dummy.DummyContent.DummyItem;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
+import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
+import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +35,12 @@ public class DepFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
+    private  EmployeesManagementDbHelper mDataBase;
+    private  Cursor cursor;
+    private Context context;
+    private  List<DepartmentItem> mValues;
+    private  MyDepartmentRecyclerViewAdapter mAdapter;
+    private static RecyclerView recyclerView;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -54,38 +65,65 @@ public class DepFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        mDataBase = new EmployeesManagementDbHelper(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_department_list, container, false);
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyDepartmentRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            mValues = new ArrayList<>();
+            cursor = mDataBase.getAllDepartments();
+            if (cursor.moveToFirst()){
+                do{
+                    String name,description;
+                    Long id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID)));
+                    name = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME));
+                    description = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION));
+                    DepartmentItem dataProvider = new  DepartmentItem (id,name,description);
+                    mValues.add(dataProvider);
+                }while (cursor.moveToNext());
+            }
+            cursor.close();
+            mAdapter = new MyDepartmentRecyclerViewAdapter(mValues, mListener);
+            recyclerView.setAdapter(mAdapter);
+            recyclerView.invalidate();
         }
+
         return view;
     }
+     public void updateDepartmentList(EmployeesManagementDbHelper mDataBase){
+         mValues = new ArrayList<>();
+         cursor =  mDataBase.getAllDepartments();
+        if (cursor.moveToFirst()) {
+            do {
+                String  name, description;
+                Long id ;
+                id = Long.parseLong(cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry._ID)));
+                name = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME));
+                description = cursor.getString(cursor.getColumnIndex(DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION));
+                DepartmentItem dataProvider = new DepartmentItem(id, name, description);
+                mValues.add(dataProvider);
+            } while (cursor.moveToNext());
+        }
+            if (mAdapter == null) {
+                mAdapter = new MyDepartmentRecyclerViewAdapter(mValues,mListener);
+                recyclerView.setAdapter(mAdapter);
+            } else {
+                mAdapter.notifyDataSetChanged();
+            }
+            cursor.close();
 
-//
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-//        }
-//    }
+    }
 
     @Override
     public void onDetach() {
@@ -105,6 +143,6 @@ public class DepFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(DepartmentItem item);
     }
 }

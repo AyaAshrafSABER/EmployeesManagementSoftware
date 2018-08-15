@@ -13,17 +13,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
+import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 public class DepartmentCreation extends AppCompatActivity {
     EditText Description;
     EditText Name_of_Department;
     EmployeesManagementDbHelper emdb ;
-
-Button save;
+    private  DepFragment depFragment = DepFragment.newInstance(0);
+    Button save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-      emdb =  new EmployeesManagementDbHelper(this);
+      emdb = new EmployeesManagementDbHelper(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
@@ -46,7 +48,7 @@ Button save;
 
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(Name_of_Department.getText().toString()==null || Description.getText().toString()== null)
+                if(Name_of_Department.getText().toString()=="" || Description.getText().toString()== "")
                     Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else{
               boolean flag =   emdb.addDepartment( Name_of_Department.getText().toString(),Description.getText().toString());
@@ -54,8 +56,7 @@ Button save;
                   Snackbar.make(v, "ENTERED SUCCESSFULLY", Snackbar.LENGTH_LONG).setAction("", null).show();
                   Description.setText("",TextView.BufferType.EDITABLE);
                   Name_of_Department.setText("",TextView.BufferType.EDITABLE);
-                  Cursor c = emdb.getAllDepartments();
-                  Log.i("take ---", "onClick: " + c.getCount());
+                  depFragment.updateDepartmentList(emdb);
               }
             else
                   Snackbar.make(v, "FAILED TO ENTER CURRENT DEPARTMENT. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();

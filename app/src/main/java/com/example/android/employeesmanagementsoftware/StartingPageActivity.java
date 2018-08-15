@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
+ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -42,13 +41,14 @@ public class StartingPageActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Fragment mTaskFregmant;
     private Fragment mDepFregmant;
+    private Toolbar toolbar;
     private int section ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting_page);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Add ACTION BAR
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -56,7 +56,6 @@ public class StartingPageActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +63,8 @@ public class StartingPageActivity extends AppCompatActivity {
                 Intent intent;
                 if (mViewPager.getCurrentItem() == 0) {
                     Log.v("section" , " zero");
-                     intent = new Intent(getApplicationContext(), TaskCreation.class);
+                    toolbar.setTitle("");
+                    intent = new Intent(getApplicationContext(), TaskCreation.class);
                 } else {
                     Log.v("section" , " two");
                     intent = new Intent(getApplicationContext(), DepartmentCreation.class);

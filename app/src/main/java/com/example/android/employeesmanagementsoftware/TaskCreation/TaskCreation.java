@@ -25,7 +25,7 @@ import java.util.TreeSet;
 public class TaskCreation extends AppCompatActivity {
 
     private static final String TAG = "spinner";
-    private final EmployeesManagementDbHelper employeeDBHelper=new EmployeesManagementDbHelper(this); ;
+    private final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this); ;
     private Set<Long> employees;
     private TaskCreationAdapterPool adapterPool;
 
@@ -40,7 +40,7 @@ public class TaskCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
 
-
+/*
             employeeDBHelper.addDepartment("engineering", "en");
             employeeDBHelper.addDepartment("marketing", "mk");
             employeeDBHelper.addDepartment("accounting", "ac");
@@ -60,7 +60,7 @@ public class TaskCreation extends AppCompatActivity {
                     "engineer", "bvfg", "565", null);
             employeeDBHelper.addEmployee("hassan", "55", 1,
                     "engineer", "bvfg", "565", null);
-
+*/
         initSpinner(savedInstanceState);
 
 

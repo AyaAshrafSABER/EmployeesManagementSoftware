@@ -50,24 +50,24 @@ public class EmployeeActivity  extends AppCompatActivity {
 
         helper = new EmployeesManagementDbHelper(this);
        Intent intent = getIntent();
-        long employeeId = intent.getExtras().getInt("employeeId");
+        long employeeId = intent.getExtras().getLong("employeeId");
         Cursor cursor = helper.getEmployee(employeeId);
 
         //setting data of employee
 
-        name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));
-        email.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL)));
-        //TODO INT not String
-        phone.setText(cursor.getInt(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHONE)));
-        //TODO date not string
-        birthday.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE)));
-        String path = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO));
-        //TODO mmkn n5ali default l photo "" ?
-        if(!TextUtils.isEmpty(path) && (new File(path)).exists()){
-            image.setImageBitmap(BitmapFactory.decodeFile(path));
-        }else{
-            image.setImageResource(R.drawable.unknown);
+        if(cursor.moveToFirst()){
+            name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));
+            email.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL)));
+            phone.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHONE)));
+            birthday.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE)));
+            String path = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO));
+            if(!TextUtils.isEmpty(path) && (new File(path)).exists()){
+                image.setImageBitmap(BitmapFactory.decodeFile(path));
+            }else{
+                image.setImageResource(R.drawable.unknown);
+            }
         }
+
 
         cursor.close();
         parentLinearLayout = (LinearLayout) findViewById(R.id.parent_linear_layout);
