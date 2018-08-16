@@ -28,19 +28,19 @@
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:orientation="vertical"
         android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="Departement's description"
                 />
 
@@ -111,7 +111,7 @@
             <ListView
                 android:id="@+id/employees_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
                 android:orientation="vertical"></ListView>
             </RelativeLayout>
@@ -154,7 +154,7 @@
             <ListView
                 android:id="@+id/tasks_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
                 android:orientation="vertical">
             </ListView>

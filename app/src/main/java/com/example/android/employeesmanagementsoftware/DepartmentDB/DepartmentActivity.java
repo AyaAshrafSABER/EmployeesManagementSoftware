@@ -32,7 +32,7 @@ import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesM
  */
 //need to attach her job with database
 // convert actvity to fregment
-    //TODO Notify adapter to change,notes and performance of each employee
+//TODO Notify adapter to change,notes and performance of each employee
 public class DepartmentActivity extends AppCompatActivity {
 
     private EmployeesManagementDbHelper helper;
@@ -51,7 +51,7 @@ public class DepartmentActivity extends AppCompatActivity {
         helper = new EmployeesManagementDbHelper(this);
         setDepatementParameter();
         setEmployeeList();
- 
+
         RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
         employees.setEmptyView(emptyView);
         employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,8 +61,6 @@ public class DepartmentActivity extends AppCompatActivity {
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
                 intent.putExtra("employeeId", id);
                 startActivity(intent);
-
-
             }
         });
 
@@ -72,9 +70,11 @@ public class DepartmentActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeCreation.class);
                 intent.putExtra("departmentId", departmentId);
-                Log.i("insert",String.valueOf(departmentId));
+                Log.i("insert", String.valueOf(departmentId));
                 startActivity(intent);
-   
+            }
+        });
+
         //TODO need to implement helper meyhod to get tasks per department
 
         //setting list of tasks in this department
@@ -84,8 +84,6 @@ public class DepartmentActivity extends AppCompatActivity {
        tasksList.setAdapter(adapterTask);
         RelativeLayout emptyTasks = (RelativeLayout)findViewById(R.id.empty_tasks);
         tasksList.setEmptyView(emptyTasks);
-*/
-
 
         cursorTask.close();
 */
@@ -103,20 +101,18 @@ public class DepartmentActivity extends AppCompatActivity {
         cursorDep.close();
     }
     private void setEmployeeList(){
-         //setting list of employees in this department
+        //setting list of employees in this department
         employees = findViewById(R.id.employees_list);
         Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
 
 //        //setting list of employees in this department
-           ListView listView = findViewById(R.id.employees_list);
+        ListView listView = findViewById(R.id.employees_list);
 //
-           Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
-           Log.v("c", ""+ cursorEmp.getCount());
-           EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
-            listView.setAdapter(adapterEmp);
-            cursorEmp.close();
-            adapterEmp = new EmployeeAdapter(this, cursorEmp);
-            employees.setAdapter(adapterEmp);
+        Log.v("c", ""+ cursorEmp.getCount());
+        EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
+        listView.setAdapter(adapterEmp);
+        adapterEmp = new EmployeeAdapter(this, cursorEmp);
+        employees.setAdapter(adapterEmp);
 
     }
     private void displayTaskList(){
