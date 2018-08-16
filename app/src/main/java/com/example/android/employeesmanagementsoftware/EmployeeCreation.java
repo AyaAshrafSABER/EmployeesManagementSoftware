@@ -1,5 +1,9 @@
 package com.example.android.employeesmanagementsoftware;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +19,10 @@ import android.widget.TextView;
 import java.util.regex.*;
 
 import java.util.Calendar;
+
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.EmployeeAdapter;
+import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 public class EmployeeCreation extends AppCompatActivity {
@@ -38,6 +46,9 @@ public class EmployeeCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_employee_creation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//added by Monica
+        Intent intent = getIntent();
+        final long departmentId = intent.getExtras().getLong("departmentId");
 
         setSupportActionBar(toolbar);
         date_select = findViewById(R.id.editBirth);
@@ -75,14 +86,17 @@ public class EmployeeCreation extends AppCompatActivity {
                 if (matchFields()!= 5)
                     Snackbar.make(v, "CHECK ENTERED VALUES AND TRY AGAIN.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else {
-                    if (emdb.addEmployee(employee_name.getText().toString(), date_select.getText().toString(), 0, employee_job.getText().toString(), employee_email.getText().toString(), employee_phone.getText().toString(), null)) {
+                    //changed id to long Monica
+                    if (emdb.addEmployee(employee_name.getText().toString(), date_select.getText().toString(), departmentId, employee_job.getText().toString(), employee_email.getText().toString(), employee_phone.getText().toString(), null)) {
                         Snackbar.make(v, "CURRENT EMPLOYEE ENTERED SUCCESSFULLY.", Snackbar.LENGTH_LONG).setAction("", null).show();
+
                     } else {
                         Snackbar.make(v, "FAILED TO ENTER CURRENT EMPLOYEE. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
                     }
                 }
             }
         });
+
 
     }
 

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,13 +32,15 @@ import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesM
  */
 //need to attach her job with database
 // convert actvity to fregment
+    //TODO Notify adapter to change,notes and performance of each employee
 public class DepartmentActivity extends AppCompatActivity {
 
     private EmployeesManagementDbHelper helper;
     private TextView description;
+    public   ListView employees;
+    private EmployeeAdapter adapterEmp;
+    private  long departmentId;
     private Toolbar toolbar;
-    private long departmentId;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,40 +50,31 @@ public class DepartmentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         helper = new EmployeesManagementDbHelper(this);
         setDepatementParameter();
-
-
-//        //setting list of employees in this department
-           ListView listView = findViewById(R.id.employees_list);
-//
-           Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
-           Log.v("c", ""+ cursorEmp.getCount());
-           EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
-            listView.setAdapter(adapterEmp);
-            cursorEmp.close();
-
-        RelativeLayout emptyView = (RelativeLayout)findViewById(R.id.empty_view);
-        listView.setEmptyView(emptyView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        setEmployeeList();
+ 
+        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        employees.setEmptyView(emptyView);
+        employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
-                intent.putExtra("employeeId",id);
+                intent.putExtra("employeeId", id);
                 startActivity(intent);
+
 
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeCreation.class);
-                intent.putExtra("departmentId",departmentId);
+                intent.putExtra("departmentId", departmentId);
+                Log.i("insert",String.valueOf(departmentId));
                 startActivity(intent);
-
-            }
-        });
+   
         //TODO need to implement helper meyhod to get tasks per department
 
         //setting list of tasks in this department
@@ -90,6 +84,8 @@ public class DepartmentActivity extends AppCompatActivity {
        tasksList.setAdapter(adapterTask);
         RelativeLayout emptyTasks = (RelativeLayout)findViewById(R.id.empty_tasks);
         tasksList.setEmptyView(emptyTasks);
+*/
+
 
         cursorTask.close();
 */
@@ -107,6 +103,20 @@ public class DepartmentActivity extends AppCompatActivity {
         cursorDep.close();
     }
     private void setEmployeeList(){
+         //setting list of employees in this department
+        employees = findViewById(R.id.employees_list);
+        Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
+
+//        //setting list of employees in this department
+           ListView listView = findViewById(R.id.employees_list);
+//
+           Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
+           Log.v("c", ""+ cursorEmp.getCount());
+           EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
+            listView.setAdapter(adapterEmp);
+            cursorEmp.close();
+            adapterEmp = new EmployeeAdapter(this, cursorEmp);
+            employees.setAdapter(adapterEmp);
 
     }
     private void displayTaskList(){
@@ -118,7 +128,6 @@ public class DepartmentActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_depatment, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -140,5 +149,12 @@ public class DepartmentActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+/*
+    @Override
+    protected void onStart() {
+        Log.i("state","start");
+        super.onStart();
+        ((EmployeeAdapter) employees.getAdapter()).notifyDataSetChanged();   }
+*/
 
 }
