@@ -50,26 +50,37 @@ public class DepartmentActivity extends AppCompatActivity {
 
 
 //        //setting list of employees in this department
-//        ListView listView = findViewById(R.id.employees_list);
+           ListView listView = findViewById(R.id.employees_list);
 //
-//        Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
-//        EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
-//        listView.setAdapter(adapterEmp);
-//
-//        RelativeLayout emptyView = (RelativeLayout)findViewById(R.id.empty_view);
-//        listView.setEmptyView(emptyView);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//
-//                Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
-//                intent.putExtra("employeeId",id);
-//                startActivity(intent);
-//
-//            }
-//        });
-//        cursorEmp.close();
+           Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
+           Log.v("c", ""+ cursorEmp.getCount());
+           EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
+            listView.setAdapter(adapterEmp);
+            cursorEmp.close();
 
+        RelativeLayout emptyView = (RelativeLayout)findViewById(R.id.empty_view);
+        listView.setEmptyView(emptyView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
+                intent.putExtra("employeeId",id);
+                startActivity(intent);
+
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DepartmentActivity.this, EmployeeCreation.class);
+                intent.putExtra("departmentId",departmentId);
+                startActivity(intent);
+
+            }
+        });
         //TODO need to implement helper meyhod to get tasks per department
 
         //setting list of tasks in this department
@@ -79,18 +90,6 @@ public class DepartmentActivity extends AppCompatActivity {
        tasksList.setAdapter(adapterTask);
         RelativeLayout emptyTasks = (RelativeLayout)findViewById(R.id.empty_tasks);
         tasksList.setEmptyView(emptyTasks);
-
-
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DepartmentActivity.this, EmployeeCreation.class);
-              intent.putExtra("departmentId",departmentId);
-                startActivity(intent);
-
-            }
-        });
 
         cursorTask.close();
 */
