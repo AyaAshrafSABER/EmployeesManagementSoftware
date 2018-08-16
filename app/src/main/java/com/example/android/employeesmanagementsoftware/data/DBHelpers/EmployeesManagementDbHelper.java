@@ -308,6 +308,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     public boolean deleteEmployee(long employee_id){
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
+        //TODO delete notes concerning this employee
         db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+employee_id,null);
         int flag =  db.delete(EmployeeContract.TABLE_NAME,EmployeeEntry._ID + "=" + employee_id,null) ;
         return flag>0;
