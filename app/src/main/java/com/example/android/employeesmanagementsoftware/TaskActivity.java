@@ -7,26 +7,34 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+
 /*
 made by menna
  */
 //First you need to show departement and  the employees in this departement who work  in the task
 public class TaskActivity extends AppCompatActivity {
-
+    private EmployeesManagementDbHelper employeeDBHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
+        employeeDBHelper = new EmployeesManagementDbHelper(this);
 
 
         Bundle bundle= getIntent().getBundleExtra("bundle");
-        String title =bundle.getString("title");
-        String date =bundle.getString("date");
-        String trainer =bundle.getString("trainer");
-        String description =bundle.getString("description");
-        String deadline =bundle.getString("deadline");
+        Long id = bundle.getLong("id");
+        Cursor cursor =employeeDBHelper.getSpecifiTaskCursor(id);
+
+        String title =cursor.getString(1);
+        String description =cursor.getString(2);
+        String deadline =cursor.getString(3);
+        String date =cursor.getString(4);
+        String trainer =cursor.getString(5);
+
+
         TextView titletext= (TextView) findViewById(R.id.tasktitle);
         TextView datetext = (TextView) findViewById(R.id.taskdate);
         TextView trainertext = (TextView) findViewById(R.id.tasktrainer);

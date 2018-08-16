@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 /*
@@ -38,5 +39,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(departementActivity);
             }
         });
+
+
+        Button tasks = (Button)findViewById(R.id.tasks);
+        tasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tasksActivity = new Intent(MainActivity.this,TasksActivity.class);
+                startActivity(tasksActivity);
+            }
+        });
+
     }
 }

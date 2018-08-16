@@ -38,11 +38,7 @@
         </activity>
         <activity
             android:name=".TaskCreation.TaskCreation"
-            android:label="Task Creation" >
-
-            </activity>
-
-
+            android:label="Task Creation"></activity>
         <activity android:name=".TaskActivity" />
         <activity
             android:name=".DepartmentCreation"
@@ -51,7 +47,8 @@
         <activity
             android:name=".EmployeeCreation"
             android:label="@string/title_activity_employee_creation"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TasksActivity"></activity>
     </application>
 
 </manifest>

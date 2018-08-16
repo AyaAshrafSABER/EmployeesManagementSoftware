@@ -7,18 +7,18 @@ made by menna
 public  class Tasks
 {
 
-        private Integer id;
+        private Long id;
         private String taskName;
         private String taskInstractor;
         private String taskDetails;
         private String taskDate;
         private String taskdeadline;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
