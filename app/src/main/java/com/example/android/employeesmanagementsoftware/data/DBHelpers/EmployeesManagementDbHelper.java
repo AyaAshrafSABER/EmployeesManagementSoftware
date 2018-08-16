@@ -55,6 +55,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHONE + " VARCHAR(20),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_EMAIL + " VARCHAR(255),"
                 + EmployeeEntry.COLUMN_EMPLOYEE_PHOTO + " VARCHAR(255), "
+                + EmployeeEntry.COLUMN_EMPLOYEE_NOTES + " VARCHAR(1024), "
                 + "FOREIGN KEY(" + EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + ") REFERENCES " + DepartmentContract.TABLE_NAME + "(" + DepartmentEntry._ID + ")"
                 + ");";
 
@@ -189,7 +190,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE,
                 EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,
                 EmployeeEntry.COLUMN_EMPLOYEE_JOB,
-                EmployeeEntry.COLUMN_EMPLOYEE_PHOTO
+                EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,
+                EmployeeEntry.COLUMN_EMPLOYEE_NOTES
         };
         String selection = EmployeeEntry._ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(employeeId)  };
@@ -314,6 +316,15 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         //TODO delete notes concerning this employee
         db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+employee_id,null);
         int flag =  db.delete(EmployeeContract.TABLE_NAME,EmployeeEntry._ID + "=" + employee_id,null) ;
+
+        //resets autoincrement
+        Cursor c = db.rawQuery("SELECT MAX("+EmployeeEntry._ID+") from "+EmployeeContract.TABLE_NAME,null);
+        c.moveToFirst();
+        long max_id = c.getLong(0);
+        db.execSQL("ALTER TABLE "+EmployeeContract.TABLE_NAME +" AUTOINCREMENT = " + String.valueOf(max_id+1)  );
+        c.close();
+
+
         return flag>0;
 
 
@@ -323,6 +334,15 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
         db.delete("employee_task",TaskContract.TABLE_NAME+TaskEntry._ID+ "="+task_id,null);
         int flag = db.delete(TaskContract.TABLE_NAME,TaskEntry._ID + "=" + task_id,null);
+
+        //resets autoincrement
+        Cursor c = db.rawQuery("SELECT MAX("+TaskEntry._ID+") from "+TaskContract.TABLE_NAME,null);
+        c.moveToFirst();
+        long max_id = c.getLong(0);
+        db.execSQL("ALTER TABLE "+TaskContract.TABLE_NAME +" AUTOINCREMENT = " + String.valueOf(max_id+1)  );
+        c.close();
+
+
         return flag>0;
 
     }
@@ -333,12 +353,30 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         Cursor c = getEmployessOfDepartment(department_id);
         while(c.moveToNext()) {
-            db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID + "  = "+c.getString(0),null);
+            db.delete(EmployeeContract.TABLE_NAME,EmployeeEntry._ID + "  = "+c.getString(0),null);
         }
         c.close();
 
+        //resets autoincrement for employess table
+        Cursor c2 = db.rawQuery("SELECT MAX("+EmployeeEntry._ID+") from "+EmployeeContract.TABLE_NAME,null);
+        c2.moveToFirst();
+        long max_id = c2.getLong(0);
+        db.execSQL("ALTER TABLE "+EmployeeContract.TABLE_NAME +" AUTOINCREMENT = " + String.valueOf(max_id+1)  );
+        c2.close();
+
+
+
+
         db.delete(EmployeeContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null);
         int flag = db.delete(DepartmentContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null) ;
+
+        //resets autoincrement
+        Cursor c3 = db.rawQuery("SELECT MAX("+DepartmentEntry._ID+") from "+DepartmentContract.TABLE_NAME,null);
+        c3.moveToFirst();
+        max_id = c2.getLong(0);
+        db.execSQL("ALTER TABLE "+DepartmentContract.TABLE_NAME +" AUTOINCREMENT = " + String.valueOf(max_id+1)  );
+        c3.close();
+
         return flag>0;
     }
 

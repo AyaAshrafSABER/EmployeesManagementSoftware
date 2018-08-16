@@ -18,5 +18,6 @@ public class EmployeeContract {
         public static final String COLUMN_EMPLOYEE_DEPARTMENT_ID = "department_id";
         public static final String COLUMN_EMPLOYEE_JOB = "job";
         public static final String COLUMN_EMPLOYEE_PHOTO = "photo";
+        public static final String COLUMN_EMPLOYEE_NOTES = "notes";
     }
 }
