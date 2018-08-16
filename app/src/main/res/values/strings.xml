@@ -17,11 +17,12 @@
         <item>Mohammad</item>
         <item>Karim</item>
     </string-array>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_employee_creation">EmployeeCreation</string>
+    <string name="title_activity_main2">Department Creation</string>
+    <string name="title_activity_employee_creation">Employee Creation</string>
     <string name="save_button_task_creation">save</string>
     <string name="save_menu">save</string>
-    <string name="delete_menu">delete</string>
+    <string name="delete_menu">Delete</string>
+    <string name="update_menu">Edit</string>
     <string name="title_activity_starting_page">ManagerSystem</string>
     <string name="action_settings">Delete All</string>
     <string name="section_format">Hello World from section: %1$d</string>
