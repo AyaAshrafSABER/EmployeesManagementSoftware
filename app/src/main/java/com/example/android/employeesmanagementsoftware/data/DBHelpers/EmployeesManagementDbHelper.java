@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.util.Log;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
@@ -35,7 +36,9 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
      */
     private static final int DATABASE_VERSION = 1;
 
-    public EmployeesManagementDbHelper(Context context) {
+
+
+    public  EmployeesManagementDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -86,7 +89,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_EMPLOYEE_TABLE);
         db.execSQL(SQL_CREATE_TASK_TABLE);
         db.execSQL(SQL_CREATE_EMPLOYEE_TASK_TABLE);
-
 
     }
 
@@ -166,14 +168,33 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
         //specify the columns to be read
         String [] columns = {
+                DepartmentEntry._ID,
                 DepartmentEntry.COLUMN_DEPARTMENT_NAME,
                 DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION
         };
         String selection = DepartmentEntry._ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(departmentId)  };
-        Cursor cursor =  db.query(DepartmentContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null);
 
-        return cursor; //don't forget to close the cursor after usage
+        return  db.query(DepartmentContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null);//don't forget to close the cursor after usage
+
+    }
+
+    public Cursor getEmployee(Long employeeId){
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+        //specify the columns to be read
+        String [] columns = {
+                EmployeeEntry._ID,
+                EmployeeEntry.COLUMN_EMPLOYEE_NAME,
+                EmployeeEntry.COLUMN_EMPLOYEE_PHONE,
+                EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE,
+                EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,
+                EmployeeEntry.COLUMN_EMPLOYEE_JOB,
+                EmployeeEntry.COLUMN_EMPLOYEE_PHOTO
+        };
+        String selection = EmployeeEntry._ID + " =?"; //where statement
+        String selectionArgs[] = { String.valueOf(employeeId)  };
+
+        return  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null);//don't forget to close the cursor after usage
 
     }
 
@@ -186,7 +207,9 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String [] columns = {
                 EmployeeEntry._ID,
                 EmployeeEntry.COLUMN_EMPLOYEE_NAME,
-                EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID
+                EmployeeEntry.COLUMN_EMPLOYEE_JOB,
+                EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
+                EmployeeEntry.COLUMN_EMPLOYEE_PHOTO
         };
 
         String selection = EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " =?"; //where statement
@@ -195,10 +218,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
 
         //cursor is a table containing the rows returned form the query
-        Cursor cursor =  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy);
+        Cursor cursor = db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
 
-        return cursor; //don't forget to close the cursor after usage
-    }
+        return  cursor; }
+
+       /*TODO  christin
+        4 emmie ka3a 11*/
 
 
     public boolean addDepartment(String department_name , String department_description)
@@ -222,7 +247,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
 
 
-    public boolean addEmployee(String employee_name, String employee_birthdate ,int department_id,String employee_job,String employee_email,String employee_phone,String employee_photo){
+    public boolean addEmployee(String employee_name, String employee_birthdate ,long department_id,String employee_job,String employee_email,String employee_phone,String employee_photo){
         //adds an employee entry to employee table
 
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
@@ -286,6 +311,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     public boolean deleteEmployee(long employee_id){
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
+        //TODO delete notes concerning this employee
         db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+employee_id,null);
         int flag =  db.delete(EmployeeContract.TABLE_NAME,EmployeeEntry._ID + "=" + employee_id,null) ;
         return flag>0;
