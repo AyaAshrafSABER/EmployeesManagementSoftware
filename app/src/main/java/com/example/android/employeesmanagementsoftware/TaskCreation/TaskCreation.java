@@ -26,7 +26,6 @@ public class TaskCreation extends AppCompatActivity {
     private static final String TAG = "spinner";
     private final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this); ;
     private Set<Long> employees;
-    private TaskCreationAdapterPool adapterPool;
     private TaskCreationCommand commander;
 
     public TaskCreation() {
@@ -47,9 +46,9 @@ public class TaskCreation extends AppCompatActivity {
         long task_id=-1;
         if (taskData!=null)
             task_id = taskData.getLong("task_id");
-        task_id=1;
+        task_id=-1;
         commander=new TaskCreationCommandUtil(this,employeeDBHelper).getCommander(task_id);
-        adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
+        TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
                 commander.execute());
 
 
@@ -77,14 +76,14 @@ public class TaskCreation extends AppCompatActivity {
                     "engineer", "bvfg", "565", null);
 */
 
-        initSpinner();
+        initSpinner(adapterPool);
 
 
 
 
     }
 
-    public void initSpinner() {
+    private void initSpinner(final TaskCreationAdapterPool adapterPool) {
 
         //object of drop down menu
         Spinner spinner = findViewById(R.id.departmentDropDown);
@@ -107,7 +106,7 @@ public class TaskCreation extends AppCompatActivity {
                 //call the method to initialize the list view of the employees of this specific department chosen
                 initListView(cursor.getLong(cursor.getColumnIndex(DepartmentContract.
                                 DepartmentEntry._ID))
-                        , employeeDBHelper);
+                        , adapterPool);
             }
 
             @Override
@@ -119,7 +118,7 @@ public class TaskCreation extends AppCompatActivity {
     }
 
     //method to bind the list view of the employees with a cursor adapter
-    public void initListView(final long depID, EmployeesManagementDbHelper employeeDBHelper) {
+    private void initListView(final long depID, TaskCreationAdapterPool adapterPool) {
 
         ListView employeesList = findViewById(R.id.employees_List);
 
