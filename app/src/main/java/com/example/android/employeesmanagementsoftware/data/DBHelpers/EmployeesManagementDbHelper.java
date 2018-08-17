@@ -71,8 +71,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +TaskEntry.COLUMN_TASK_NAME + " VARCHAR(70) NOT NULL, "
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
-                +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
-                +TaskEntry.COLUMN_TASK_EVALUATION + " INTEGER NOT NULL"
+                +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME "
                 +");"
                 ;
         // Create a String that contains the SQL statement to create the employee_task table
@@ -107,14 +106,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //specify the columns to be read
         String [] columns = {
-                //task id
+                TaskEntry._ID,
                 TaskEntry.COLUMN_TASK_NAME,
                 TaskEntry.COLUMN_TASK_DESCRIPTION,
                 TaskEntry.COLUMN_TASK_DEADLINE,
-                //task date
-                //task instructor
-                TaskEntry.COLUMN_TASK_EVALUATION
-
         };
 
         //cursor is a table containing the rows returned form the query

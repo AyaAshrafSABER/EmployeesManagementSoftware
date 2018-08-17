@@ -1,4 +1,4 @@
-package com.example.android.employeesmanagementsoftware;
+package com.example.android.employeesmanagementsoftware.taskDB;
 /*
 made by menna
  */
@@ -18,8 +18,8 @@ public  class Tasks
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = Long.parseLong(id);
     }
 
     public String getTaskName() {

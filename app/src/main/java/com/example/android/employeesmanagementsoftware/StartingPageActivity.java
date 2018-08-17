@@ -9,18 +9,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Bundle;
-import android.widget.TextView;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
+import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
 public class StartingPageActivity extends AppCompatActivity {
 

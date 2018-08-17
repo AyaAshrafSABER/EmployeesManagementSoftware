@@ -1,8 +1,6 @@
-package com.example.android.employeesmanagementsoftware;
+package com.example.android.employeesmanagementsoftware.taskDB;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.employeesmanagementsoftware.R;
+import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
+import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
+import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
+
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.taskDB.Tasks;
+import com.example.android.employeesmanagementsoftware.taskDB.TasksAdapter;
 
 import java.util.ArrayList;
 
@@ -48,12 +53,12 @@ public class TasksFragment extends Fragment {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 Tasks task = new Tasks();
-                task.setId(new Long(cursor.getString(0)));
-                task.setTaskName(cursor.getString(1));
-                task.setTaskDetails(cursor.getString(2));
-                task.setTaskDeadline(cursor.getString(3));
-                task.setTaskDate(cursor.getString(4));
-                task.setTaskInstractor(cursor.getString(5));
+                task.setId(cursor.getString(cursor.getColumnIndex(TaskEntry._ID)));
+                task.setTaskName(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_NAME)));
+                task.setTaskDetails(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DESCRIPTION)));
+                task.setTaskDeadline(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DEADLINE)));
+               // task.setTaskDate(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE)));
+               // task.setTaskInstractor(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_INSTRUCTOR)));
                 tasks.add(task);
                 cursor.moveToNext();}
         }
