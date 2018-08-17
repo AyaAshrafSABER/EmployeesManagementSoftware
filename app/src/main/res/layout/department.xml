@@ -1,177 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".DepartmentDB.DepartmentActivity">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
+        android:theme="@style/AppTheme.AppBarOverlay"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:hint="Departement's description"
-            />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_weight="1"
+            android:background="?attr/colorPrimary"
+            >
+        </android.support.v7.widget.Toolbar>
 
+    </android.support.design.widget.AppBarLayout>
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical"
+        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_employee"
-                android:src="@mipmap/team"
-                android:tint="@color/colorTheme" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Departement's employees" />
+                android:hint="Departement's description"
+                />
 
-        </LinearLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:id="@+id/empty_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/empty_business"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/hire"
-                    android:tint="@color/colorPrimary"
-                    />
+                    android:padding="@dimen/padding_employee"
+                    android:src="@mipmap/team"
+                    android:tint="@color/colorTheme" />
 
                 <TextView
-                    android:id="@+id/empty_title"
-                    android:text="Starting business ?!"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/empty_business"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingTop="16dp"
-                    android:textAppearance="?android:textAppearanceMedium"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="Departement's employees" />
 
-                <TextView
-                    android:id="@+id/empty_subtitle"
-                    android:text="Let's hire some brilliant employees !"
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/empty_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/empty_title"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif"
-                    android:paddingTop="8dp"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="#A2AAB0"/>
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/empty_business"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/hire"
+                        android:tint="@color/colorPrimary"
+                        />
+
+                    <TextView
+                        android:id="@+id/empty_title"
+                        android:text="Starting business ?!"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/empty_business"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingTop="16dp"
+                        android:textAppearance="?android:textAppearanceMedium"/>
+
+                    <TextView
+                        android:id="@+id/empty_subtitle"
+                        android:text="Let's hire some brilliant employees !"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/empty_title"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="sans-serif"
+                        android:paddingTop="8dp"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="#A2AAB0"/>
+                </RelativeLayout>
+
+
+            <ListView
+                android:id="@+id/employees_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:orientation="vertical"></ListView>
             </RelativeLayout>
-
-
-        <ListView
-            android:id="@+id/employees_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawSelectorOnTop="true"
-            android:orientation="vertical"></ListView>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_margin="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="right"
                 android:scaleType="center"
                 android:src="@mipmap/ic_hire">
 
             </android.support.design.widget.FloatingActionButton>
 
-        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_employee"
+                    android:src="@mipmap/tasks"
+                    android:tint="@color/colorTheme" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Departement's tasks" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/tasks_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:orientation="vertical">
+            </ListView>
+            <RelativeLayout
+                android:id="@+id/empty_tasks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_employee"
-                android:src="@mipmap/tasks"
-                android:tint="@color/colorTheme" />
+                android:layout_centerInParent="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Departement's tasks" />
+                <ImageView
+                    android:id="@+id/empty_task_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/deadlines"
+
+                    />
+
+                <TextView
+                    android:id="@+id/empty_title_task"
+                    android:text="Add some tasks !"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/empty_task_list"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingTop="16dp"
+                    android:textAppearance="?android:textAppearanceMedium"/>
+
+
+            </RelativeLayout>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_tasks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="16dp"
+                  ></android.support.design.widget.FloatingActionButton>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <ListView
-            android:id="@+id/tasks_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawSelectorOnTop="true"
-            android:orientation="vertical">
-        </ListView>
-        <RelativeLayout
-            android:id="@+id/empty_tasks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:id="@+id/empty_task_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/deadlines"
-
-                />
-
-            <TextView
-                android:id="@+id/empty_title_task"
-                android:text="Add some tasks !"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/empty_task_list"
-                android:layout_centerHorizontal="true"
-                android:fontFamily="sans-serif-medium"
-                android:paddingTop="16dp"
-                android:textAppearance="?android:textAppearanceMedium"/>
-
-
-        </RelativeLayout>
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_tasks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_margin="16dp"
-              ></android.support.design.widget.FloatingActionButton>
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</android.support.design.widget.CoordinatorLayout>
