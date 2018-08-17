@@ -13,6 +13,15 @@ public  class Tasks
         private String taskDetails;
         private String taskDate;
         private String taskdeadline;
+        private int  evaluation;
+
+    public int getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(int evaluation) {
+        this.evaluation = evaluation;
+    }
 
     public Long getId() {
         return id;

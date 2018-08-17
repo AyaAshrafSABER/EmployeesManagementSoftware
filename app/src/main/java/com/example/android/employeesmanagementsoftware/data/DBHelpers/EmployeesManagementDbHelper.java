@@ -73,6 +73,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_NAME + " VARCHAR(70) NOT NULL, "
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
                 +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
+                +TaskEntry.COLUMN_TASK_DATE + " DATETIME ,"
+                +TaskEntry.COLUMN_TASK_INSTRUCTOR + " VARCHAR(300),"
                 +TaskEntry.COLUMN_TASK_EVALUATION+" INTEGER"
                 +");"
                 ;
