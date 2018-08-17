@@ -16,6 +16,7 @@ class TaskCreationCommandUtil {
         this.employeeDBHelper = employeeDBHelper;
     }
 
+    //return a suitable TaskCreationCommandObject based on the task's id
     TaskCreationCommand getCommander(long task_id){
 
         return task_id==-1?new NewCommand():new EditCommand(activity,employeeDBHelper,task_id);
