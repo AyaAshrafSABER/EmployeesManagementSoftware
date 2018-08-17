@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "employees_management.db";
+    private static final String TAG="helper";
 
     /**
      * Database version. If you change the database schema, you must increment the database version.
@@ -71,7 +72,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +TaskEntry.COLUMN_TASK_NAME + " VARCHAR(70) NOT NULL, "
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
-                +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME "
+                +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
+                +TaskEntry.COLUMN_TASK_EVALUATION+" INTEGER"
                 +");"
                 ;
         // Create a String that contains the SQL statement to create the employee_task table

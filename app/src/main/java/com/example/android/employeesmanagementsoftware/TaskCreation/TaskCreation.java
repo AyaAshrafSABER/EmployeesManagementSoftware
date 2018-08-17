@@ -141,6 +141,7 @@ public class TaskCreation extends AppCompatActivity {
                     taskDeadline.getText().toString(), emp);
 
         }
+        finish();
         return super.onOptionsItemSelected(item);
     }
 
