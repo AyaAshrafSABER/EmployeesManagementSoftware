@@ -45,10 +45,8 @@ public class DepartmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.department);
-        //Add ACTION BAR
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         helper = new EmployeesManagementDbHelper(this);
+        setToolbar();         //Add ACTION BAR
         setDepatementParameter();
         setEmployeeList();
 
@@ -87,6 +85,10 @@ public class DepartmentActivity extends AppCompatActivity {
 
         cursorTask.close();
 */
+    }
+    private  void setToolbar (){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
     private void setDepatementParameter(){
         description = (TextView)findViewById(R.id.description);
@@ -133,8 +135,8 @@ public class DepartmentActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-
-            return true;
+            finish();
+            helper.deleteDepartment(departmentId);
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(DepartmentActivity.this, DepartmentCreation.class);

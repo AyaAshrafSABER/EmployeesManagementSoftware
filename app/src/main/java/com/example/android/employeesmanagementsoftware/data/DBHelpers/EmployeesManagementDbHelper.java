@@ -366,10 +366,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         long max_id = c2.getLong(0);
         db.execSQL("ALTER TABLE "+EmployeeContract.TABLE_NAME +" AUTOINCREMENT = " + String.valueOf(max_id+1)  );
         c2.close();
-
-
-
-
         db.delete(EmployeeContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null);
         int flag = db.delete(DepartmentContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null) ;
 

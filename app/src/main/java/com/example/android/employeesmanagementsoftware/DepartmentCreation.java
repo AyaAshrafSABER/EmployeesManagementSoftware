@@ -43,16 +43,6 @@ public class DepartmentCreation extends AppCompatActivity {
         } else {
             AddNewDepartemnt();
         }
-        //TODO: what is the importance of the  fab button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "NO ACTION YET", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
 
     }
     private void AddNewDepartemnt(){
@@ -98,6 +88,7 @@ public class DepartmentCreation extends AppCompatActivity {
             description.setText("",TextView.BufferType.EDITABLE);
             nameOfDepartment.setText("",TextView.BufferType.EDITABLE);
             depFragment.updateDepartmentList(emdb);
+            this.finish();
         }
         else
             Snackbar.make(v, "FAILED TO ENTER CURRENT DEPARTMENT. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
