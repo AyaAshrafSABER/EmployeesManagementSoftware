@@ -2,53 +2,35 @@ package com.example.android.employeesmanagementsoftware;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.MyDepartmentRecyclerViewAdapter;
+import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
+import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+
 /*
 made by Aya
  */
 // see how to connect 3 main activity ** department ** employies **tasks
 public class MainActivity extends AppCompatActivity {
-
+    private static int SPLASH_TIME_OUT = 750;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//         TasksFragment fragment = new TasksFragment();
-//         getSupportFragmentManager()
-//                 .beginTransaction()
-//                 .replace(R.id.frame, fragment)
-//                 .commit();
-        Button emp = (Button)findViewById(R.id.emp);
-        emp.setOnClickListener(new View.OnClickListener() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onClick(View view) {
-                Intent employeeActivity = new Intent(MainActivity.this,EmployeeActivity.class);
-                startActivity(employeeActivity);
-            }
-        });
+            public void run() {
 
-        Button dep = (Button)findViewById(R.id.dep);
-        dep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent departementActivity = new Intent(MainActivity.this,DepartmentActivity.class);
-                startActivity(departementActivity);
+                Intent home = new Intent(MainActivity.this,StartingPageActivity.class);
+                startActivity(home);
+                finish();
             }
-        });
-
-
-        Button tasks = (Button)findViewById(R.id.tasks);
-        tasks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent tasksActivity = new Intent(MainActivity.this,TasksActivity.class);
-                startActivity(tasksActivity);
-            }
-        });
+        },SPLASH_TIME_OUT);
 
     }
 }

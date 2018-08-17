@@ -9,6 +9,7 @@ public class EmployeeContract {
 
     public static final class EmployeeEntry implements BaseColumns{
         //EmployeeEntry class for deifning column names of Employee table
+
         public static final String _ID = BaseColumns._ID;
         public static final String COLUMN_EMPLOYEE_NAME = "name";
         public static final String COLUMN_EMPLOYEE_BIRTHDATE = "birthdate";
@@ -17,5 +18,6 @@ public class EmployeeContract {
         public static final String COLUMN_EMPLOYEE_DEPARTMENT_ID = "department_id";
         public static final String COLUMN_EMPLOYEE_JOB = "job";
         public static final String COLUMN_EMPLOYEE_PHOTO = "photo";
+        public static final String COLUMN_EMPLOYEE_NOTES = "notes";
     }
 }

@@ -6,12 +6,10 @@
     >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/taskCreationLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="10dp"
-    android:layout_marginLeft="10dp"
     android:layout_marginStart="10dp"
 
 
@@ -30,7 +28,6 @@
         android:id="@+id/task_name_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/task_name_text"
         android:layout_marginTop="7dp"
         android:inputType="text"
 
@@ -46,7 +43,7 @@
 
     <EditText
         android:id="@+id/task_deadline_edit"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/task_name_text"
         android:layout_marginTop="7dp"
@@ -67,7 +64,7 @@
 
     <EditText
         android:id="@+id/department_description_edit_text"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginBottom="21dp"
         android:gravity="top|start"
