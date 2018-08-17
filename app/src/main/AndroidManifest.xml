@@ -34,7 +34,7 @@
             android:name=".EmployeeCreation"
             android:label="@string/title_activity_employee_creation"
             android:theme="@style/AppTheme.NoActionBar" />
-        </activity>
+
         <activity android:name=".TasksActivity"></activity>
         <activity
             android:name=".EmployeeDB.EmployeeActivity"
