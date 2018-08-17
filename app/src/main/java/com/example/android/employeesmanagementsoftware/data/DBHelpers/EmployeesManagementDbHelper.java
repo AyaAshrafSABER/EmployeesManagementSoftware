@@ -107,10 +107,14 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         //specify the columns to be read
         String [] columns = {
+                //task id
                 TaskEntry.COLUMN_TASK_NAME,
                 TaskEntry.COLUMN_TASK_DESCRIPTION,
-                TaskEntry.COLUMN_TASK_EVALUATION,
-                TaskEntry.COLUMN_TASK_DEADLINE
+                TaskEntry.COLUMN_TASK_DEADLINE,
+                //task date
+                //task instructor
+                TaskEntry.COLUMN_TASK_EVALUATION
+
         };
 
         //cursor is a table containing the rows returned form the query
