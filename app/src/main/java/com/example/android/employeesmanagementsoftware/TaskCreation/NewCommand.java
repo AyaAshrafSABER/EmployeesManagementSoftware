@@ -9,7 +9,11 @@ import java.util.Set;
 public class NewCommand implements TaskCreationCommand {
 
     private EmployeesManagementDbHelper employeeDBHelper;
-    private long task_id;
+
+    public NewCommand(EmployeesManagementDbHelper employeeDBHelper) {
+        this.employeeDBHelper = employeeDBHelper;
+    }
+
     @Override
     public Set<Long> execute() {
         //Any extra functionality can be added to the new task

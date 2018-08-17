@@ -1,7 +1,9 @@
 package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
@@ -146,12 +149,18 @@ public class TaskCreation extends AppCompatActivity {
         EditText taskDescp = findViewById(R.id.department_description_edit_text);
         EditText taskDeadline = findViewById(R.id.task_deadline_edit);
 
-
         if (item.getItemId() == R.id.save_task_creation_button) {
+
+           if(util.isEmpty(taskName.getText().toString(), taskDescp.getText().toString(),
+                   taskDeadline.getText().toString())){
+               Snackbar.make(taskDeadline.getRootView(), "All fields must be filled", Snackbar.LENGTH_LONG).setAction("", null).show();
+               return super.onOptionsItemSelected(item);
+                }
 
             //add a new task or update an existing one with the extracted data
             commander.saveData(taskName.getText().toString(), 5, taskDescp.getText().toString(),
                     taskDeadline.getText().toString(), new ArrayList<>(employees));
+
 
         }
         finish();

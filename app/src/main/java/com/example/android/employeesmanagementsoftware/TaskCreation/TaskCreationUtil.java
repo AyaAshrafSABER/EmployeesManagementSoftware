@@ -19,7 +19,7 @@ class TaskCreationUtil {
     //return a suitable TaskCreationCommandObject based on the task's id
     TaskCreationCommand getCommander(long task_id){
 
-        return task_id==-1?new NewCommand():new EditCommand(activity,employeeDBHelper,task_id);
+        return task_id==-1?new NewCommand(employeeDBHelper):new EditCommand(activity,employeeDBHelper,task_id);
 
     }
     boolean isEmpty(String taskName,String taskDescp,String taskDeadline){
