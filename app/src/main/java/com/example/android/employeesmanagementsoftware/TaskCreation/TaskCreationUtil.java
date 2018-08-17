@@ -5,12 +5,12 @@ import android.app.Activity;
 
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
-class TaskCreationCommandUtil {
+class TaskCreationUtil {
 
     private Activity activity;
     private EmployeesManagementDbHelper employeeDBHelper;
 
-    TaskCreationCommandUtil(Activity activity, EmployeesManagementDbHelper employeeDBHelper) {
+    TaskCreationUtil(Activity activity, EmployeesManagementDbHelper employeeDBHelper) {
         this.activity=activity;
 
         this.employeeDBHelper = employeeDBHelper;
@@ -21,5 +21,8 @@ class TaskCreationCommandUtil {
 
         return task_id==-1?new NewCommand():new EditCommand(activity,employeeDBHelper,task_id);
 
+    }
+    boolean isEmpty(String taskName,String taskDescp,String taskDeadline){
+        return taskName.isEmpty()||taskDescp.isEmpty()||taskDeadline.isEmpty();
     }
 }

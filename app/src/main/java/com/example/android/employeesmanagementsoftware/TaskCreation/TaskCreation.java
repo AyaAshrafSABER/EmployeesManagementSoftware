@@ -27,6 +27,7 @@ public class TaskCreation extends AppCompatActivity {
     private final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this); ;
     private Set<Long> employees;
     private TaskCreationCommand commander;
+    private TaskCreationUtil util;
 
     public TaskCreation() {
         employees = new TreeSet<>();
@@ -47,7 +48,8 @@ public class TaskCreation extends AppCompatActivity {
         if (taskData!=null)
             task_id = taskData.getLong("task_id");
         task_id=-1;
-        commander=new TaskCreationCommandUtil(this,employeeDBHelper).getCommander(task_id);
+        util=new TaskCreationUtil(this,employeeDBHelper);
+        commander=util.getCommander(task_id);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
                 commander.execute());
 
@@ -146,6 +148,7 @@ public class TaskCreation extends AppCompatActivity {
 
 
         if (item.getItemId() == R.id.save_task_creation_button) {
+
             //add a new task or update an existing one with the extracted data
             commander.saveData(taskName.getText().toString(), 5, taskDescp.getText().toString(),
                     taskDeadline.getText().toString(), new ArrayList<>(employees));
