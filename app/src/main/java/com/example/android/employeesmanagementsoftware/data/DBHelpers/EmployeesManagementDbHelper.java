@@ -409,5 +409,16 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 //        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
 //        return true;
 //    }
+    public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
+        cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
+        cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
+        cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
+        db.update(TaskContract.TABLE_NAME, contentValues, TaskEntry._ID + "=" + task_id,null);
+        return true;
+        
+    }
 
 }
