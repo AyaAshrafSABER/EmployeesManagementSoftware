@@ -31,8 +31,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
 
-
-    public  EmployeesManagementDbHelper(Context context) {
+    public EmployeesManagementDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -97,15 +96,43 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         // DATABASE_VERSION ++;
     }
 
+
+
+    public Cursor getEmployeesOfTask(long task_id){
+        SQLiteDatabase db  = this.getReadableDatabase();
+
+        String [] columns = {
+                EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+        };
+        String selection = TaskContract.TABLE_NAME+TaskEntry._ID + " =?"; //where TaskEntry._ID=task_id
+        String selectionArgs[] = { String.valueOf(task_id)  };
+
+
+        //cursor is a table containing the rows returned form the query
+
+        return db.query("employee_task",columns,selection,selectionArgs,null,null,null); //don't forget to close the cursor after usage
+
+    }
+
     public Cursor getTasksOfDepartment(long department_id){
-        //gets all tasks
+        //gets tasks of a specific deparrtment
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
 
         //specify the columns to be read
         String [] columns = {
 
-                TaskContract.TABLE_NAME+TaskEntry.COLUMN_TASK_NAME,
-                TaskEntry.COLUMN_TASK_EVALUATION
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME,
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
+                TaskEntry.COLUMN_TASK_DESCRIPTION,
+                TaskEntry.COLUMN_TASK_DEADLINE,
+                TaskEntry.COLUMN_TASK_DATE,
+                TaskEntry.COLUMN_TASK_EVALUATION,
+                TaskEntry.COLUMN_TASK_INSTRUCTOR,
+                TaskContract.TABLE_NAME+TaskEntry._ID,
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID,
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
+                DepartmentEntry._ID
+
         };
 
         String selection = DepartmentContract.TABLE_NAME+DepartmentEntry._ID + " =?"; //where statement
@@ -121,6 +148,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     }
 
 /*
+=======
+
+
+>>>>>>> master
     public Cursor getAllTasksCursor(){
         //gets all tasks
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
@@ -416,6 +447,28 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return flag>0;
     }
 
+    public boolean deleteAllDepartments()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int f2 = db.delete("employee_task",null,null);
+        int f1 = db.delete(TaskContract.TABLE_NAME,null,null);
+        int f3 = db.delete(EmployeeContract.TABLE_NAME,null,null);
+        int f4 = db.delete(DepartmentContract.TABLE_NAME,null,null);
+
+        return f1>0 && f2>0 && f3>0 && f4>0 ;
+    }
+
+    public boolean deleteAllTasks()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int f2 = db.delete("employee_task",null,null);
+        int f1 = db.delete(TaskContract.TABLE_NAME,null,null);
+
+        return f1>0 && f2>0 ;
+    }
+
 //    public boolean updateEmployee() {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues contentValues = new ContentValues();
@@ -445,47 +498,51 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 //        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
 //        return true;
 //    }
-    
-    
+
+
 // >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
-/*public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
-		
+
+public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
+
         SQLiteDatabase db = this.getWritableDatabase();
+
 		SQLiteDatabase db_ = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
-		ArrayList list_of_current_ids= new ArrayList<Long> ();
-		ArrayList list1= new ArrayList<Long> ();
-		ArrayList list2= new ArrayList<Long> ();
-		
+		ArrayList <Long>list_of_current_ids= new ArrayList<>();
+		ArrayList <Long>list1= new ArrayList<>();
+		ArrayList <Long>list2= new ArrayList<>();
+
         cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
         cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
         cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
         db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null);
-		
-		Cursor c= dbQuery("SELECT from employee_task "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
-			if (c.moveToFirst()){
-	   while(!c.isAfterLast()){
-		  String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
-		  list_of_current_ids.add(Long.parseLong(data));
-		  c.moveToNext();
-	   }
+
+
+		Cursor c= db_.rawQuery("SELECT "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" from employee_task where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
+        if (c.moveToFirst()){
+	        while(!c.isAfterLast()){
+                String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
+                list_of_current_ids.add(Long.parseLong(data));
+                c.moveToNext();
+                }
 	}
 	c.close();
-	
+
 	list1.addAll(employee_ids);
 	list2.addAll(list_of_current_ids);
 	list1.removeAll(list_of_current_ids);
 	list2.removeAll(employee_ids);
-	
+
 	if(list2.size()>0){
 	for(long emp_id:list2){
 		long flag= db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+emp_id,null);
 		if(flag==-1) return false;
 	}
 	}
-	
+
 	if(list1.size()>0){
+	    cv=new ContentValues();
 	for(long emp_id:list1){
 		cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
         cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
@@ -493,8 +550,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         if(flag==-1) return false;
 	}
 	}
+
         return true;
+
         
-    }*/
+    }
+
+ // }
 
 }
