@@ -493,7 +493,8 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
         cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
         db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null);
 
-		Cursor c= db_.rawQuery("SELECT from employee_task "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id+";", null);
+
+		Cursor c= db_.rawQuery("SELECT "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" from employee_task where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
         if (c.moveToFirst()){
 	        while(!c.isAfterLast()){
                 String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
