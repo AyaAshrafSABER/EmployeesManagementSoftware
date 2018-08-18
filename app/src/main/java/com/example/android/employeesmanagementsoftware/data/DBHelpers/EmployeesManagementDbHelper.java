@@ -456,46 +456,46 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 //        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
 //        return true;
 //    }
-    
-    
+
+
 // >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
 public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
-		
+
         SQLiteDatabase db = this.getWritableDatabase();
 		SQLiteDatabase db_ = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
-		ArrayList list_of_current_ids= new ArrayList<Long> ();
-		ArrayList list1= new ArrayList<Long> ();
-		ArrayList list2= new ArrayList<Long> ();
-		
+		ArrayList <Long>list_of_current_ids= new ArrayList<>();
+		ArrayList <Long>list1= new ArrayList<>();
+		ArrayList <Long>list2= new ArrayList<>();
+
         cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
         cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
         cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
         db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null);
-		
-		Cursor c= dbQuery("SELECT from employee_task "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
-			if (c.moveToFirst()){
-	   while(!c.isAfterLast()){
-		  String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
-		  list_of_current_ids.add(Long.parseLong(data));
-		  c.moveToNext();
-	   }
+
+		Cursor c= db_.rawQuery("SELECT from employee_task "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
+        if (c.moveToFirst()){
+	        while(!c.isAfterLast()){
+                String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
+                list_of_current_ids.add(Long.parseLong(data));
+                c.moveToNext();
+                }
 	}
 	c.close();
-	
+
 	list1.addAll(employee_ids);
 	list2.addAll(list_of_current_ids);
 	list1.removeAll(list_of_current_ids);
 	list2.removeAll(employee_ids);
-	
+
 	if(list2.size()>0){
 	for(long emp_id:list2){
 		long flag= db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+emp_id,null);
 		if(flag==-1) return false;
 	}
 	}
-	
+
 	if(list1.size()>0){
 	for(long emp_id:list1){
 		cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
@@ -505,7 +505,7 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
 	}
 	}
         return true;
-        
+
     }
 
 }
