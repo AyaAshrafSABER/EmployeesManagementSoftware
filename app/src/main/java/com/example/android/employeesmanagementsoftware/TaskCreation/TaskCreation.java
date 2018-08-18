@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,12 +46,12 @@ public class TaskCreation extends AppCompatActivity {
         setContentView(R.layout.activity_task_creation);
 
 
-            //TODO update the data in db use command
+
         Bundle taskData=getIntent().getExtras();
         long task_id=-1;
         if (taskData!=null)
             task_id = taskData.getLong("task_id");
-        task_id=1;
+
         util=new TaskCreationUtil(this,employeeDBHelper);
         commander=util.getCommander(task_id);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,

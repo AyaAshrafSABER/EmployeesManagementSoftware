@@ -517,6 +517,7 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
 	}
 
 	if(list1.size()>0){
+	    cv=new ContentValues();
 	for(long emp_id:list1){
 		cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
         cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);

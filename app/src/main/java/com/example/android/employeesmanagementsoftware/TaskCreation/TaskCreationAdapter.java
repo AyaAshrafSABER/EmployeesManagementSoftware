@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 
+import java.net.IDN;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class TaskCreationAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        //TODO onCreate is called when switching to landscape
+
         //TODO too much on main thread !!!!!!!!!
 
         View view = LayoutInflater.from(context).inflate(R.layout.task_creation_row, parent, false);
@@ -76,6 +77,7 @@ public class TaskCreationAdapter extends CursorAdapter {
             holder.checkBox.setChecked(true);
             holder.checkBox.setTag(position);
             checkBoxState.set((Integer) holder.checkBox.getTag(), true);
+            employees.add(ID);
 
         }
 
