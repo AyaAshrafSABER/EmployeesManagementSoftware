@@ -129,17 +129,17 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         //specify the columns to be read
         String [] columns = {
 
-                TaskContract.TABLE_NAME+TaskEntry.COLUMN_TASK_NAME,
-                EmployeeContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME,
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
                 TaskEntry.COLUMN_TASK_DESCRIPTION,
                 TaskEntry.COLUMN_TASK_DEADLINE,
                 TaskEntry.COLUMN_TASK_DATE,
                 TaskEntry.COLUMN_TASK_EVALUATION,
                 TaskEntry.COLUMN_TASK_INSTRUCTOR,
                 TaskContract.TABLE_NAME+TaskEntry._ID,
-                EmployeeContract.TABLE_NAME+EmployeeEntry._ID,
-                EmployeeContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
-                DepartmentContract.TABLE_NAME+DepartmentEntry._ID
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID,
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
+                DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
 
         };
 
