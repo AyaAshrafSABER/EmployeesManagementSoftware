@@ -489,17 +489,21 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
 	list1.removeAll(list_of_current_ids);
 	list2.removeAll(employee_ids);
 	
+	if(list2.size()>0){
 	for(long emp_id:list2){
 		long flag= db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+emp_id,null);
 		if(flag==-1) return false;
 	}
+	}
+	
+	if(list1.size()>0){
 	for(long emp_id:list1){
 		cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
         cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
         long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
         if(flag==-1) return false;
 	}
-	
+	}
         return true;
         
     }
