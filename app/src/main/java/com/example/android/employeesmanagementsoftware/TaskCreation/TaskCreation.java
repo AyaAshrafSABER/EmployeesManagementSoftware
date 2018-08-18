@@ -50,7 +50,7 @@ public class TaskCreation extends AppCompatActivity {
         long task_id=-1;
         if (taskData!=null)
             task_id = taskData.getLong("task_id");
-        task_id=-1;
+        task_id=1;
         util=new TaskCreationUtil(this,employeeDBHelper);
         commander=util.getCommander(task_id);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
@@ -58,8 +58,7 @@ public class TaskCreation extends AppCompatActivity {
 
 
 
-/*
-            employeeDBHelper.addDepartment("engineering", "en");
+           /* employeeDBHelper.addDepartment("engineering", "en");
 
             employeeDBHelper.addDepartment("marketing", "mk");
             employeeDBHelper.addDepartment("accounting", "ac");
@@ -78,10 +77,11 @@ public class TaskCreation extends AppCompatActivity {
             employeeDBHelper.addEmployee("mohamed", "55", 3,
                     "engineer", "bvfg", "565", null);
             employeeDBHelper.addEmployee("hassan", "55", 1,
-                    "engineer", "bvfg", "565", null);
-*/
+                    "engineer", "bvfg", "565", null);*/
 
-        initSpinner(adapterPool);
+
+
+                    initSpinner(adapterPool);
 
 
 
