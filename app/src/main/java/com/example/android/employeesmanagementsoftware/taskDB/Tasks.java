@@ -1,4 +1,4 @@
-package com.example.android.employeesmanagementsoftware;
+package com.example.android.employeesmanagementsoftware.taskDB;
 /*
 made by menna
  */
@@ -7,19 +7,28 @@ made by menna
 public  class Tasks
 {
 
-        private Integer id;
+        private Long id;
         private String taskName;
         private String taskInstractor;
         private String taskDetails;
         private String taskDate;
         private String taskdeadline;
+        private int  evaluation;
 
-    public Integer getId() {
+    public int getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(int evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = Long.parseLong(id);
     }
 
     public String getTaskName() {

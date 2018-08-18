@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.MyDepartmentRecyclerViewAdapter;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
