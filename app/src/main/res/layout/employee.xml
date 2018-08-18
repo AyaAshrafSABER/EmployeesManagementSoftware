@@ -40,7 +40,16 @@
                 android:layout_below="@+id/employee_icon"
                 android:layout_centerHorizontal="true"
                 android:paddingTop="@dimen/padding_employee"
-                android:text="Employee's Name" />
+                android:hint="Employee's Name" />
+
+            <EditText
+                android:id="@+id/post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/employee_name"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="@dimen/padding_employee"
+                android:hint="Employee's post" />
 
 
         </RelativeLayout>
@@ -160,11 +169,6 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -172,29 +176,17 @@
                 android:src="@mipmap/notes"
                 android:tint="@color/colorTheme" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Notes" />
 
-            <Button
-                android:id="@+id/add_field_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:paddingLeft="32dp"
-                android:background="@mipmap/add"
-                android:backgroundTint="@color/colorTheme"
-                android:onClick="onAddField"/>
 
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/notes_list"
+        <com.example.android.employeesmanagementsoftware.EmployeeDB.CustomEditTextWithBullets
+            android:id="@+id/notes"
+            android:hint="Notes"
+            android:background="@drawable/note"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawSelectorOnTop="true"
-            android:orientation="vertical"></ListView>
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+         ></com.example.android.employeesmanagementsoftware.EmployeeDB.CustomEditTextWithBullets>
 
 
         <LinearLayout

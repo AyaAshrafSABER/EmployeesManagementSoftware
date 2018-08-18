@@ -49,8 +49,8 @@ public class TasksFragment extends Fragment {
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.eventlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Tasks> tasks = new ArrayList<Tasks>();
-        Cursor cursor =employeeDBHelper.getAllTasksCursor();
-        if (cursor.moveToFirst()) {
+//        Cursor cursor =employeeDBHelper.getAllTasksCursor();
+  /*      if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 Tasks task = new Tasks();
                 task.setId(cursor.getString(cursor.getColumnIndex(TaskEntry._ID)));
@@ -63,7 +63,7 @@ public class TasksFragment extends Fragment {
                 tasks.add(task);
                 cursor.moveToNext();}
         }
-        cursor.close();
+        cursor.close();*/
         recyclerView.setAdapter(new TasksAdapter(getActivity(),tasks));
     }
 

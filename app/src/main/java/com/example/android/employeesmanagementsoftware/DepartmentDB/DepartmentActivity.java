@@ -52,8 +52,6 @@ public class DepartmentActivity extends AppCompatActivity {
         setDepatementParameter();
         setEmployeeList();
 
-        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
-        employees.setEmptyView(emptyView);
         employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -77,6 +75,7 @@ public class DepartmentActivity extends AppCompatActivity {
 
         //TODO need to implement helper meyhod to get tasks per department
 
+        displayTaskList();
         //setting list of tasks in this department
      /*   Cursor cursorTask = helper.get
         ListView tasksList = (ListView)findViewById(R.id.tasks_list);
@@ -100,24 +99,34 @@ public class DepartmentActivity extends AppCompatActivity {
         }
         cursorDep.close();
     }
+
+
     private void setEmployeeList(){
         //setting list of employees in this department
         employees = findViewById(R.id.employees_list);
         Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
 
-//        //setting list of employees in this department
-        ListView listView = findViewById(R.id.employees_list);
-//
-        Log.v("c", ""+ cursorEmp.getCount());
+
         EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
-        listView.setAdapter(adapterEmp);
-        adapterEmp = new EmployeeAdapter(this, cursorEmp);
         employees.setAdapter(adapterEmp);
+     //   cursorEmp.close();
+        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        employees.setEmptyView(emptyView);
 
     }
+
     private void displayTaskList(){
+        Cursor cursorTask = helper.getTasksOfDepartment(departmentId);
+        ListView tasksList = (ListView)findViewById(R.id.tasks_list);
+        TaskAdapter adapterTask = new TaskAdapter(this,cursorTask);
+        tasksList.setAdapter(adapterTask);
+        RelativeLayout emptyTasks = (RelativeLayout)findViewById(R.id.empty_tasks);
+        tasksList.setEmptyView(emptyTasks);
+      //  cursorTask.close();
 
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

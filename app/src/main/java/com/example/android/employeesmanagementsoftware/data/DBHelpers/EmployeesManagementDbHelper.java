@@ -5,25 +5,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
-import android.util.Log;
 
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
-import com.example.android.employeesmanagementsoftware.EmployeeDB.Employee;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
-import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
-import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
-import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
 
 
 import java.util.ArrayList;
-import java.util.*;
 
 // to use insert or get methods
 // Create  EmployeesManagementDbHelper instance first
@@ -113,25 +105,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String [] columns = {
 
                 TaskContract.TABLE_NAME+TaskEntry.COLUMN_TASK_NAME,
-                EmployeeContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
-                TaskEntry.COLUMN_TASK_DESCRIPTION,
-                TaskEntry.COLUMN_TASK_DEADLINE,
-                TaskEntry.COLUMN_TASK_DATE,
-                TaskEntry.COLUMN_TASK_EVALUATION,
-                TaskEntry.COLUMN_TASK_INSTRUCTOR,
-                TaskContract.TABLE_NAME+TaskEntry._ID,
-                EmployeeContract.TABLE_NAME+EmployeeEntry._ID,
-                EmployeeContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
-                DepartmentContract.TABLE_NAME+DepartmentEntry._ID
-
+                TaskEntry.COLUMN_TASK_EVALUATION
         };
-
 
         String selection = DepartmentContract.TABLE_NAME+DepartmentEntry._ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = TaskEntry.COLUMN_TASK_NAME+ " ASC";
-
-
 
         //cursor is a table containing the rows returned form the query
         Cursor cursor = db.query(EmployeeContract.TABLE_NAME + " , employee_task , "+TaskContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
@@ -141,7 +120,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     }
 
-
+/*
     public Cursor getAllTasksCursor(){
         //gets all tasks
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
@@ -163,7 +142,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return cursor; //don't forget to close the cursor after usage
 
     }
-
+*/
     public Cursor getSpecifiTaskCursor(long task_id){
 
         //gets specific task by its id
@@ -247,6 +226,19 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean updateEmployee(long id,ContentValues values){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = EmployeeEntry._ID + " =?"; //where statement
+        String selectionArgs[] = { String.valueOf(id)  };
+
+       if( db.update(EmployeeContract.TABLE_NAME,values,selection,selectionArgs)>0){
+           return true;
+       }
+       return false;
+
+    }
+
     public Cursor getEmployessOfDepartment(long department_id)
     {
         //gets all employees of a given department
@@ -270,9 +262,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
 
         return  cursor; }
-
-       /*TODO  christin
-        4 emmie ka3a 11*/
 
 
     public boolean addDepartment(String department_name , String department_description)
@@ -459,7 +448,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     
     
 // >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
-public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
+/*public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
 		
         SQLiteDatabase db = this.getWritableDatabase();
 		SQLiteDatabase db_ = this.getReadableDatabase();
@@ -506,6 +495,6 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
 	}
         return true;
         
-    }
+    }*/
 
 }

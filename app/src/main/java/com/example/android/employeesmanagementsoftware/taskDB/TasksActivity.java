@@ -29,7 +29,7 @@ public class TasksActivity extends AppCompatActivity {
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.eventlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ArrayList<Tasks> tasks = new ArrayList<Tasks>();
-        Cursor cursor =employeeDBHelper.getAllTasksCursor();
+     /*   Cursor cursor =employeeDBHelper.getAllTasksCursor();
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 Tasks task = new Tasks();
@@ -42,7 +42,7 @@ public class TasksActivity extends AppCompatActivity {
                 tasks.add(task);
                 cursor.moveToNext();}
         }
-        cursor.close();
+        cursor.close();*/
 //        for(int i=0;i<10;i++)
 //        {Tasks task = new Tasks();
 //            task.setId((Long.valueOf(i)));

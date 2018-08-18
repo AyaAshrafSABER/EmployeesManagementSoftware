@@ -3,6 +3,7 @@ package com.example.android.employeesmanagementsoftware.EmployeeDB;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,13 +37,14 @@ import java.io.File;
 /**
  * Created  by Monica on on 7/10/2018.
  */
+//TODO notify,date mn calendar,tasks,performance,validation
 
 public class EmployeeActivity  extends AppCompatActivity {
-    private LinearLayout parentLinearLayout;
     private EmployeesManagementDbHelper helper;
-    private EditText name,email,phone,birthday;
+    private EditText name,email,phone,birthday,job;
+    private CustomEditTextWithBullets notes;
     private ImageView image;
-    private  long employeeId;
+    private long employeeId;
     private String picturePath;
     private static int RESULT_LOAD_IMAGE = 1;
     private boolean imgChanged = false;
@@ -57,6 +59,8 @@ public class EmployeeActivity  extends AppCompatActivity {
         email = (EditText)findViewById(R.id.email);
         phone = (EditText)findViewById(R.id.phone);
         birthday = (EditText)findViewById(R.id.birthday);
+        job = (EditText)findViewById(R.id.post);
+        notes = (CustomEditTextWithBullets)findViewById(R.id.notes);
         image = (ImageView)findViewById(R.id.employee_icon);
         image.setTag("");
         picturePath = new String();
@@ -80,39 +84,9 @@ public class EmployeeActivity  extends AppCompatActivity {
 
         helper = new EmployeesManagementDbHelper(this);
        Intent intent = getIntent();
-         employeeId = intent.getExtras().getLong("employeeId");
-        Cursor cursor = helper.getEmployee(employeeId);
-
-        //setting data of employee
-
-        if(cursor.moveToFirst()){
-            name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));
-            email.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL)));
-            phone.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHONE)));
-            birthday.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE)));
-            String path = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO));
-            if(!TextUtils.isEmpty(path) && (new File(path)).exists()){
-                image.setImageBitmap(BitmapFactory.decodeFile(path));
-            }else{
-                image.setImageResource(R.drawable.unknown);
-            }
-        }
-
-
-        cursor.close();
-        parentLinearLayout = (LinearLayout) findViewById(R.id.parent_linear_layout);
+        employeeId = intent.getExtras().getLong("employeeId");
+       setEmployee();
     }
-    public void onAddField(View v) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.note, null);
-        // Add the new row before the add field button.
-        parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
-    }
-
-    public void onDelete(View v) {
-        parentLinearLayout.removeView((View) v.getParent());
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,7 +102,7 @@ public class EmployeeActivity  extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
-              //TODO edit and save
+              editEmployee();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -193,6 +167,49 @@ public class EmployeeActivity  extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void setEmployee(){
+        Cursor cursor = helper.getEmployee(employeeId);
+
+        //setting data of employee
+        if(cursor.moveToFirst()){
+            name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));
+            email.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL)));
+            phone.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHONE)));
+            birthday.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE)));
+            job.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_JOB)));
+            notes.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NOTES)));
+            String path = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO));
+            if(!TextUtils.isEmpty(path) && (new File(path)).exists()){
+                image.setImageBitmap(BitmapFactory.decodeFile(path));
+            }else{
+                image.setImageResource(R.drawable.unknown);
+            }
+        }
+        cursor.close();
+    }
+
+
+    private void editEmployee(){
+
+        ContentValues values = new ContentValues();
+
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_NAME,name.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE,birthday.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_JOB,job.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,email.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_NOTES,notes.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHONE,phone.getText().toString().trim());
+        if(imgChanged){
+            values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,image.getTag().toString());
+        }
+
+       if( helper.updateEmployee(employeeId,values)){
+            finish();
+       }
+
+
     }
 
 
