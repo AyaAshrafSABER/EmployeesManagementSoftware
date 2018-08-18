@@ -39,8 +39,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
 
-
-    public  EmployeesManagementDbHelper(Context context) {
+    public EmployeesManagementDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -105,6 +104,24 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         // DATABASE_VERSION ++;
     }
 
+
+
+    public Cursor getEmployeesOfTask(long task_id){
+        SQLiteDatabase db  = this.getReadableDatabase();
+
+        String [] columns = {
+                EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+        };
+        String selection = TaskContract.TABLE_NAME+TaskEntry._ID + " =?"; //where TaskEntry._ID=task_id
+        String selectionArgs[] = { String.valueOf(task_id)  };
+
+
+        //cursor is a table containing the rows returned form the query
+
+        return db.query("employee_task",columns,selection,selectionArgs,null,null,null); //don't forget to close the cursor after usage
+
+    }
+
     public Cursor getTasksOfDepartment(long department_id){
         //gets all tasks
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
@@ -140,6 +157,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return cursor; //don't forget to close the cursor after usage
 
     }
+
 
 
     public Cursor getAllTasksCursor(){
@@ -462,6 +480,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
 
         SQLiteDatabase db = this.getWritableDatabase();
+
 		SQLiteDatabase db_ = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
 		ArrayList <Long>list_of_current_ids= new ArrayList<>();
@@ -473,6 +492,7 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
         cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
         cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
         db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null);
+
 
 		Cursor c= db_.rawQuery("SELECT "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" from employee_task where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
         if (c.moveToFirst()){
@@ -505,6 +525,7 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
         if(flag==-1) return false;
 	}
 	}
+
         return true;
 
     }
