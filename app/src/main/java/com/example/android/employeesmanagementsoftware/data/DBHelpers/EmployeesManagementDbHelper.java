@@ -123,7 +123,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getTasksOfDepartment(long department_id){
-        //gets all tasks
+        //gets tasks of a specific deparrtment
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
 
         //specify the columns to be read
@@ -443,6 +443,28 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         c3.close();
 
         return flag>0;
+    }
+
+    public boolean deleteAllDepartments()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int f2 = db.delete("employee_task",null,null);
+        int f1 = db.delete(TaskContract.TABLE_NAME,null,null);
+        int f3 = db.delete(EmployeeContract.TABLE_NAME,null,null);
+        int f4 = db.delete(DepartmentContract.TABLE_NAME,null,null);
+
+        return f1>0 && f2>0 && f3>0 && f4>0 ;
+    }
+
+    public boolean deleteAllTasks()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int f2 = db.delete("employee_task",null,null);
+        int f1 = db.delete(TaskContract.TABLE_NAME,null,null);
+
+        return f1>0 && f2>0 ;
     }
 
 //    public boolean updateEmployee() {
