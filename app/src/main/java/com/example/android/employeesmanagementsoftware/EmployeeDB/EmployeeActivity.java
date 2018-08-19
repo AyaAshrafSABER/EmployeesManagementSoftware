@@ -205,7 +205,7 @@ public class EmployeeActivity  extends AppCompatActivity {
             values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,image.getTag().toString());
         }
 
-    /*   if( helper.updateEmployee(employeeId,values)){hgibha mn ommit l merge
+  /*    if( helper.updateEmployee(employeeId,values)){hgibha mn ommit l merge
             finish();
        }
 */
