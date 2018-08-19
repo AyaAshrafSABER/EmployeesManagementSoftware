@@ -58,7 +58,7 @@ public class DepartmentCreation extends AppCompatActivity {
     private void AddNewDepartemnt(){
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(nameOfDepartment.getText().toString()=="" || description.getText().toString()== "")
+                if(nameOfDepartment.getText().toString()=="" || description.getText().toString()== ""||nameOfDepartment.getText().toString()==null||description.getText().toString()== null)
                     Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else{
                     boolean flag =   emdb.addDepartment( nameOfDepartment.getText().toString(),description.getText().toString());
@@ -82,7 +82,7 @@ public class DepartmentCreation extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nameOfDepartment.getText().toString()=="" || description.getText().toString()== "") {
+                if(nameOfDepartment.getText().toString()=="" || description.getText().toString()== "" ||nameOfDepartment.getText().toString()==null||description.getText().toString()== null) {
                     Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 } else {
                     boolean correct = emdb.updateDepartment(new DepartmentItem(departmentId,nameOfDepartment.getText().toString(),description.getText().toString()));
