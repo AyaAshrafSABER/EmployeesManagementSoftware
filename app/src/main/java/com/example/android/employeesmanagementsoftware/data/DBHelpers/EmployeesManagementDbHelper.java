@@ -5,17 +5,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.util.Log;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
+import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
+import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
 
 
 import java.util.ArrayList;
+import java.util.*;
 
 // to use insert or get methods
 // Create  EmployeesManagementDbHelper instance first
@@ -131,27 +138,27 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 TaskContract.TABLE_NAME+TaskEntry._ID,
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID,
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
-                DepartmentEntry._ID
+                DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
 
         };
+
 
         String selection = DepartmentContract.TABLE_NAME+DepartmentEntry._ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = TaskEntry.COLUMN_TASK_NAME+ " ASC";
 
+
+
         //cursor is a table containing the rows returned form the query
-        Cursor cursor = db.query(EmployeeContract.TABLE_NAME + " , employee_task , "+TaskContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
+        Cursor cursor = db.query(DepartmentContract.TABLE_NAME+ " , "+EmployeeContract.TABLE_NAME + " , employee_task , "+TaskContract.TABLE_NAME ,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
 
 
         return cursor; //don't forget to close the cursor after usage
 
     }
 
-/*
-=======
 
 
->>>>>>> master
     public Cursor getAllTasksCursor(){
         //gets all tasks
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
@@ -173,7 +180,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return cursor; //don't forget to close the cursor after usage
 
     }
-*/
+
     public Cursor getSpecifiTaskCursor(long task_id){
 
         //gets specific task by its id
@@ -257,19 +264,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean updateEmployee(long id,ContentValues values){
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = EmployeeEntry._ID + " =?"; //where statement
-        String selectionArgs[] = { String.valueOf(id)  };
-
-       if( db.update(EmployeeContract.TABLE_NAME,values,selection,selectionArgs)>0){
-           return true;
-       }
-       return false;
-
-    }
-
     public Cursor getEmployessOfDepartment(long department_id)
     {
         //gets all employees of a given department
@@ -293,6 +287,9 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
 
         return  cursor; }
+
+       /*TODO  christin
+        4 emmie ka3a 11*/
 
 
     public boolean addDepartment(String department_name , String department_description)
@@ -469,7 +466,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return f1>0 && f2>0 ;
     }
 
-//    public boolean updateEmployee() {
+    //    public boolean updateEmployee() {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put(COL_1,id);
@@ -500,17 +497,16 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 //    }
 
 
-// >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
-
-public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
+    // >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
+    public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-		SQLiteDatabase db_ = this.getReadableDatabase();
+        SQLiteDatabase db_ = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
-		ArrayList <Long>list_of_current_ids= new ArrayList<>();
-		ArrayList <Long>list1= new ArrayList<>();
-		ArrayList <Long>list2= new ArrayList<>();
+        ArrayList <Long>list_of_current_ids= new ArrayList<>();
+        ArrayList <Long>list1= new ArrayList<>();
+        ArrayList <Long>list2= new ArrayList<>();
 
         cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
@@ -519,43 +515,40 @@ public boolean updateTask(int task_id, String task_name, int task_evaluation , S
         db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null);
 
 
-		Cursor c= db_.rawQuery("SELECT "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" from employee_task where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
+        Cursor c= db_.rawQuery("SELECT "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" from employee_task where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
         if (c.moveToFirst()){
-	        while(!c.isAfterLast()){
+            while(!c.isAfterLast()){
                 String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
                 list_of_current_ids.add(Long.parseLong(data));
                 c.moveToNext();
-                }
-	}
-	c.close();
+            }
+        }
+        c.close();
 
-	list1.addAll(employee_ids);
-	list2.addAll(list_of_current_ids);
-	list1.removeAll(list_of_current_ids);
-	list2.removeAll(employee_ids);
+        list1.addAll(employee_ids);
+        list2.addAll(list_of_current_ids);
+        list1.removeAll(list_of_current_ids);
+        list2.removeAll(employee_ids);
 
-	if(list2.size()>0){
-	for(long emp_id:list2){
-		long flag= db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+emp_id,null);
-		if(flag==-1) return false;
-	}
-	}
+        if(list2.size()>0){
+            for(long emp_id:list2){
+                long flag= db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+emp_id,null);
+                if(flag==-1) return false;
+            }
+        }
 
-	if(list1.size()>0){
-	    cv=new ContentValues();
-	for(long emp_id:list1){
-		cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
-        cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
-        long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
-        if(flag==-1) return false;
-	}
-	}
+        if(list1.size()>0){
+            cv=new ContentValues();
+            for(long emp_id:list1){
+                cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
+                cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
+                long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
+                if(flag==-1) return false;
+            }
+        }
 
         return true;
 
-        
     }
-
- // }
 
 }
