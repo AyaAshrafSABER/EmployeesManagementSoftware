@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.android.employeesmanagementsoftware.DepartmentCreation;
 import com.example.android.employeesmanagementsoftware.EmployeeCreation;
 import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeActivity;
+import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeAdapter;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
@@ -29,9 +30,8 @@ import java.util.ArrayList;
  */
 //need to attach her job with database
 // convert actvity to fregment
-//TODO Notify adapter to change
 
-// /notes and performance of each employee,description edittext
+// /notes and performance of each employee,description edittext,Notify adapter to change
 public class DepartmentActivity extends AppCompatActivity {
 
     private final int EMP_REQUEST = 1;

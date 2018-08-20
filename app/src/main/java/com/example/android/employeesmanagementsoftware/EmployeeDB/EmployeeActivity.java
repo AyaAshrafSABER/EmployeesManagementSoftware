@@ -5,7 +5,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -244,15 +243,10 @@ public class EmployeeActivity extends AppCompatActivity {
         if (imgChanged) {
             values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO, image.getTag().toString());
         }
-
         if (helper.updateEmployee(employeeId, values)) {
             Intent returnIntent = new Intent();
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         }
-
-
     }
-
-
 }
