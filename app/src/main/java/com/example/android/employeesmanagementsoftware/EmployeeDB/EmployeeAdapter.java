@@ -1,4 +1,4 @@
-package com.example.android.employeesmanagementsoftware.DepartmentDB;
+package com.example.android.employeesmanagementsoftware.EmployeeDB;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -39,7 +39,13 @@ public class EmployeeAdapter extends CursorAdapter {
         name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));
 
         TextView job = (TextView)view.findViewById(R.id.post);
-        job.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_JOB)));
+        String post = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_JOB)).trim();
+        if(post.isEmpty() || post == null){
+            job.setText("Unknown Post");
+        }else{
+            job.setText(post);
+        }
+
 
         ImageView icon = (ImageView)view.findViewById(R.id.icon);
 
