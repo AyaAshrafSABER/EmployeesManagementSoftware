@@ -16,10 +16,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.TaskAdapter;
 import com.example.android.employeesmanagementsoftware.R;
+import com.example.android.employeesmanagementsoftware.Utilities.CustomEditTextWithBullets;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;

@@ -1,4 +1,4 @@
-package com.example.android.employeesmanagementsoftware.EmployeeDB;
+package com.example.android.employeesmanagementsoftware.Utilities;
 
 import android.content.Context;
 import android.content.res.TypedArray;
