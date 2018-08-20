@@ -124,7 +124,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     public Cursor getTasksOfDepartment(long department_id){
         //gets tasks of a specific deparrtment
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
-
         String select = "SELECT " +
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
@@ -156,6 +155,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String where = " WHERE "+DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID + " = " + String.valueOf(department_id);
 
         String query = select+from+where;
+        Log.i("query",query);
 
         Cursor cursor  =db.rawQuery(query,null);
         return cursor; //don't forget to close the cursor after usage
@@ -188,6 +188,51 @@ String query
 
 
     }
+
+
+    public Cursor getTasksOfEmployee(long employee_id){
+            //gets tasks of a specific employee
+            SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+
+            String select = "SELECT " +
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
+                    EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
+                    TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_INSTRUCTOR +" , "+
+                    TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
+                    EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
+                    EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID +" , "+
+                    DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID +" , "+
+                    "employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" , "+
+                    "employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                    ;
+
+
+            String from = " from "+ DepartmentContract.TABLE_NAME + " INNER JOIN " + EmployeeContract.TABLE_NAME
+                    + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID+ " = "
+                    + DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
+                    + " INNER JOIN " + " employee_task "
+                    + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID+ " = "
+                    + " employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+                    + " INNER JOIN " + TaskContract.TABLE_NAME
+                    + " ON " +TaskContract.TABLE_NAME+"."+TaskEntry._ID+ " = "
+                    + " employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                    ;
+
+            String where = " WHERE "+EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID + " = " + String.valueOf(employee_id);
+
+            String query = select+from+where;
+
+            Cursor cursor  =db.rawQuery(query,null);
+            return cursor; //don't forget to close the cursor after usage
+
+
+        }
+
+
 
 
 
@@ -309,7 +354,7 @@ String query
                 EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
                 EmployeeEntry.COLUMN_EMPLOYEE_PHOTO
         };
-
+//department_id is the right one
         String selection = EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = EmployeeEntry.COLUMN_EMPLOYEE_NAME + " ASC";
@@ -379,6 +424,7 @@ String query
         ContentValues cv  = new ContentValues(); //used for inserting an entry
 
         cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
+        Log.i("cursor fi laddTask",task_name);
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
 
         if(task_description!=null && !task_description.isEmpty()&&!task_description.trim().isEmpty())
@@ -415,12 +461,11 @@ String query
         Cursor c = db.rawQuery("SELECT MAX("+EmployeeEntry._ID+") from "+EmployeeContract.TABLE_NAME,null);
         c.moveToFirst();
         long max_id = c.getLong(0);
-        db.execSQL("ALTER TABLE "+EmployeeContract.TABLE_NAME +" AUTOINCREMENT = " + String.valueOf(max_id+1)  );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + EmployeeContract. TABLE_NAME+" ' " );
         c.close();
 
 
         return flag>0;
-
 
     }
 
@@ -579,6 +624,16 @@ String query
 
         return true;
 
+    }
+
+    public boolean updateEmployee(long id,ContentValues values){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = EmployeeEntry._ID + " =?"; //where statement
+        String selectionArgs[] = { String.valueOf(id)  };
+        if( db.update(EmployeeContract.TABLE_NAME,values,selection,selectionArgs)>0){
+            return true;
+        }
+        return false;
     }
 
 }

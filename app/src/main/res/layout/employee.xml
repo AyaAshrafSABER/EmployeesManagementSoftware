@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.android.employeesmanagementsoftware.DepartmentDB.VerticalScrollview xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/parent_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,7 +45,8 @@
                 android:layout_below="@+id/employee_icon"
                 android:layout_centerHorizontal="true"
                 android:paddingTop="@dimen/padding_employee"
-                android:hint="Employee's Name" />
+                android:hint="Employee's Name"
+                />
 
             <EditText
                 android:id="@+id/post"
@@ -110,8 +116,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:inputType="date"
-                android:text="7/8/1975" />
+                android:inputType="datetime"
+                android:hint="Birthdate" />
 
         </LinearLayout>
 
@@ -133,41 +139,16 @@
                 android:text="Tasks" />
 
         </LinearLayout>
+    </LinearLayout>
+
 
 
         <ListView
             android:id="@+id/tasks_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/list_height"
             android:drawSelectorOnTop="true"
             android:orientation="vertical"></ListView>
-
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="88dp"
-            android:padding="4dp">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/padding_employee"
-                android:text="hblghhjhb" />
-
-            <RatingBar
-                android:id="@+id/ratingBar_task"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:rating="2.5"
-                android:stepSize="0.5"
-                android:theme="@style/RatingBar" />
-        </LinearLayout>
-
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -175,7 +156,6 @@
                 android:padding="@dimen/padding_employee"
                 android:src="@mipmap/notes"
                 android:tint="@color/colorTheme" />
-
 
 
         <com.example.android.employeesmanagementsoftware.EmployeeDB.CustomEditTextWithBullets
@@ -187,7 +167,6 @@
             android:padding="8dp"
             android:layout_margin="8dp"
          ></com.example.android.employeesmanagementsoftware.EmployeeDB.CustomEditTextWithBullets>
-
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -208,10 +187,12 @@
                 android:layout_gravity="right"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:rating="4.5"
+                android:rating="0"
                 android:stepSize="0.1"
                 android:theme="@style/RatingBar" />
 
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</com.example.android.employeesmanagementsoftware.DepartmentDB.VerticalScrollview>
+
+

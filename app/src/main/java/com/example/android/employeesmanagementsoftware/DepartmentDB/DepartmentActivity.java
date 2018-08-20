@@ -25,14 +25,19 @@ import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeActivi
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
+import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by Monica  on 7/11/2018.
  */
 //need to attach her job with database
 // convert actvity to fregment
-//TODO Notify adapter to change,notes and performance of each employee
+//TODO Notify adapter to change
+
+// /notes and performance of each employee,description edittext
 public class DepartmentActivity extends AppCompatActivity {
 
     private EmployeesManagementDbHelper helper;
@@ -46,18 +51,23 @@ public class DepartmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.department);
         //Add ACTION BAR
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+     /*   toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        helper = new EmployeesManagementDbHelper(this);
+       */ helper = new EmployeesManagementDbHelper(this);
         setDepatementParameter();
         setEmployeeList();
-
+/*
+        ArrayList<Long> arr = new  ArrayList<Long>();
+        Long id = Long.valueOf(2);arr.add(0,id);
+        helper.addTask("task1",4,"lol","08-08-2018",arr);
+*/
         employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
                 intent.putExtra("employeeId", id);
+                Log.i("perf","id "+id);
                 startActivity(intent);
             }
         });
@@ -73,19 +83,8 @@ public class DepartmentActivity extends AppCompatActivity {
             }
         });
 
-        //TODO need to implement helper meyhod to get tasks per department
-
         displayTaskList();
-        //setting list of tasks in this department
-     /*   Cursor cursorTask = helper.get
-        ListView tasksList = (ListView)findViewById(R.id.tasks_list);
-        TaskAdapter adapterTask = new TaskAdapter(this,cursorTask);
-       tasksList.setAdapter(adapterTask);
-        RelativeLayout emptyTasks = (RelativeLayout)findViewById(R.id.empty_tasks);
-        tasksList.setEmptyView(emptyTasks);
 
-        cursorTask.close();
-*/
     }
     private void setDepatementParameter(){
         description = (TextView)findViewById(R.id.description);
@@ -106,13 +105,11 @@ public class DepartmentActivity extends AppCompatActivity {
         employees = findViewById(R.id.employees_list);
         Cursor cursorEmp = helper.getEmployessOfDepartment(departmentId);
 
-
         EmployeeAdapter adapterEmp = new EmployeeAdapter(this,cursorEmp);
         employees.setAdapter(adapterEmp);
-     //   cursorEmp.close();
         RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
         employees.setEmptyView(emptyView);
-
+       // cursorEmp.close();
     }
 
     private void displayTaskList(){
@@ -122,7 +119,7 @@ public class DepartmentActivity extends AppCompatActivity {
         tasksList.setAdapter(adapterTask);
         RelativeLayout emptyTasks = (RelativeLayout)findViewById(R.id.empty_tasks);
         tasksList.setEmptyView(emptyTasks);
-      //  cursorTask.close();
+   //    cursorTask.close();
 
     }
 

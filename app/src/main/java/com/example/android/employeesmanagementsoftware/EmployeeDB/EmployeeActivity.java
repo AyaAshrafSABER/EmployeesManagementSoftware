@@ -18,32 +18,46 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.TaskAdapter;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
+import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created  by Monica on on 7/10/2018.
  */
-//TODO notify,date mn calendar,tasks,performance,validation
+//TODO notify,date mn calendar,validation
+    //TODO  fragment tas0k
+    //TODO evaluation float msh int
+
+    //delete ,scroll,tasks,performance
 
 public class EmployeeActivity  extends AppCompatActivity {
     private EmployeesManagementDbHelper helper;
     private EditText name,email,phone,birthday,job;
     private CustomEditTextWithBullets notes;
     private ImageView image;
+    private RatingBar performanceRatBar;
+    private ListView tasksList;
     private long employeeId;
     private String picturePath;
     private static int RESULT_LOAD_IMAGE = 1;
@@ -82,10 +96,46 @@ public class EmployeeActivity  extends AppCompatActivity {
             }
         });
 
+
+
         helper = new EmployeesManagementDbHelper(this);
+
        Intent intent = getIntent();
         employeeId = intent.getExtras().getLong("employeeId");
+        Log.i("id"," id = "+employeeId);
        setEmployee();
+       setEmployeeTasks();
+    }
+
+    private void setEmployeeTasks(){
+        tasksList = (ListView)findViewById(R.id.tasks_list);
+       Cursor cursor = helper.getTasksOfEmployee(employeeId);
+        CursorAdapter tasksAdapter = new TaskAdapter(this,cursor);
+        tasksList.setAdapter(tasksAdapter);
+       setPerformance(cursor);
+
+    //    cursor.close();
+
+
+    }
+
+    private void setPerformance(Cursor cursor){
+
+        int performance = 0;
+
+        if(cursor.moveToFirst()&&cursor.getCount()>0){
+            for(int i = 1;i<= cursor.getCount();i++){
+                performance += cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_EVALUATION));
+            }
+
+
+float res = (float)performance/cursor.getCount();
+
+            performanceRatBar = (RatingBar)findViewById(R.id.ratingBar_employee);
+            performanceRatBar.setRating(res);
+        }
+
+      // cursor.close();
     }
 
     @Override
@@ -205,10 +255,10 @@ public class EmployeeActivity  extends AppCompatActivity {
             values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,image.getTag().toString());
         }
 
-  /*    if( helper.updateEmployee(employeeId,values)){hgibha mn ommit l merge
+      if( helper.updateEmployee(employeeId,values)){
             finish();
        }
-*/
+
 
     }
 
