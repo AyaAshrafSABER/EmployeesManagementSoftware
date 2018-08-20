@@ -2,6 +2,7 @@ package com.example.android.employeesmanagementsoftware.EmployeeDB;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -19,63 +20,58 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.TaskAdapter;
 import com.example.android.employeesmanagementsoftware.R;
-import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created  by Monica on on 7/10/2018.
  */
-//TODO notify,date mn calendar,validation
-    //TODO  fragment tas0k
-    //TODO evaluation float msh int
+//TODO date mn calendar,validation
+//TODO  fragment task
+//TODO evaluation float msh int
 
-    //delete ,scroll,tasks,performance
+//delete ,scroll,tasks,performance,notify
 
-public class EmployeeActivity  extends AppCompatActivity {
+public class EmployeeActivity extends AppCompatActivity {
+    private static final int PICK_FROM_GALLERY = 1;
+    private static int RESULT_LOAD_IMAGE = 1;
     private EmployeesManagementDbHelper helper;
-    private EditText name,email,phone,birthday,job;
+    private EditText name, email, phone, birthday, job;
     private CustomEditTextWithBullets notes;
     private ImageView image;
     private RatingBar performanceRatBar;
     private ListView tasksList;
     private long employeeId;
     private String picturePath;
-    private static int RESULT_LOAD_IMAGE = 1;
     private boolean imgChanged = false;
-    private static final int PICK_FROM_GALLERY = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.employee);
 
-        name = (EditText)findViewById(R.id.employee_name);
-        email = (EditText)findViewById(R.id.email);
-        phone = (EditText)findViewById(R.id.phone);
-        birthday = (EditText)findViewById(R.id.birthday);
-        job = (EditText)findViewById(R.id.post);
-        notes = (CustomEditTextWithBullets)findViewById(R.id.notes);
-        image = (ImageView)findViewById(R.id.employee_icon);
+        name = (EditText) findViewById(R.id.employee_name);
+        email = (EditText) findViewById(R.id.email);
+        phone = (EditText) findViewById(R.id.phone);
+        birthday = (EditText) findViewById(R.id.birthday);
+        job = (EditText) findViewById(R.id.post);
+        notes = (CustomEditTextWithBullets) findViewById(R.id.notes);
+        image = (ImageView) findViewById(R.id.employee_icon);
         image.setTag("");
         picturePath = new String();
         image.setOnClickListener(new View.OnClickListener() {
@@ -97,46 +93,40 @@ public class EmployeeActivity  extends AppCompatActivity {
         });
 
 
-
         helper = new EmployeesManagementDbHelper(this);
 
-       Intent intent = getIntent();
+        Intent intent = getIntent();
         employeeId = intent.getExtras().getLong("employeeId");
-        Log.i("id"," id = "+employeeId);
-       setEmployee();
-       setEmployeeTasks();
+        setEmployee();
+        setEmployeeTasks();
     }
 
-    private void setEmployeeTasks(){
-        tasksList = (ListView)findViewById(R.id.tasks_list);
-       Cursor cursor = helper.getTasksOfEmployee(employeeId);
-        CursorAdapter tasksAdapter = new TaskAdapter(this,cursor);
+    private void setEmployeeTasks() {
+        tasksList = (ListView) findViewById(R.id.tasks_list);
+        Cursor cursor = helper.getTasksOfEmployee(employeeId);
+        CursorAdapter tasksAdapter = new TaskAdapter(this, cursor);
         tasksList.setAdapter(tasksAdapter);
-       setPerformance(cursor);
+        setPerformance(cursor);
 
-    //    cursor.close();
-
-
+        //    cursor.close();
     }
 
-    private void setPerformance(Cursor cursor){
+    private void setPerformance(Cursor cursor) {
 
         int performance = 0;
 
-        if(cursor.moveToFirst()&&cursor.getCount()>0){
-            for(int i = 1;i<= cursor.getCount();i++){
+        if (cursor.moveToFirst() && cursor.getCount() > 0) {
+            for (int i = 1; i <= cursor.getCount(); i++) {
                 performance += cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_EVALUATION));
             }
-
-
-float res = (float)performance/cursor.getCount();
-
-            performanceRatBar = (RatingBar)findViewById(R.id.ratingBar_employee);
+            float res = (float) performance / cursor.getCount();
+            performanceRatBar = (RatingBar) findViewById(R.id.ratingBar_employee);
             performanceRatBar.setRating(res);
         }
 
-      // cursor.close();
+        // cursor.close();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,15 +138,15 @@ float res = (float)performance/cursor.getCount();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
+        // User clicked on a menu option in the app bar menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Save" menu option
+            // Respond to a click on the "Edit" menu option
             case R.id.action_save:
-              editEmployee();
+                editEmployee();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
-              showDeleteConfirmationDialog();
+                showDeleteConfirmationDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -164,8 +154,7 @@ float res = (float)performance/cursor.getCount();
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case PICK_FROM_GALLERY:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -202,10 +191,10 @@ float res = (float)performance/cursor.getCount();
         builder.setMessage("Are you sure you want to fire this employee ?");
         builder.setPositiveButton("Fire", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-             if( helper.deleteEmployee(employeeId))
-                finish();
-             else
-                 Toast.makeText(getApplicationContext(),"Can't fire this employee",Toast.LENGTH_LONG).show();
+                if (helper.deleteEmployee(employeeId))
+                    finish();
+                else
+                    Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -219,11 +208,11 @@ float res = (float)performance/cursor.getCount();
         alertDialog.show();
     }
 
-    private void setEmployee(){
+    private void setEmployee() {
         Cursor cursor = helper.getEmployee(employeeId);
 
         //setting data of employee
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));
             email.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL)));
             phone.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHONE)));
@@ -231,9 +220,9 @@ float res = (float)performance/cursor.getCount();
             job.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_JOB)));
             notes.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NOTES)));
             String path = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO));
-            if(!TextUtils.isEmpty(path) && (new File(path)).exists()){
+            if (!TextUtils.isEmpty(path) && (new File(path)).exists()) {
                 image.setImageBitmap(BitmapFactory.decodeFile(path));
-            }else{
+            } else {
                 image.setImageResource(R.drawable.unknown);
             }
         }
@@ -241,27 +230,28 @@ float res = (float)performance/cursor.getCount();
     }
 
 
-    private void editEmployee(){
+    private void editEmployee() {
 
         ContentValues values = new ContentValues();
 
-        values.put(EmployeeEntry.COLUMN_EMPLOYEE_NAME,name.getText().toString().trim());
-        values.put(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE,birthday.getText().toString().trim());
-        values.put(EmployeeEntry.COLUMN_EMPLOYEE_JOB,job.getText().toString().trim());
-        values.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL,email.getText().toString().trim());
-        values.put(EmployeeEntry.COLUMN_EMPLOYEE_NOTES,notes.getText().toString().trim());
-        values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHONE,phone.getText().toString().trim());
-        if(imgChanged){
-            values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO,image.getTag().toString());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_NAME, name.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_BIRTHDATE, birthday.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_JOB, job.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_EMAIL, email.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_NOTES, notes.getText().toString().trim());
+        values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHONE, phone.getText().toString().trim());
+        if (imgChanged) {
+            values.put(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO, image.getTag().toString());
         }
 
-      if( helper.updateEmployee(employeeId,values)){
+        if (helper.updateEmployee(employeeId, values)) {
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_OK, returnIntent);
             finish();
-       }
+        }
 
 
     }
-
 
 
 }

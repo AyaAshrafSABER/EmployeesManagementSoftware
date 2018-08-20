@@ -89,7 +89,9 @@ public class EmployeeCreation extends AppCompatActivity {
                     //changed id to long Monica
                     if (emdb.addEmployee(employee_name.getText().toString(), date_select.getText().toString(), departmentId, employee_job.getText().toString(), employee_email.getText().toString(), employee_phone.getText().toString(), null)) {
                         Snackbar.make(v, "CURRENT EMPLOYEE ENTERED SUCCESSFULLY.", Snackbar.LENGTH_LONG).setAction("", null).show();
-
+                        Intent returnIntent = new Intent();
+                        setResult(Activity.RESULT_OK, returnIntent);
+                        finish();
                     } else {
                         Snackbar.make(v, "FAILED TO ENTER CURRENT EMPLOYEE. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
                     }
