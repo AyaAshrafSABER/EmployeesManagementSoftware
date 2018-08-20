@@ -155,7 +155,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String where = " WHERE "+DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID + " = " + String.valueOf(department_id);
 
         String query = select+from+where;
-        Log.i("query",query);
 
         Cursor cursor  =db.rawQuery(query,null);
         return cursor; //don't forget to close the cursor after usage

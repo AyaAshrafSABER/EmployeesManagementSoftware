@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.android.employeesmanagementsoftware.DepartmentDB.VerticalScrollview xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.android.employeesmanagementsoftware.Utilities.VerticalScrollview
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -158,7 +159,7 @@
                 android:tint="@color/colorTheme" />
 
 
-        <com.example.android.employeesmanagementsoftware.EmployeeDB.CustomEditTextWithBullets
+        <com.example.android.employeesmanagementsoftware.Utilities.CustomEditTextWithBullets
             android:id="@+id/notes"
             android:hint="Notes"
             android:background="@drawable/note"
@@ -166,7 +167,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:layout_margin="8dp"
-         ></com.example.android.employeesmanagementsoftware.EmployeeDB.CustomEditTextWithBullets>
+         ></com.example.android.employeesmanagementsoftware.Utilities.CustomEditTextWithBullets>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -193,6 +194,6 @@
 
         </LinearLayout>
     </LinearLayout>
-</com.example.android.employeesmanagementsoftware.DepartmentDB.VerticalScrollview>
+</com.example.android.employeesmanagementsoftware.Utilities.VerticalScrollview>
 
 

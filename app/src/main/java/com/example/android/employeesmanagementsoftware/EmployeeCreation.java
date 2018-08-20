@@ -21,7 +21,7 @@ import java.util.regex.*;
 import java.util.Calendar;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.EmployeeAdapter;
+import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeAdapter;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 

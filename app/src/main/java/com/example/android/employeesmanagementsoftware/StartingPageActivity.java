@@ -57,6 +57,7 @@ public class StartingPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TaskCreation.class);
+                intent.putExtra("task_id",(long)-1);
                 startActivity(intent);
             }
         });
@@ -75,7 +76,7 @@ public class StartingPageActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(getApplicationContext(), TaskCreation.class);
-                            intent.putExtra("task_id",-1);
+                            intent.putExtra("task_id",(long)-1);
                             startActivity(intent);
                         }
                     });
