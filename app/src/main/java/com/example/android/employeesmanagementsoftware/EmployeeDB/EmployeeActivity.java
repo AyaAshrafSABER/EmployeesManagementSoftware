@@ -191,9 +191,11 @@ public class EmployeeActivity extends AppCompatActivity {
         builder.setMessage("Are you sure you want to fire this employee ?");
         builder.setPositiveButton("Fire", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if (helper.deleteEmployee(employeeId))
+                if (helper.deleteEmployee(employeeId)){
+                    Intent returnIntent = new Intent();
+                    setResult(Activity.RESULT_OK, returnIntent);
                     finish();
-                else
+                }else
                     Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
             }
         });
