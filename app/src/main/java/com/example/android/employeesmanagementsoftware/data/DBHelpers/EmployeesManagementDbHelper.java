@@ -512,7 +512,7 @@ String query
         //resets autoincrement
         Cursor c3 = db.rawQuery("SELECT MAX("+DepartmentEntry._ID+") from "+DepartmentContract.TABLE_NAME,null);
         c3.moveToFirst();
-        max_id = c2.getLong(0);
+        max_id = c3.getLong(0);
         db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + DepartmentContract.TABLE_NAME+" ' " );
         c3.close();
 
