@@ -45,9 +45,11 @@ public class TaskCreation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
+        Bundle taskData=getIntent().getExtras();
         long task_id=-1;
-        task_id = getIntent().getExtras().getLong("task_id");
-        Log.d(TAG, "onCreate: "+task_id);
+        if (taskData!=null)
+            task_id = taskData.getLong("task_id");
+
         util=new TaskCreationUtil(this,employeeDBHelper);
         commander=util.getCommander(task_id);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
