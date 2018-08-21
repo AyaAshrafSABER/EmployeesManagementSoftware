@@ -53,6 +53,8 @@ public class StartingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_starting_page);
         //Add ACTION BAR
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Tasks");
+        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPageAdapter(getSupportFragmentManager());

@@ -51,8 +51,8 @@ public class DepartmentCreation extends AppCompatActivity {
     private void AddNewDepartemnt(){
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if((nameOfDepartment.getText().toString()).matches("") || (description.getText().toString()).matches(""))
-                    Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
+                if((nameOfDepartment.getText().toString()).matches("[A-Za-z0-9$%#@*!]{1,50}") || (description.getText().toString()).matches("^[\\s\\S]{2,200}$"))
+                    Snackbar.make(v, "SOME OR ALL INPUTS ARE INVALID. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else{
                     boolean flag =   emdb.addDepartment( nameOfDepartment.getText().toString(),description.getText().toString());
                     actionSave(flag, v);
@@ -75,8 +75,8 @@ public class DepartmentCreation extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((nameOfDepartment.getText().toString()).matches("") || (description.getText().toString()).matches("")) {
-                    Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
+                if((nameOfDepartment.getText().toString()).matches("^[A-Za-z0-9$%#@*!]{1,50}") || (description.getText().toString()).matches("^[\\s\\S]{2,200}$")) {
+                    Snackbar.make(v, "SOME OR ALL INPUTS ARE INVALID. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 } else {
                     boolean correct = emdb.updateDepartment(new DepartmentItem(departmentId,nameOfDepartment.getText().toString(),description.getText().toString()));
                     actionSave(correct, v);
