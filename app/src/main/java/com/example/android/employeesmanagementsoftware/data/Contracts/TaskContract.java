@@ -14,7 +14,9 @@ public class TaskContract {
         public static final String COLUMN_TASK_DESCRIPTION = "description";
         public static final String COLUMN_TASK_DEADLINE = "deadline";
         public static final String COLUMN_TASK_DATE = "dateOfTask";
-        public static final String COLUMN_TASK_INSTRUCTOR = "instructor";
+        //public static final String COLUMN_TASK_INSTRUCTOR = "instructor";
+        public static final String COLUMN_TASK_COMPLETED = "completed" ;
+
         public static final String COLUMN_TASK_EVALUATION = "evaluation" ;
 
     }
