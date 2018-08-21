@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +34,9 @@ import java.util.ArrayList;
 
 // /notes and performance of each employee,description edittext,Notify adapter to change
 public class DepartmentActivity extends AppCompatActivity {
-
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     private final int EMP_REQUEST = 1;
     private EmployeesManagementDbHelper helper;
     private TextView description;
