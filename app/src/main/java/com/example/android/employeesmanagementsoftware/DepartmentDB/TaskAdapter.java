@@ -2,6 +2,7 @@ package com.example.android.employeesmanagementsoftware.DepartmentDB;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,9 @@ public class TaskAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         TextView name = (TextView)view.findViewById(R.id.taskName);
-        name.setText(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_NAME)));
-
+        name.setText(cursor.getString(0));
         RatingBar ratingBar = (RatingBar)view.findViewById(R.id.ratingBar_task);
-        ratingBar.setNumStars(cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_EVALUATION)));
+        ratingBar.setRating(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION)));
 
     }
 }

@@ -1,37 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.android.employeesmanagementsoftware.Utilities.VerticalScrollview
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".DepartmentDB.DepartmentActivity">
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_weight="1"
-            android:background="?attr/colorPrimary"
-            >
-        </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:orientation="vertical"
-        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +15,7 @@
 
             <TextView
                 android:id="@+id/description"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Departement's description"
                 />
@@ -111,7 +87,7 @@
             <ListView
                 android:id="@+id/employees_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/list_height"
                 android:drawSelectorOnTop="true"
                 android:orientation="vertical"></ListView>
             </RelativeLayout>
@@ -154,7 +130,7 @@
             <ListView
                 android:id="@+id/tasks_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/list_height"
                 android:drawSelectorOnTop="true"
                 android:orientation="vertical">
             </ListView>
@@ -187,19 +163,7 @@
 
             </RelativeLayout>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_tasks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="16dp"
-                  ></android.support.design.widget.FloatingActionButton>
-
             </RelativeLayout>
-
-
         </LinearLayout>
+    </com.example.android.employeesmanagementsoftware.Utilities.VerticalScrollview>
 
-    </ScrollView>
-</android.support.design.widget.CoordinatorLayout>

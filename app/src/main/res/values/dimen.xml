@@ -3,4 +3,5 @@
     <dimen name="list_item_height">88dp</dimen>
     <dimen name="padding_employee">8dp</dimen>
     <dimen name="item">24dp</dimen>
+    <dimen name="list_height">160dp</dimen>
     </resources>

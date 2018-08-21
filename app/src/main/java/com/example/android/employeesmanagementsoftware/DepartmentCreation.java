@@ -43,13 +43,16 @@ public class DepartmentCreation extends AppCompatActivity {
         } else {
             AddNewDepartemnt();
         }
+        //TODO: what is the importance of the  fab button
+
+
 
     }
     private void AddNewDepartemnt(){
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(nameOfDepartment.getText().toString()=="" || description.getText().toString()== "")
-                    Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
+                if((nameOfDepartment.getText().toString()).matches("[A-Za-z0-9$%#@*!]{1,50}") || (description.getText().toString()).matches("^[\\s\\S]{2,200}$"))
+                    Snackbar.make(v, "SOME OR ALL INPUTS ARE INVALID. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else{
                     boolean flag =   emdb.addDepartment( nameOfDepartment.getText().toString(),description.getText().toString());
                     actionSave(flag, v);
@@ -72,8 +75,8 @@ public class DepartmentCreation extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nameOfDepartment.getText().toString()=="" || description.getText().toString()== "") {
-                    Snackbar.make(v, "SOME OR ALL INPUTS ARE EMPTY. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
+                if((nameOfDepartment.getText().toString()).matches("^[A-Za-z0-9$%#@*!]{1,50}") || (description.getText().toString()).matches("^[\\s\\S]{2,200}$")) {
+                    Snackbar.make(v, "SOME OR ALL INPUTS ARE INVALID. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 } else {
                     boolean correct = emdb.updateDepartment(new DepartmentItem(departmentId,nameOfDepartment.getText().toString(),description.getText().toString()));
                     actionSave(correct, v);
@@ -88,7 +91,6 @@ public class DepartmentCreation extends AppCompatActivity {
             description.setText("",TextView.BufferType.EDITABLE);
             nameOfDepartment.setText("",TextView.BufferType.EDITABLE);
             depFragment.updateDepartmentList(emdb);
-            this.finish();
         }
         else
             Snackbar.make(v, "FAILED TO ENTER CURRENT DEPARTMENT. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
