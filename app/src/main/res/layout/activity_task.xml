@@ -53,7 +53,7 @@
                     android:text="1/8/2018"
                     />
 
-                <TextView
+                <ListView
                     android:id="@+id/tasktrainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

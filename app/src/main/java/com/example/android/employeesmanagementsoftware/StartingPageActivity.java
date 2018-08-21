@@ -54,7 +54,7 @@ public class StartingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_starting_page);
         //Add ACTION BAR
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Tasks");
+        toolbar.setTitle("Department");
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -67,17 +67,15 @@ public class StartingPageActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        //TabLayout.Tab tab = tabLayout.getTabAt(0);
-//        tab.select();
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), TaskCreation.class);
-//                intent.putExtra("task_id",(long)-1);
-//                startActivity(intent);
-//            }
-//        });
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DepartmentCreation.class);
+                intent.putExtra("IsEdit", false);
+                startActivity(intent);
+            }
+        });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

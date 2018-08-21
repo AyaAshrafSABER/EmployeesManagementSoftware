@@ -59,6 +59,11 @@ public class TasksFragment extends Fragment {
                 task.setTaskDeadline(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DEADLINE)));
                 task.setTaskDate(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE)));
                 task.setEvaluation(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION)));
+                if (cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_COMPLETED)) == 0){
+                    task.setDone(false);
+                }else {
+                    task.setDone(true);
+                }
                 tasks.add(task);
                 cursor.moveToNext();}
         }

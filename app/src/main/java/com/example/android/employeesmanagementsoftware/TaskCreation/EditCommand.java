@@ -39,8 +39,8 @@ public class EditCommand implements TaskCreationCommand {
 
         //get a cursor for the task's data for its id
         Cursor textCursor=employeeDBHelper.getSpecifiTaskCursor(task_id);
-        textCursor.moveToNext();
 
+        textCursor.moveToNext();
         //set the edit texts with the data from the cursor
         taskName.setText(textCursor.getString(textCursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_NAME)));
         taskDeadline.setText(textCursor.getString(textCursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_DEADLINE)));

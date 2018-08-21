@@ -148,8 +148,9 @@ public class DepartmentActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
+            this.finish();
+            return helper.deleteDepartment(departmentId);
 
-            return true;
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(DepartmentActivity.this, DepartmentCreation.class);

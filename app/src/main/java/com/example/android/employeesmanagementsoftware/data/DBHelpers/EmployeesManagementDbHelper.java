@@ -416,7 +416,7 @@ String query
 
     }
 
-    public boolean addTask(String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> emplyee_ids)
+    public boolean addTask(String task_name, int task_evaluation , String task_description,String task_date, String task_deadline,boolean task_completed  ,ArrayList<Long> emplyee_ids)
     {
         //adds task to db
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
@@ -431,7 +431,8 @@ String query
 
         if(task_deadline!=null && !task_deadline.isEmpty()&&!task_deadline.trim().isEmpty())
             cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
-
+        cv.put(TaskEntry.COLUMN_TASK_COMPLETED,task_completed);
+        cv.put(TaskEntry.COLUMN_TASK_DATE,task_date);
         long task_id = db.insert(TaskContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
 
         if(task_id==-1) return false; //-1 if insert fails

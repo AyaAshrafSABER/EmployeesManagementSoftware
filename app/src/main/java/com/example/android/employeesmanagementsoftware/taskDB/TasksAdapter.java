@@ -52,7 +52,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
         final Tasks tasks = data.get(position);
         holder.titletask.setText(tasks.getTaskName());
         holder.disctask.setText(tasks.getTaskDetails());
-        holder.trainertask.setText(tasks.getTaskInstractor());
         holder.datetask.setText(tasks.getTaskDate());
         holder.deadlinetask.setText(tasks.getTaskDeadline());
 
@@ -61,25 +60,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
             @Override
             public void onClick(View view)
             {
-               // title = tasks.getTaskName();
-                //date = tasks.getTaskDate();
-                //trainer = tasks.getTaskInstractor();
-                //description=tasks.getTaskDetails();
-                //deadline=tasks.getTaskDeadline();
                 id = tasks.getId();
-                Bundle bundle=new Bundle();
-               // bundle.putString("title",title);
-               // bundle.putString("date",date);
-                //bundle.putString("trainer",trainer);
-                //bundle.putString("description",description);
-                //bundle.putString("deadline",deadline);
-                bundle.putString("id",id.toString());
                 Intent in = new Intent(context, TaskActivity.class);
-                in.putExtra("bundle", bundle);
+                in.putExtra("task_id",id);
                 context.startActivity(in);
-
-
-
             }
         });
 
@@ -95,7 +79,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     public class TasksViewHolder extends RecyclerView.ViewHolder {
         TextView titletask;
         TextView disctask;
-        TextView trainertask;
         TextView datetask;
         TextView deadlinetask;
         public TasksViewHolder(View itemView)
@@ -103,7 +86,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
             super(itemView);
             titletask = (TextView)itemView.findViewById(R.id.title_card);
             disctask = (TextView)itemView.findViewById(R.id.disc_card);
-            trainertask=(TextView)itemView.findViewById(R.id.employee);
             datetask=(TextView)itemView.findViewById(R.id.date);
             deadlinetask=(TextView)itemView.findViewById(R.id.deadline);
         }
