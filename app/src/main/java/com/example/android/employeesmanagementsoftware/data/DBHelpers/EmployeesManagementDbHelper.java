@@ -73,7 +73,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
                 +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
                 +TaskEntry.COLUMN_TASK_DATE + " DATETIME ,"
-                +TaskEntry.COLUMN_TASK_INSTRUCTOR + " VARCHAR(300),"
+                +TaskEntry.COLUMN_TASK_COMPLETED + " TINYINT(1) ,"
                 +TaskEntry.COLUMN_TASK_EVALUATION+" INTEGER"
                 +");"
                 ;
@@ -131,7 +131,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_INSTRUCTOR +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_COMPLETED +" , "+
                 TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID +" , "+
@@ -200,7 +200,7 @@ String query
                     TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
                     TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
                     TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_INSTRUCTOR +" , "+
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_COMPLETED +" , "+
                     TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
                     EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
                     EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID +" , "+
@@ -247,7 +247,7 @@ String query
                 TaskEntry.COLUMN_TASK_DEADLINE,
                 TaskEntry.COLUMN_TASK_DATE,
                 TaskEntry.COLUMN_TASK_EVALUATION,
-                TaskEntry.COLUMN_TASK_INSTRUCTOR
+                TaskEntry.COLUMN_TASK_COMPLETED
         };
 
         //cursor is a table containing the rows returned form the query
@@ -270,7 +270,7 @@ String query
                 TaskEntry.COLUMN_TASK_DEADLINE,
                 TaskEntry.COLUMN_TASK_DATE,
                 TaskEntry.COLUMN_TASK_EVALUATION,
-                TaskEntry.COLUMN_TASK_INSTRUCTOR
+                TaskEntry.COLUMN_TASK_COMPLETED
         };
 
         //where statement to filter quere
