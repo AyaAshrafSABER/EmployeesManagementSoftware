@@ -9,7 +9,6 @@ import android.os.Build;
 import android.util.Log;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
-import com.example.android.employeesmanagementsoftware.EmployeeDB.Employee;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
@@ -39,8 +38,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
 
-
-    public  EmployeesManagementDbHelper(Context context) {
+    public EmployeesManagementDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -105,41 +103,136 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         // DATABASE_VERSION ++;
     }
 
-    public Cursor getTasksOfDepartment(long department_id){
-        //gets all tasks
-        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
 
+
+    public Cursor getEmployeesOfTask(long task_id){
+        SQLiteDatabase db  = this.getReadableDatabase();
+
+        String [] columns = {
+                EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+        };
+        String selection = TaskContract.TABLE_NAME+TaskEntry._ID + " =?"; //where TaskEntry._ID=task_id
+        String selectionArgs[] = { String.valueOf(task_id)  };
+
+
+        //cursor is a table containing the rows returned form the query
+
+        return db.query("employee_task",columns,selection,selectionArgs,null,null,null); //don't forget to close the cursor after usage
+
+    }
+
+    public Cursor getTasksOfDepartment(long department_id){
+        //gets tasks of a specific deparrtment
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+        String select = "SELECT " +
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
+                TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_INSTRUCTOR +" , "+
+                TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID +" , "+
+                DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID +" , "+
+                "employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" , "+
+                "employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                ;
+
+
+        String from = " from "+ DepartmentContract.TABLE_NAME + " INNER JOIN " + EmployeeContract.TABLE_NAME
+                + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID+ " = "
+                + DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
+                + " INNER JOIN " + " employee_task "
+                + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID+ " = "
+                + " employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+                + " INNER JOIN " + TaskContract.TABLE_NAME
+                + " ON " +TaskContract.TABLE_NAME+"."+TaskEntry._ID+ " = "
+                + " employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                ;
+
+        String where = " WHERE "+DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID + " = " + String.valueOf(department_id);
+
+        String query = select+from+where;
+
+        Cursor cursor  =db.rawQuery(query,null);
+        return cursor; //don't forget to close the cursor after usage
+/*
+String query
         //specify the columns to be read
         String [] columns = {
-
-                TaskContract.TABLE_NAME+TaskEntry.COLUMN_TASK_NAME,
-                EmployeeContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME,
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
                 TaskEntry.COLUMN_TASK_DESCRIPTION,
                 TaskEntry.COLUMN_TASK_DEADLINE,
                 TaskEntry.COLUMN_TASK_DATE,
                 TaskEntry.COLUMN_TASK_EVALUATION,
                 TaskEntry.COLUMN_TASK_INSTRUCTOR,
                 TaskContract.TABLE_NAME+TaskEntry._ID,
-                EmployeeContract.TABLE_NAME+EmployeeEntry._ID,
-                EmployeeContract.TABLE_NAME+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
-                DepartmentContract.TABLE_NAME+DepartmentEntry._ID
-
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID,
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
+                DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
         };
-
-
         String selection = DepartmentContract.TABLE_NAME+DepartmentEntry._ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = TaskEntry.COLUMN_TASK_NAME+ " ASC";
+*/
+        //    Cursor cursor = db.query(DepartmentContract.TABLE_NAME+ " , "+EmployeeContract.TABLE_NAME + " , employee_task , "+TaskContract.TABLE_NAME ,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
 
 
 
         //cursor is a table containing the rows returned form the query
-        Cursor cursor = db.query(EmployeeContract.TABLE_NAME + " , employee_task , "+TaskContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
 
 
-        return cursor; //don't forget to close the cursor after usage
 
     }
+
+
+    public Cursor getTasksOfEmployee(long employee_id){
+        //gets tasks of a specific employee
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+
+        String select = "SELECT " +
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
+                TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_INSTRUCTOR +" , "+
+                TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID +" , "+
+                DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID +" , "+
+                "employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" , "+
+                "employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                ;
+
+
+        String from = " from "+ DepartmentContract.TABLE_NAME + " INNER JOIN " + EmployeeContract.TABLE_NAME
+                + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID+ " = "
+                + DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
+                + " INNER JOIN " + " employee_task "
+                + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID+ " = "
+                + " employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+                + " INNER JOIN " + TaskContract.TABLE_NAME
+                + " ON " +TaskContract.TABLE_NAME+"."+TaskEntry._ID+ " = "
+                + " employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                ;
+
+        String where = " WHERE "+EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID + " = " + String.valueOf(employee_id);
+
+        String query = select+from+where;
+
+        Cursor cursor  =db.rawQuery(query,null);
+        return cursor; //don't forget to close the cursor after usage
+
+
+    }
+
+
+
 
 
     public Cursor getAllTasksCursor(){
@@ -260,7 +353,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
                 EmployeeEntry.COLUMN_EMPLOYEE_PHOTO
         };
-
+//department_id is the right one
         String selection = EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(department_id)  };
         String orderBy = EmployeeEntry.COLUMN_EMPLOYEE_NAME + " ASC";
@@ -271,8 +364,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
         return  cursor; }
 
-       /*TODO  christin
-        4 emmie ka3a 11*/
 
 
     public boolean addDepartment(String department_name , String department_description)
@@ -332,6 +423,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         ContentValues cv  = new ContentValues(); //used for inserting an entry
 
         cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
+        Log.i("cursor fi laddTask",task_name);
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
 
         if(task_description!=null && !task_description.isEmpty()&&!task_description.trim().isEmpty())
@@ -368,12 +460,11 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("SELECT MAX("+EmployeeEntry._ID+") from "+EmployeeContract.TABLE_NAME,null);
         c.moveToFirst();
         long max_id = c.getLong(0);
-        db.execSQL("ALTER TABLE "+EmployeeContract.TABLE_NAME +" AUTOINCREMENT = " + String.valueOf(max_id+1)  );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + EmployeeContract. TABLE_NAME+" ' " );
         c.close();
 
 
         return flag>0;
-
 
     }
 
@@ -410,6 +501,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         long max_id = c2.getLong(0);
         db.execSQL("ALTER TABLE "+EmployeeContract.TABLE_NAME +" AUTO_INCREMENT = " + String.valueOf(max_id+1)  );
         c2.close();
+
+
+
+
         db.delete(EmployeeContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null);
         int flag = db.delete(DepartmentContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null) ;
 
@@ -423,7 +518,29 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return flag>0;
     }
 
-//    public boolean updateEmployee() {
+    public boolean deleteAllDepartments()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int f2 = db.delete("employee_task",null,null);
+        int f1 = db.delete(TaskContract.TABLE_NAME,null,null);
+        int f3 = db.delete(EmployeeContract.TABLE_NAME,null,null);
+        int f4 = db.delete(DepartmentContract.TABLE_NAME,null,null);
+
+        return f1>0 && f2>0 && f3>0 && f4>0 ;
+    }
+
+    public boolean deleteAllTasks()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int f2 = db.delete("employee_task",null,null);
+        int f1 = db.delete(TaskContract.TABLE_NAME,null,null);
+
+        return f1>0 && f2>0 ;
+    }
+
+    //    public boolean updateEmployee() {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put(COL_1,id);
@@ -452,56 +569,70 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 //        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
 //        return true;
 //    }
-    
-    
-// >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
-public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
-		
+
+
+    // >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
+    public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
+
         SQLiteDatabase db = this.getWritableDatabase();
-		SQLiteDatabase db_ = this.getReadableDatabase();
+
+        SQLiteDatabase db_ = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
-		ArrayList list_of_current_ids= new ArrayList<Long> ();
-		ArrayList list1= new ArrayList<Long> ();
-		ArrayList list2= new ArrayList<Long> ();
-		
+        ArrayList <Long>list_of_current_ids= new ArrayList<>();
+        ArrayList <Long>list1= new ArrayList<>();
+        ArrayList <Long>list2= new ArrayList<>();
+
         cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
         cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
         cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
         cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
         db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null);
-		
-		Cursor c= dbQuery("SELECT from employee_task "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
-			if (c.moveToFirst()){
-	   while(!c.isAfterLast()){
-		  String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
-		  list_of_current_ids.add(Long.parseLong(data));
-		  c.moveToNext();
-	   }
-	}
-	c.close();
-	
-	list1.addAll(employee_ids);
-	list2.addAll(list_of_current_ids);
-	list1.removeAll(list_of_current_ids);
-	list2.removeAll(employee_ids);
-	
-	if(list2.size()>0){
-	for(long emp_id:list2){
-		long flag= db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+emp_id,null);
-		if(flag==-1) return false;
-	}
-	}
-	
-	if(list1.size()>0){
-	for(long emp_id:list1){
-		cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
-        cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
-        long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
-        if(flag==-1) return false;
-	}
-	}
+
+
+        Cursor c= db_.rawQuery("SELECT "+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" from employee_task where "+ TaskContract.TABLE_NAME+TaskEntry._ID+ "= "+ task_id, null);
+        if (c.moveToFirst()){
+            while(!c.isAfterLast()){
+                String data = c.getString(c.getColumnIndex(EmployeeContract.TABLE_NAME+EmployeeEntry._ID));
+                list_of_current_ids.add(Long.parseLong(data));
+                c.moveToNext();
+            }
+        }
+        c.close();
+
+        list1.addAll(employee_ids);
+        list2.addAll(list_of_current_ids);
+        list1.removeAll(list_of_current_ids);
+        list2.removeAll(employee_ids);
+
+        if(list2.size()>0){
+            for(long emp_id:list2){
+                long flag= db.delete("employee_task",EmployeeContract.TABLE_NAME+EmployeeEntry._ID+ "="+emp_id,null);
+                if(flag==-1) return false;
+            }
+        }
+
+        if(list1.size()>0){
+            cv=new ContentValues();
+            for(long emp_id:list1){
+                cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
+                cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
+                long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
+                if(flag==-1) return false;
+            }
+        }
+
         return true;
-        
+
+    }
+
+    public boolean updateEmployee(long id,ContentValues values){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = EmployeeEntry._ID + " =?"; //where statement
+        String selectionArgs[] = { String.valueOf(id)  };
+        if( db.update(EmployeeContract.TABLE_NAME,values,selection,selectionArgs)>0){
+            return true;
+        }
+        return false;
     }
 
 }
