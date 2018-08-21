@@ -2,6 +2,7 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -85,6 +86,23 @@ public class TaskCreation extends AppCompatActivity {
                     initSpinner(adapterPool);
 
 
+
+
+    }
+    class SpinnerInitTask extends AsyncTask<TaskCreationAdapterPool,Void,Cursor>{
+
+
+        @Override
+        protected Cursor doInBackground(TaskCreationAdapterPool... taskCreationAdapterPools) {
+
+
+            return employeeDBHelper.getAllDepartments();
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+        }
 
 
     }
