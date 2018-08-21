@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.MyDepartmentRecyclerViewAdapter;
@@ -17,6 +18,9 @@ made by Aya
  */
 // see how to connect 3 main activity ** department ** employies **tasks
 public class MainActivity extends AppCompatActivity {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     private static int SPLASH_TIME_OUT = 750;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
