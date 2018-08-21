@@ -73,7 +73,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
                 +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
                 +TaskEntry.COLUMN_TASK_DATE + " DATETIME ,"
-                +TaskEntry.COLUMN_TASK_COMPLETED + " TINYINT(1) ,"
+                +TaskEntry.COLUMN_TASK_COMPLETED + " TINYINT(1) DEFAULT 0,"
                 +TaskEntry.COLUMN_TASK_EVALUATION+" INTEGER"
                 +");"
                 ;
@@ -461,7 +461,7 @@ String query
         Cursor c = db.rawQuery("SELECT MAX("+EmployeeEntry._ID+") from "+EmployeeContract.TABLE_NAME,null);
         c.moveToFirst();
         long max_id = c.getLong(0);
-        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + EmployeeContract. TABLE_NAME+" ' " );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + EmployeeContract.TABLE_NAME+" ' " );
         c.close();
 
 
@@ -478,7 +478,7 @@ String query
         Cursor c = db.rawQuery("SELECT MAX("+TaskEntry._ID+") from "+TaskContract.TABLE_NAME,null);
         c.moveToFirst();
         long max_id = c.getLong(0);
-        db.execSQL("ALTER TABLE "+TaskContract.TABLE_NAME +" AUTO_INCREMENT  = " + String.valueOf(max_id+1)  );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + TaskContract.TABLE_NAME+" ' " );
         c.close();
 
 
@@ -500,7 +500,7 @@ String query
         Cursor c2 = db.rawQuery("SELECT MAX("+EmployeeEntry._ID+") from "+EmployeeContract.TABLE_NAME,null);
         c2.moveToFirst();
         long max_id = c2.getLong(0);
-        db.execSQL("ALTER TABLE "+EmployeeContract.TABLE_NAME +" AUTO_INCREMENT = " + String.valueOf(max_id+1)  );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + EmployeeContract.TABLE_NAME+" ' " );
         c2.close();
 
 
@@ -513,7 +513,7 @@ String query
         Cursor c3 = db.rawQuery("SELECT MAX("+DepartmentEntry._ID+") from "+DepartmentContract.TABLE_NAME,null);
         c3.moveToFirst();
         max_id = c2.getLong(0);
-        db.execSQL("ALTER TABLE "+DepartmentContract.TABLE_NAME +" AUTO_INCREMENT = " + String.valueOf(max_id+1)  );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + DepartmentContract.TABLE_NAME+" ' " );
         c3.close();
 
         return flag>0;
@@ -528,6 +528,12 @@ String query
         int f3 = db.delete(EmployeeContract.TABLE_NAME,null,null);
         int f4 = db.delete(DepartmentContract.TABLE_NAME,null,null);
 
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(0) +" WHERE name ='  " + EmployeeContract.TABLE_NAME+" ' " );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(0) +" WHERE name ='  " + TaskContract.TABLE_NAME+" ' " );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(0) +" WHERE name ='  " + DepartmentContract.TABLE_NAME+" ' " );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(0) +" WHERE name ='  " + " employee_task " +" ' " );
+
+
         return f1>0 && f2>0 && f3>0 && f4>0 ;
     }
 
@@ -537,6 +543,9 @@ String query
 
         int f2 = db.delete("employee_task",null,null);
         int f1 = db.delete(TaskContract.TABLE_NAME,null,null);
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(0) +" WHERE name ='  " + " employee_task " +" ' " );
+        db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(0) +" WHERE name ='  " + TaskContract.TABLE_NAME+" ' " );
+
 
         return f1>0 && f2>0 ;
     }
