@@ -4,145 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="120dp"
     android:layout_marginBottom="20dp"
-    android:layout_marginEnd="5dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginStart="10dp"
     android:layout_marginTop="20dp"
-    android:backgroundTint="@color/whitecolor"
+    android:backgroundTint="#FFFFFF"
     android:clickable="true"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical"
-    android:background="#E5E5E5"
-    card_view:cardBackgroundColor="@color/whitecolor"
+    card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="10dp"
+    card_view:cardElevation="8dp"
+    card_view:cardPreventCornerOverlap="false"
     card_view:contentPadding="0dp">
 
-    <android.support.constraint.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/department_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="Accounting"
+            android:textAppearance="@android:style/TextAppearance.DialogWindowTitle"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/department_description"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/department_name"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="5sp"
+            android:maxLines="2"
+            android:text="It's ........"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Click to see more"
-            android:textColor="#0871f1"
-            android:textStyle="bold"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.962"
-            card_view:layout_constraintStart_toEndOf="@+id/department_description"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.905" />
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/department_description"
+            android:layout_marginTop="0dp"
+            android:text="... See More"
+            android:textColor="#0871f1" /><![CDATA[
+        >
+    ]]>
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/department_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:maxLines="2"
-            android:text="It's ........"
-            android:textColor="#000000"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/textView12"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.905" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="228dp"
-            android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="#000000"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="@+id/department_name"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/department_name"
-            card_view:layout_constraintTop_toBottomOf="@+id/department_name"
-            card_view:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/department_name"
-            android:layout_width="172dp"
-            android:layout_height="37dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/source_sans_pro_black"
-            android:gravity="center"
-            android:text="Accounting"
-            android:textAlignment="textStart"
-            android:textAppearance="@android:style/TextAppearance.DialogWindowTitle"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.07"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.36" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:layout_width="10dp"
+            android:layout_height="0dp"
             android:layout_marginEnd="8dp"
-            android:background="#223F51"
+            android:background="@color/colorAccent"
             android:orientation="horizontal"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"></LinearLayout>
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="103dp"
-            android:layout_height="21dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/source_sans_pro_black"
-            android:text="DEPARTMENT"
-            android:textColor="#1F1D7D"
-            card_view:layout_constraintBottom_toTopOf="@+id/department_name"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/department_name"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.59000003" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/source_sans_pro_black"
-            android:text="DESCRIPTION"
-            android:textColor="#1F1D7D"
-            android:textStyle="bold"
-            card_view:layout_constraintBottom_toTopOf="@+id/department_description"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/department_name"
-            card_view:layout_constraintTop_toBottomOf="@+id/view" />
-
+            card_view:layout_constraintVertical_bias="0.454"></LinearLayout>
     </android.support.constraint.ConstraintLayout>
+
 
 </android.support.v7.widget.CardView>

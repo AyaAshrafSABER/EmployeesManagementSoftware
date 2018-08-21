@@ -49,21 +49,20 @@ public class TasksFragment extends Fragment {
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.eventlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ArrayList<Tasks> tasks = new ArrayList<Tasks>();
-//        Cursor cursor =employeeDBHelper.getAllTasksCursor();
-  /*      if (cursor.moveToFirst()) {
+        Cursor cursor =employeeDBHelper.getAllTasksCursor();
+       if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 Tasks task = new Tasks();
                 task.setId(cursor.getString(cursor.getColumnIndex(TaskEntry._ID)));
                 task.setTaskName(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_NAME)));
                 task.setTaskDetails(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DESCRIPTION)));
                 task.setTaskDeadline(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DEADLINE)));
-//                task.setTaskDate(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE)));
-         //       task.setTaskInstractor(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_INSTRUCTOR)));
-//                task.setEvaluation(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION)));
+                task.setTaskDate(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE)));
+                task.setEvaluation(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION)));
                 tasks.add(task);
                 cursor.moveToNext();}
         }
-        cursor.close();*/
+        cursor.close();
         recyclerView.setAdapter(new TasksAdapter(getActivity(),tasks));
     }
 

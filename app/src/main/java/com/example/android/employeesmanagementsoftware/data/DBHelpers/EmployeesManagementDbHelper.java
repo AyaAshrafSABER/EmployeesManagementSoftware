@@ -190,46 +190,46 @@ String query
 
 
     public Cursor getTasksOfEmployee(long employee_id){
-            //gets tasks of a specific employee
-            SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
+        //gets tasks of a specific employee
+        SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
 
-            String select = "SELECT " +
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
-                    EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
-                    TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_INSTRUCTOR +" , "+
-                    TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
-                    EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
-                    EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID +" , "+
-                    DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID +" , "+
-                    "employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" , "+
-                    "employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
-                    ;
-
-
-            String from = " from "+ DepartmentContract.TABLE_NAME + " INNER JOIN " + EmployeeContract.TABLE_NAME
-                    + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID+ " = "
-                    + DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
-                    + " INNER JOIN " + " employee_task "
-                    + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID+ " = "
-                    + " employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID
-                    + " INNER JOIN " + TaskContract.TABLE_NAME
-                    + " ON " +TaskContract.TABLE_NAME+"."+TaskEntry._ID+ " = "
-                    + " employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
-                    ;
-
-            String where = " WHERE "+EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID + " = " + String.valueOf(employee_id);
-
-            String query = select+from+where;
-
-            Cursor cursor  =db.rawQuery(query,null);
-            return cursor; //don't forget to close the cursor after usage
+        String select = "SELECT " +
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
+                TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_INSTRUCTOR +" , "+
+                TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
+                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID +" , "+
+                DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID +" , "+
+                "employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID+" , "+
+                "employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                ;
 
 
-        }
+        String from = " from "+ DepartmentContract.TABLE_NAME + " INNER JOIN " + EmployeeContract.TABLE_NAME
+                + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID+ " = "
+                + DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
+                + " INNER JOIN " + " employee_task "
+                + " ON " +EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID+ " = "
+                + " employee_task."+EmployeeContract.TABLE_NAME+EmployeeEntry._ID
+                + " INNER JOIN " + TaskContract.TABLE_NAME
+                + " ON " +TaskContract.TABLE_NAME+"."+TaskEntry._ID+ " = "
+                + " employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
+                ;
+
+        String where = " WHERE "+EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID + " = " + String.valueOf(employee_id);
+
+        String query = select+from+where;
+
+        Cursor cursor  =db.rawQuery(query,null);
+        return cursor; //don't forget to close the cursor after usage
+
+
+    }
 
 
 
