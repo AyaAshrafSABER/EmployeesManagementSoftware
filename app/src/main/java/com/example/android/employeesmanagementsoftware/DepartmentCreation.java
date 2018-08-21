@@ -55,7 +55,7 @@ public class DepartmentCreation extends AppCompatActivity {
                     Snackbar.make(v, "SOME OR ALL INPUTS ARE INVALID. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 else{
                     boolean flag =   emdb.addDepartment( nameOfDepartment.getText().toString(),description.getText().toString());
-                    actionSave(flag, v);
+                    actionSave(flag, v, false);
                 }
             }
         });
@@ -79,15 +79,18 @@ public class DepartmentCreation extends AppCompatActivity {
                     Snackbar.make(v, "SOME OR ALL INPUTS ARE INVALID. PLEASE ENTER VALID VALUES.", Snackbar.LENGTH_LONG).setAction("", null).show();
                 } else {
                     boolean correct = emdb.updateDepartment(new DepartmentItem(departmentId,nameOfDepartment.getText().toString(),description.getText().toString()));
-                    actionSave(correct, v);
+                    actionSave(correct, v, true);
                 }
             }
         });
 
     }
-    private  void actionSave(boolean flag,View v) {
+    private  void actionSave(boolean flag,View v, boolean isEdit) {
         if(flag){
+            if(!isEdit)
             Snackbar.make(v, "ENTERED SUCCESSFULLY", Snackbar.LENGTH_LONG).setAction("", null).show();
+            else
+                Snackbar.make(v, "UPDATED SUCCESSFULLY", Snackbar.LENGTH_LONG).setAction("", null).show();
             description.setText("",TextView.BufferType.EDITABLE);
             nameOfDepartment.setText("",TextView.BufferType.EDITABLE);
             depFragment.updateDepartmentList(emdb);
