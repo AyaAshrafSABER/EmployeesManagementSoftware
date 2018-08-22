@@ -51,22 +51,22 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/source_sans_pro"
-            android:text="... See More"
+            android:text="Click to see more"
             android:textColor="#0871f1"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.95"
             card_view:layout_constraintStart_toEndOf="@+id/linearLayout3"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.95" />
+            card_view:layout_constraintVertical_bias="0.060000002" />
 
         <TextView
             android:id="@+id/department_description"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="41dp"
             android:layout_below="@id/department_name"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="24dp"
             android:fontFamily="@font/source_sans_pro"
             android:maxLines="2"
             android:text="It's ........"
