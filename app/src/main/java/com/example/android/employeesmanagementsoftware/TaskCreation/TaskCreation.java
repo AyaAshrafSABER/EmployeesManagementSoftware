@@ -34,7 +34,7 @@ public class TaskCreation extends AppCompatActivity {
     private Set<Long> employees;
     private TaskCreationCommand commander;
     private TaskCreationUtil util;
-    private TasksFragment tasksFragment = TasksFragment.newInstance(0);
+    private final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this);
 
     public TaskCreation() {
         employees = new TreeSet<>();
@@ -46,7 +46,6 @@ public class TaskCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
 
-        final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this); ;
 
 
         Bundle taskData=getIntent().getExtras();
@@ -84,7 +83,7 @@ public class TaskCreation extends AppCompatActivity {
 
 
 
-                    initSpinner(adapterPool,employeeDBHelper);
+                    initSpinner(adapterPool);
 
 
 
@@ -135,7 +134,7 @@ public class TaskCreation extends AppCompatActivity {
 
     }
 
-    private void initSpinner(final TaskCreationAdapterPool adapterPool,EmployeesManagementDbHelper employeeDBHelper) {
+    private void initSpinner(final TaskCreationAdapterPool adapterPool) {
 
        new SpinnerInitTask().execute(new SpinnerTaskParams(employeeDBHelper,adapterPool));
 
@@ -179,10 +178,11 @@ public class TaskCreation extends AppCompatActivity {
             //add a new task or update an existing one with the extracted data
             commander.saveData(taskName.getText().toString(), 0, taskDescp.getText().toString(),
                     taskDeadline.getText().toString(), new ArrayList<>(employees));
-
+            TasksFragment.newInstance(0).updateTasksList(employeeDBHelper);
+           finish();
 
         }
-        finish();
+
         return super.onOptionsItemSelected(item);
     }
 
