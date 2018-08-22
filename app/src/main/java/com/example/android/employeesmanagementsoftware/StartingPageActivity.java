@@ -143,6 +143,7 @@ public class StartingPageActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //TO-DO-
             return true;
         }
 

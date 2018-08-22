@@ -51,8 +51,6 @@ public class DepFragment extends Fragment {
     public DepFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static DepFragment newInstance(int columnCount) {
         DepFragment fragment = new DepFragment();
         Bundle args = new Bundle();

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.example.android.employeesmanagementsoftware.DepartmentCreation;
 import com.example.android.employeesmanagementsoftware.EmployeeCreation;
 import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeActivity;
@@ -23,9 +21,6 @@ import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeAdapte
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
-
-import java.util.ArrayList;
-
 /**
  * Created by Monica  on 7/11/2018.
  */
@@ -40,9 +35,11 @@ public class DepartmentActivity extends AppCompatActivity {
     private final int EMP_REQUEST = 1;
     private EmployeesManagementDbHelper helper;
     private TextView description;
-    public ListView employees;
+    private ListView employees;
     private EmployeeAdapter adapterEmp;
     private long departmentId;
+    private String depName;
+    private DepFragment depFragment = DepFragment.newInstance(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,31 +48,21 @@ public class DepartmentActivity extends AppCompatActivity {
         helper = new EmployeesManagementDbHelper(this);
         setDepatementParameter();
         setEmployeeList();
-
-        Log.i("start", "oncreate");
-/*
-        ArrayList<Long> arr = new  ArrayList<Long>();
-        Long id = Long.valueOf(2);arr.add(0,id);
-        helper.addTask("task1",4,"lol","08-08-2018",arr);
-*/
         employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
                 intent.putExtra("employeeId", id);
-                Log.i("perf", "id " + id);
                 startActivityForResult(intent, EMP_REQUEST);
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeCreation.class);
                 intent.putExtra("departmentId", departmentId);
-                Log.i("insert", String.valueOf(departmentId));
                 startActivityForResult(intent, EMP_REQUEST);
             }
         });
@@ -85,14 +72,15 @@ public class DepartmentActivity extends AppCompatActivity {
     }
 
     private void setDepatementParameter() {
-        description = (TextView) findViewById(R.id.description);
+        description =  findViewById(R.id.description);
         Intent intent = getIntent();
         departmentId = intent.getExtras().getLong("departmentId");
         //setting name,description of department
         Cursor cursorDep = helper.getDepartment(departmentId);
         if (cursorDep.moveToFirst()) {
             description.setText(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_DESCRIPTION)));
-            setTitle(cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_NAME)));
+            depName = cursorDep.getString(cursorDep.getColumnIndex(DepartmentEntry.COLUMN_DEPARTMENT_NAME));
+            setTitle(depName);
         }
         cursorDep.close();
     }
@@ -105,17 +93,17 @@ public class DepartmentActivity extends AppCompatActivity {
 
         adapterEmp = new EmployeeAdapter(this, cursorEmp);
         employees.setAdapter(adapterEmp);
-        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        RelativeLayout emptyView =  findViewById(R.id.empty_view);
         employees.setEmptyView(emptyView);
         // cursorEmp.close();
     }
 
     private void displayTaskList() {
         Cursor cursorTask = helper.getTasksOfDepartment(departmentId);
-        ListView tasksList = (ListView) findViewById(R.id.tasks_list);
+        ListView tasksList = findViewById(R.id.tasks_list);
         TaskAdapter adapterTask = new TaskAdapter(this, cursorTask);
         tasksList.setAdapter(adapterTask);
-        RelativeLayout emptyTasks = (RelativeLayout) findViewById(R.id.empty_tasks);
+        RelativeLayout emptyTasks = findViewById(R.id.empty_tasks);
         tasksList.setEmptyView(emptyTasks);
         //    cursorTask.close();
     }
@@ -148,15 +136,17 @@ public class DepartmentActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
+            boolean re = helper.deleteDepartment(departmentId);
             this.finish();
-            return helper.deleteDepartment(departmentId);
-
+            depFragment.updateDepartmentList(helper);
+            return re;
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(DepartmentActivity.this, DepartmentCreation.class);
             intent.putExtra("depatmentID", departmentId);
             intent.putExtra("IsEdit", true);
             startActivity(intent);
+            this.finish();
         }
 
         return super.onOptionsItemSelected(item);

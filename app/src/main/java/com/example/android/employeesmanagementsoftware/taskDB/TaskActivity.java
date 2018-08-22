@@ -12,21 +12,31 @@ import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
-
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 /*
 made by menna
  */
 //First you need to show departement and  the employees in this departement who work  in the task
 public class TaskActivity extends AppCompatActivity {
     private EmployeesManagementDbHelper employeeDBHelper;
-    private  Long task_id;
+    private Long task_id;
+    private TextView titletext;
+    private TextView datetext;
+    private TextView descriptiontext;
+    private TextView deadlinetext ;
+    private TasksFragment tasksFragment = TasksFragment.newInstance(0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
         employeeDBHelper = new EmployeesManagementDbHelper(this);
-
+         titletext =  findViewById(R.id.tasktitle);
+         datetext = findViewById(R.id.taskdate);
+         descriptiontext = findViewById(R.id.taskdesc);
+         deadlinetext = findViewById(R.id.deadline);
 
         Intent intent= getIntent();
         task_id = intent.getExtras().getLong("task_id");
@@ -36,10 +46,6 @@ public class TaskActivity extends AppCompatActivity {
             String description = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DESCRIPTION));
             String deadline = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DEADLINE));
             String date = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE));
-            TextView titletext = (TextView) findViewById(R.id.tasktitle);
-            TextView datetext = (TextView) findViewById(R.id.taskdate);
-            TextView descriptiontext = (TextView) findViewById(R.id.taskdesc);
-            TextView deadlinetext = (TextView) findViewById(R.id.deadline);
             titletext.setText(title);
             datetext.setText("Start Date: " + date);
             descriptiontext.setText(description);
@@ -50,7 +56,7 @@ public class TaskActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_depatment, menu);
+        getMenuInflater().inflate(R.menu.menu_task, menu);
         return true;
     }
 
@@ -63,14 +69,26 @@ public class TaskActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-            this.finish();
-            return  employeeDBHelper.deleteTask(id);
+              employeeDBHelper.deleteTask(task_id );
+              tasksFragment.updateTasksList(employeeDBHelper);
+               this.finish();
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(TaskActivity.this, TaskCreation.class);
             intent.putExtra("task_id",(long) task_id);
             intent.putExtra("IsEdit", true);
             startActivity(intent);
+            tasksFragment.updateTasksList(employeeDBHelper);
+        }
+        if (id == R.id.action_done) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+
+// 2. Chain together various setter methods to set the dialog characteristics
+            builder.setMessage("hello")
+                    .setTitle("yarab");
+
+// 3. Get the AlertDialog from create()
+            AlertDialog dialog = builder.create();
         }
 
         return super.onOptionsItemSelected(item);

@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.TaskAdapter;
@@ -62,14 +63,13 @@ public class EmployeeActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.employee);
-
-        name = (EditText) findViewById(R.id.employee_name);
-        email = (EditText) findViewById(R.id.email);
-        phone = (EditText) findViewById(R.id.phone);
-        birthday = (EditText) findViewById(R.id.birthday);
-        job = (EditText) findViewById(R.id.post);
-        notes = (CustomEditTextWithBullets) findViewById(R.id.notes);
-        image = (ImageView) findViewById(R.id.employee_icon);
+        name = findViewById(R.id.employee_name);
+        email = findViewById(R.id.email);
+        phone =  findViewById(R.id.phone);
+        birthday = findViewById(R.id.birthday);
+        job = findViewById(R.id.post);
+        notes = findViewById(R.id.notes);
+        image = findViewById(R.id.employee_icon);
         image.setTag("");
         picturePath = new String();
         image.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +118,7 @@ public class EmployeeActivity extends AppCompatActivity {
                 performance += cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_EVALUATION));
             }
             float res = (float) performance / cursor.getCount();
-            performanceRatBar = (RatingBar) findViewById(R.id.ratingBar_employee);
+            performanceRatBar =  findViewById(R.id.ratingBar_employee);
             performanceRatBar.setRating(res);
         }
 
@@ -210,7 +210,6 @@ public class EmployeeActivity extends AppCompatActivity {
 
     private void setEmployee() {
         Cursor cursor = helper.getEmployee(employeeId);
-
         //setting data of employee
         if (cursor.moveToFirst()) {
             name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));

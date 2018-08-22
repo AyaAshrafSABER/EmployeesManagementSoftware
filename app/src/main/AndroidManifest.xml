@@ -23,7 +23,10 @@
             android:label="Task Creation"
             android:configChanges="orientation|screenSize|keyboardHidden">
             </activity>
-        <activity android:name=".taskDB.TaskActivity" />
+        <activity android:name=".taskDB.TaskActivity"
+            android:theme="@style/AppTheme">
+
+        </activity>
         <activity
             android:name=".DepartmentCreation"
             android:label="@string/title_activity_main2"
@@ -35,7 +38,6 @@
             android:label="@string/title_activity_employee_creation"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".taskDB.TasksActivity"></activity>
         <activity
             android:name=".EmployeeDB.EmployeeActivity"
             android:label="Employee"

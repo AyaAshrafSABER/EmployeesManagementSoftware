@@ -10,18 +10,19 @@ made by menna
 public  class Tasks
 {
 
-        private Long id;
-        private String taskName;
-        private ArrayList<Long> employees_id;
-        private String taskDetails;
-        private String taskDate;
-        private String taskdeadline;
-        private boolean done;
-        private int  evaluation;
-        public Tasks (){
-            employees_id = new ArrayList<>();
-            done = false;
-        }
+    private Long id;
+    private String taskName;
+    private ArrayList<Long> employees_id;
+    private String taskDetails;
+    private String taskDate;
+    private String taskDeadLine;
+    private boolean done;
+    private int  evaluation;
+    public Tasks (){
+        employees_id = new ArrayList<>();
+        done = false;
+    }
+
     public void addEmployee(Long id) {
             employees_id.add(id);
     }
@@ -49,7 +50,7 @@ public  class Tasks
     }
 
     public void setTaskDeadline(String taskdeadline) {
-        this.taskdeadline=taskdeadline;}
+        this.taskDeadLine=taskdeadline;}
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
@@ -61,7 +62,7 @@ public  class Tasks
     }
 
     public String getTaskDeadline() {
-        return taskdeadline;
+        return taskDeadLine;
     }
 
     public void setTaskDetails(String taskDetails) {
