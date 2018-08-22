@@ -3,7 +3,6 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
