@@ -9,7 +9,7 @@ class TaskCreationUtil {
 
     private Activity activity;
     private EmployeesManagementDbHelper employeeDBHelper;
-
+    public static final int NEW_TASK_ID=-1;
     TaskCreationUtil(Activity activity, EmployeesManagementDbHelper employeeDBHelper) {
         this.activity=activity;
 
@@ -19,7 +19,7 @@ class TaskCreationUtil {
     //return a suitable TaskCreationCommandObject based on the task's id
     TaskCreationCommand getCommander(long task_id){
 
-        return task_id==-1?new NewCommand(employeeDBHelper):new EditCommand(activity,employeeDBHelper,task_id);
+        return task_id==NEW_TASK_ID?new NewCommand(employeeDBHelper):new EditCommand(activity,employeeDBHelper,task_id);
 
     }
     boolean isEmpty(String taskName,String taskDescp,String taskDeadline){

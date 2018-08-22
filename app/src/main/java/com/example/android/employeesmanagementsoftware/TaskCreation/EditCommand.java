@@ -66,7 +66,6 @@ public class EditCommand implements TaskCreationCommand {
 
     @Override
     public boolean saveData(String task_name, int task_evaluation, String task_description, String task_deadline, ArrayList<Long> employees_ids) {
-        //TODO pass the array of employees to the db's method when it's ready
         return employeeDBHelper.updateTask((int)task_id,task_name,task_evaluation,task_description,task_deadline,employees_ids);
 
     }

@@ -48,7 +48,7 @@ public class TaskCreation extends AppCompatActivity {
 
 
         Bundle taskData=getIntent().getExtras();
-        long task_id=-1;
+        long task_id=TaskCreationUtil.NEW_TASK_ID;
         if (taskData!=null)
             task_id = taskData.getLong("task_id");
 
@@ -176,7 +176,7 @@ public class TaskCreation extends AppCompatActivity {
                 }
 
             //add a new task or update an existing one with the extracted data
-            commander.saveData(taskName.getText().toString(), 5, taskDescp.getText().toString(),
+            commander.saveData(taskName.getText().toString(), 0, taskDescp.getText().toString(),
                     taskDeadline.getText().toString(), new ArrayList<>(employees));
 
 
