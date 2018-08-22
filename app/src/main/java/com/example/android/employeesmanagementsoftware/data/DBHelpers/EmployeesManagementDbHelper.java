@@ -556,7 +556,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return true;
 
     }
-    public boolean updateTaskEvaluation(int task_id,boolean task_completed , int task_evaluation) {
+    public boolean updateTaskEvaluation(Long task_id,boolean task_completed , int task_evaluation) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(TaskEntry.COLUMN_TASK_COMPLETED, task_completed);

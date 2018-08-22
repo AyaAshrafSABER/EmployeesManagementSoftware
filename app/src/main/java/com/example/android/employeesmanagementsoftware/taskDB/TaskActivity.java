@@ -6,20 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 /*
 made by menna
  */
 //First you need to show departement and  the employees in this departement who work  in the task
-public class TaskActivity extends AppCompatActivity {
+public class TaskActivity extends AppCompatActivity implements Evaluation.EvaluationListner{
     private EmployeesManagementDbHelper employeeDBHelper;
     private Long task_id;
     private TextView titletext;
@@ -27,17 +26,20 @@ public class TaskActivity extends AppCompatActivity {
     private TextView descriptiontext;
     private TextView deadlinetext ;
     private TasksFragment tasksFragment = TasksFragment.newInstance(0);
+    private RatingBar mRatingBar;
+    private TextView mEvaluation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-        employeeDBHelper = new EmployeesManagementDbHelper(this);
+         employeeDBHelper = new EmployeesManagementDbHelper(this);
          titletext =  findViewById(R.id.tasktitle);
          datetext = findViewById(R.id.taskdate);
          descriptiontext = findViewById(R.id.taskdesc);
          deadlinetext = findViewById(R.id.deadline);
-
+         mRatingBar = findViewById(R.id.ratingBar_task);
+         mEvaluation = findViewById(R.id.evaluation);
         Intent intent= getIntent();
         task_id = intent.getExtras().getLong("task_id");
         Cursor cursor = employeeDBHelper.getSpecifiTaskCursor(task_id);
@@ -50,6 +52,12 @@ public class TaskActivity extends AppCompatActivity {
             datetext.setText("Start Date: " + date);
             descriptiontext.setText(description);
             deadlinetext.setText("Deadline: " + deadline);
+            if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_COMPLETED)))> 0) {
+                mRatingBar.setRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION))));
+                mRatingBar.setVisibility(View.VISIBLE);
+                mEvaluation.setVisibility(View.VISIBLE);
+            }
+
         }
 
 }
@@ -81,17 +89,20 @@ public class TaskActivity extends AppCompatActivity {
             tasksFragment.updateTasksList(employeeDBHelper);
         }
         if (id == R.id.action_done) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-
-// 2. Chain together various setter methods to set the dialog characteristics
-            builder.setMessage("hello")
-                    .setTitle("yarab");
-
-// 3. Get the AlertDialog from create()
-            AlertDialog dialog = builder.create();
+            openDialog();
         }
 
         return super.onOptionsItemSelected(item);
     }
-
+    public void openDialog(){
+        Evaluation evaluation = new Evaluation();
+        evaluation.show(getSupportFragmentManager(),"EvaluationTaskDialog");
+    }
+    @Override
+    public void applyingRating(int rate) {
+        employeeDBHelper.updateTaskEvaluation(task_id,true,rate);
+        mRatingBar.setRating(rate);
+        mRatingBar.setVisibility(View.VISIBLE);
+        mEvaluation.setVisibility(View.VISIBLE);
+    }
 }
