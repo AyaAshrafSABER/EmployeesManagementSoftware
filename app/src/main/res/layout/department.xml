@@ -44,45 +44,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:id="@+id/empty_view"
+                <include
+                    android:id="@+id/empty_employees"
+                    layout="@layout/empty_employees_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
-
-                    <ImageView
-                        android:id="@+id/empty_business"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:src="@drawable/hire"
-                        android:tint="@color/colorPrimary"
-                        />
-
-                    <TextView
-                        android:id="@+id/empty_title"
-                        android:text="Starting business ?!"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/empty_business"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingTop="16dp"
-                        android:textAppearance="?android:textAppearanceMedium"/>
-
-                    <TextView
-                        android:id="@+id/empty_subtitle"
-                        android:text="Let's hire some brilliant employees !"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/empty_title"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="sans-serif"
-                        android:paddingTop="8dp"
-                        android:textAppearance="?android:textAppearanceSmall"
-                        android:textColor="#A2AAB0"/>
-                </RelativeLayout>
-
+                    android:layout_centerInParent="true"
+                    ></include>
 
             <ListView
                 android:id="@+id/employees_list"
@@ -134,35 +102,14 @@
                 android:drawSelectorOnTop="true"
                 android:orientation="vertical">
             </ListView>
-            <RelativeLayout
-                android:id="@+id/empty_tasks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
 
-                <ImageView
-                    android:id="@+id/empty_task_list"
+                <include
+                    android:id="@+id/empty_tasks_dep"
+                    layout="@layout/empty_tasks_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/deadlines"
-
-                    />
-
-                <TextView
-                    android:id="@+id/empty_title_task"
-                    android:text="Add some tasks !"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/empty_task_list"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingTop="16dp"
-                    android:textAppearance="?android:textAppearanceMedium"/>
-
-
-            </RelativeLayout>
-
+                    android:layout_centerInParent="true"
+                    ></include>
             </RelativeLayout>
         </LinearLayout>
     </com.example.android.employeesmanagementsoftware.Utilities.VerticalScrollview>

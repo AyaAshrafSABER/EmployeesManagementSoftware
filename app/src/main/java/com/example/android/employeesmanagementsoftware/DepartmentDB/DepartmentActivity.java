@@ -50,12 +50,12 @@ public class DepartmentActivity extends AppCompatActivity {
         setEmployeeList();
 
         Log.i("start", "oncreate");
-/*
-        ArrayList<Long> arr = new  ArrayList<Long>();
+
+       /* ArrayList<Long> arr = new  ArrayList<Long>();
         Long id = Long.valueOf(2);arr.add(0,id);
         helper.addTask("task1",4,"lol","08-08-2018",arr);
-*/
-        employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        helper.addTask("task1",4,"lol","08-08-2018",arr);
+      */  employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
@@ -102,7 +102,7 @@ public class DepartmentActivity extends AppCompatActivity {
 
         adapterEmp = new EmployeeAdapter(this, cursorEmp);
         employees.setAdapter(adapterEmp);
-        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_view);
+        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_employees);
         employees.setEmptyView(emptyView);
         // cursorEmp.close();
     }
@@ -112,7 +112,7 @@ public class DepartmentActivity extends AppCompatActivity {
         ListView tasksList = (ListView) findViewById(R.id.tasks_list);
         TaskAdapter adapterTask = new TaskAdapter(this, cursorTask);
         tasksList.setAdapter(adapterTask);
-        RelativeLayout emptyTasks = (RelativeLayout) findViewById(R.id.empty_tasks);
+        RelativeLayout emptyTasks = (RelativeLayout) findViewById(R.id.empty_tasks_dep);
         tasksList.setEmptyView(emptyTasks);
         //    cursorTask.close();
     }

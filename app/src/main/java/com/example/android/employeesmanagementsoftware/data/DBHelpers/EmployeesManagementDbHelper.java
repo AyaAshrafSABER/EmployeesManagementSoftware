@@ -124,7 +124,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
     public Cursor getTasksOfDepartment(long department_id){
         //gets tasks of a specific deparrtment
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
-        String select = "SELECT " +
+        String select = "SELECT DISTINCT " +
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
                 TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
@@ -193,7 +193,7 @@ String query
             //gets tasks of a specific employee
             SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
 
-            String select = "SELECT " +
+            String select = "SELECT DISTINCT " +
                     TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
                     EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
                     TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+

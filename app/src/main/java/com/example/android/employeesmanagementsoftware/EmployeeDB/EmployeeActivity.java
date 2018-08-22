@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.TaskAdapter;
@@ -104,6 +105,8 @@ public class EmployeeActivity extends AppCompatActivity {
         Cursor cursor = helper.getTasksOfEmployee(employeeId);
         CursorAdapter tasksAdapter = new TaskAdapter(this, cursor);
         tasksList.setAdapter(tasksAdapter);
+        RelativeLayout noTasks = findViewById(R.id.empty_view_task);
+        tasksList.setEmptyView(noTasks);
         setPerformance(cursor);
 
         //    cursor.close();

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+       android:id="@+id/empty_deadlines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/deadlines"
+        />
+
+    <TextView
+        android:id="@+id/empty_task"
+        android:text="No tasks?!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/empty_deadlines"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-medium"
+        android:paddingTop="16dp"
+        android:textAppearance="?android:textAppearanceMedium"/>
+
+    <TextView
+        android:id="@+id/empty_subtitle_task"
+        android:text="Let's assign some tasks !"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/empty_task"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:paddingTop="8dp"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="#A2AAB0"/>
+</RelativeLayout>
