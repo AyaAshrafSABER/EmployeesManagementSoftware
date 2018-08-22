@@ -78,7 +78,7 @@ public class TasksFragment extends Fragment {
     }
     public void updateTasksList(EmployeesManagementDbHelper mDataBase){
         mValues = new ArrayList<>();
-        cursor =  mDataBase.getAllDepartments();
+        cursor =  mDataBase.getAllTasksCursor();
         if (cursor.moveToFirst()) {
             do {
                 Tasks task = new Tasks();
