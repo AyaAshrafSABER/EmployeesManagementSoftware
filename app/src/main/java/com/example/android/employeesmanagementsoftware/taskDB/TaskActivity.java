@@ -77,8 +77,8 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-              employeeDBHelper.deleteTask(task_id );
-              tasksFragment.updateTasksList(employeeDBHelper);
+               employeeDBHelper.deleteTask(task_id );
+               tasksFragment.updateTasksList(employeeDBHelper);
                this.finish();
         }
         if (id == R.id.action_update) {
