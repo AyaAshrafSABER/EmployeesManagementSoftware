@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -33,6 +34,7 @@ public class TaskCreation extends AppCompatActivity {
     private Set<Long> employees;
     private TaskCreationCommand commander;
     private TaskCreationUtil util;
+    private TasksFragment tasksFragment = TasksFragment.newInstance(0);
 
     public TaskCreation() {
         employees = new TreeSet<>();
@@ -83,7 +85,6 @@ public class TaskCreation extends AppCompatActivity {
 
 
                     initSpinner(adapterPool,employeeDBHelper);
-
 
 
 

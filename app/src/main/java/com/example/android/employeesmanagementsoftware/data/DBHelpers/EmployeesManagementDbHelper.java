@@ -5,32 +5,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.util.Log;
-
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
-import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
-import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
-import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
-
-
 import java.util.ArrayList;
-import java.util.*;
-
 // to use insert or get methods
 // Create  EmployeesManagementDbHelper instance first
 
 public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "employees_management.db";
-    private static final String TAG="helper";
 
     /**
      * Database version. If you change the database schema, you must increment the database version.
@@ -73,7 +62,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
                 +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
                 +TaskEntry.COLUMN_TASK_DATE + " DATETIME ,"
-                +TaskEntry.COLUMN_TASK_COMPLETED + " TINYINT(1) DEFAULT 0,"
+                +TaskEntry.COLUMN_TASK_COMPLETED + " TINYINT(1),"
                 +TaskEntry.COLUMN_TASK_EVALUATION+" INTEGER"
                 +");"
                 ;
@@ -127,9 +116,9 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String select = "SELECT " +
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
-                TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
+                //TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
+                //TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
+                //TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_COMPLETED +" , "+
                 TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
@@ -151,40 +140,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + " ON " +TaskContract.TABLE_NAME+"."+TaskEntry._ID+ " = "
                 + " employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
                 ;
-
         String where = " WHERE "+DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID + " = " + String.valueOf(department_id);
-
-        String query = select+from+where;
-
-        Cursor cursor  =db.rawQuery(query,null);
-        return cursor; //don't forget to close the cursor after usage
-/*
-String query
-        //specify the columns to be read
-        String [] columns = {
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME,
-                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
-                TaskEntry.COLUMN_TASK_DESCRIPTION,
-                TaskEntry.COLUMN_TASK_DEADLINE,
-                TaskEntry.COLUMN_TASK_DATE,
-                TaskEntry.COLUMN_TASK_EVALUATION,
-                TaskEntry.COLUMN_TASK_INSTRUCTOR,
-                TaskContract.TABLE_NAME+TaskEntry._ID,
-                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID,
-                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_DEPARTMENT_ID,
-                DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID
-        };
-        String selection = DepartmentContract.TABLE_NAME+DepartmentEntry._ID + " =?"; //where statement
-        String selectionArgs[] = { String.valueOf(department_id)  };
-        String orderBy = TaskEntry.COLUMN_TASK_NAME+ " ASC";
-*/
-        //    Cursor cursor = db.query(DepartmentContract.TABLE_NAME+ " , "+EmployeeContract.TABLE_NAME + " , employee_task , "+TaskContract.TABLE_NAME ,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
-
-
-
-        //cursor is a table containing the rows returned form the query
-
-
+        String group = " GROUP BY " + TaskContract.TABLE_NAME + "."+TaskEntry._ID + " ";
+        String query = select+from+where+group;
+        return db.rawQuery(query,null); //don't forget to close the cursor after usage
 
     }
 
@@ -222,11 +181,11 @@ String query
                     ;
 
             String where = " WHERE "+EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID + " = " + String.valueOf(employee_id);
+            String group = " GROUP BY " + TaskContract.TABLE_NAME + "."+TaskEntry._ID + " ";
+            String query = select+from+where+group;
 
-            String query = select+from+where;
 
-            Cursor cursor  =db.rawQuery(query,null);
-            return cursor; //don't forget to close the cursor after usage
+            return db.rawQuery(query,null); //don't forget to close the cursor after usage
 
 
         }
@@ -251,9 +210,7 @@ String query
         };
 
         //cursor is a table containing the rows returned form the query
-        Cursor cursor =  db.query(TaskContract.TABLE_NAME,columns,null,null,null,null,null);
-
-        return cursor; //don't forget to close the cursor after usage
+        return db.query(TaskContract.TABLE_NAME,columns,null,null,null,null,null); //don't forget to close the cursor after usage
 
     }
 
@@ -279,9 +236,7 @@ String query
 
 
         //cursor is a table containing the rows returned form the query
-        Cursor cursor =  db.query(TaskContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null);
-
-        return cursor; //don't forget to close the cursor after usage
+        return  db.query(TaskContract.TABLE_NAME,columns,selection,selectionArgs,null,null,null); //don't forget to close the cursor after usage
 
     }
 
@@ -300,9 +255,7 @@ String query
         String orderBy = DepartmentEntry.COLUMN_DEPARTMENT_NAME + " ASC "; //order by statement
 
         //cursor is a table containing the rows returned form the query
-        Cursor cursor =  db.query(DepartmentContract.TABLE_NAME,columns,null,null,null,null,orderBy);
-
-        return cursor; //don't forget to close the cursor after usage
+        return  db.query(DepartmentContract.TABLE_NAME,columns,null,null,null,null,orderBy); //don't forget to close the cursor after usage
 
     }
     public Cursor getDepartment(Long departmentId){
@@ -360,9 +313,10 @@ String query
 
 
         //cursor is a table containing the rows returned form the query
-        Cursor cursor = db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy); //don't forget to close the cursor after usage
+         //don't forget to close the cursor after usage
 
-        return  cursor; }
+        return  db.query(EmployeeContract.TABLE_NAME,columns,selection,selectionArgs,null,null,orderBy);
+    }
 
 
 
@@ -379,9 +333,7 @@ String query
 
         long flag = db.insert(DepartmentContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
 
-        if(flag==-1) return false; //-1 if insert fails
-
-        return true;
+         return flag != -1; //-1 if insert fails
     }
 
 
@@ -410,9 +362,7 @@ String query
 
         long flag = db.insert(EmployeeContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
 
-        if(flag==-1) return false; //-1 if insert fails
-
-        return true;
+       return flag != -1; //-1 if insert fails
 
     }
 
@@ -473,15 +423,12 @@ String query
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
         db.delete("employee_task",TaskContract.TABLE_NAME+TaskEntry._ID+ "="+task_id,null);
         int flag = db.delete(TaskContract.TABLE_NAME,TaskEntry._ID + "=" + task_id,null);
-
         //resets autoincrement
         Cursor c = db.rawQuery("SELECT MAX("+TaskEntry._ID+") from "+TaskContract.TABLE_NAME,null);
         c.moveToFirst();
         long max_id = c.getLong(0);
         db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + TaskContract.TABLE_NAME+" ' " );
         c.close();
-
-
         return flag>0;
 
     }
@@ -550,16 +497,6 @@ String query
         return f1>0 && f2>0 ;
     }
 
-    //    public boolean updateEmployee() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(COL_1,id);
-//        contentValues.put(COL_2,name);
-//        contentValues.put(COL_3,surname);
-//        contentValues.put(COL_4,marks);
-//        db.update(EmployeeContract.TABLE_NAME, contentValues, "ID = ?",new String[] { id });
-//        return true;
-//    }
     public boolean updateDepartment(DepartmentItem departmentItem) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -569,19 +506,7 @@ String query
         db.update(DepartmentContract.TABLE_NAME, contentValues, DepartmentEntry._ID + "=" + departmentItem.id,null);
         return true;
     }
-//    public boolean updateTask() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(COL_1,id);
-//        contentValues.put(COL_2,name);
-//        contentValues.put(COL_3,surname);
-//        contentValues.put(COL_4,marks);
-//        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
-//        return true;
-//    }
 
-
-    // >>>>>>>>>>>>>>>>>>>>ZYAD<<<<<<<<<<: NEEDS TESTING BY OMAR
     public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -627,22 +552,26 @@ String query
                 cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
                 cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
                 long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
-                if(flag==-1) return false;
+                if(flag==-1) return flag==-1;
             }
         }
 
         return true;
 
     }
+    public boolean updateTaskEvaluation(Long task_id,boolean task_completed , int task_evaluation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TaskEntry.COLUMN_TASK_COMPLETED, task_completed);
+        cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
+        return  db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null)> 0;
+    }
 
     public boolean updateEmployee(long id,ContentValues values){
         SQLiteDatabase db = this.getWritableDatabase();
         String selection = EmployeeEntry._ID + " =?"; //where statement
         String selectionArgs[] = { String.valueOf(id)  };
-        if( db.update(EmployeeContract.TABLE_NAME,values,selection,selectionArgs)>0){
-            return true;
-        }
-        return false;
+            return  db.update(EmployeeContract.TABLE_NAME,values,selection,selectionArgs)>0;
     }
 
 }

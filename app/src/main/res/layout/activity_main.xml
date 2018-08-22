@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#13125c"
+    android:background="@color/colorAccent"
     android:orientation="vertical"
     tools:context=".MainActivity">
     <TextView
@@ -23,5 +23,5 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/main_launcher"></ImageView>
+        android:src="@drawable/work"></ImageView>
 </LinearLayout>

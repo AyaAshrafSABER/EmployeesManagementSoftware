@@ -3,7 +3,6 @@ package com.example.android.employeesmanagementsoftware;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
@@ -25,15 +25,15 @@ public class DepartmentCreation extends AppCompatActivity {
     private DepFragment depFragment = DepFragment.newInstance(0);
     private Button save;
     private Intent intent;
+    private long departmentId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_depaetment_creation);
-
         intent = getIntent();
         boolean IsEditable = intent.getExtras().getBoolean("IsEdit");
         emdb =  new EmployeesManagementDbHelper(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         description= findViewById(R.id.department_description);
         nameOfDepartment= findViewById(R.id.department_name);
@@ -43,10 +43,6 @@ public class DepartmentCreation extends AppCompatActivity {
         } else {
             AddNewDepartemnt();
         }
-        //TODO: what is the importance of the  fab button
-
-
-
     }
     private void AddNewDepartemnt(){
         save.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +59,7 @@ public class DepartmentCreation extends AppCompatActivity {
     }
 
     private void updateAction() {
-        final long departmentId = intent.getExtras().getLong("depatmentID");
+        departmentId = intent.getExtras().getLong("depatmentID");
         Cursor cursorDep = emdb.getDepartment(departmentId);
         Log.v("Dep cre cur" , ""+departmentId);
         if (cursorDep.moveToFirst()) {
@@ -80,7 +76,9 @@ public class DepartmentCreation extends AppCompatActivity {
                 } else {
                     boolean correct = emdb.updateDepartment(new DepartmentItem(departmentId,nameOfDepartment.getText().toString(),description.getText().toString()));
                     actionSave(correct, v, true);
+
                 }
+
             }
         });
 
@@ -94,6 +92,10 @@ public class DepartmentCreation extends AppCompatActivity {
             description.setText("",TextView.BufferType.EDITABLE);
             nameOfDepartment.setText("",TextView.BufferType.EDITABLE);
             depFragment.updateDepartmentList(emdb);
+            Intent intent2 = new Intent(getBaseContext(), DepartmentActivity.class);
+            intent2.putExtra("departmentId", departmentId);
+            this.finish();
+            startActivity(intent2);
         }
         else
             Snackbar.make(v, "FAILED TO ENTER CURRENT DEPARTMENT. TRY AGAIN LATER.", Snackbar.LENGTH_LONG).setAction("", null).show();
