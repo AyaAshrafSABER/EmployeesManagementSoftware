@@ -16,39 +16,30 @@
     android:foreground="?selectableItemBackground"
     android:orientation="vertical"
     card_view:cardBackgroundColor="#FFFFFF"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="8dp"
-    card_view:cardPreventCornerOverlap="false"
-    card_view:contentPadding="0dp">
+    card_view:cardCornerRadius="5dp"
+    card_view:contentPadding="0dp"
+    android:elevation="8dp"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0.0px"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    card_view:cardElevation="5dp"
+    card_view:cardPreventCornerOverlap="false">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
-
-        <TextView
-            android:id="@+id/department_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:text="Accounting"
-            android:textAppearance="@android:style/TextAppearance.DialogWindowTitle"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        android:padding="10dp"><![CDATA[
 
 
-        <TextView
-            android:id="@+id/department_description"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/department_name"
-            android:layout_marginTop="10sp"
-            android:layout_marginLeft="5sp"
-            android:maxLines="2"
-            android:text="It's ........"
-            android:textColor="#000000" />
+
+        >
+
+    ]]></RelativeLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView"
@@ -56,18 +47,59 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/department_description"
-            android:layout_marginTop="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:text="... See More"
-            android:textColor="#0871f1" /><![CDATA[
-        >
-    ]]>
-    </RelativeLayout>
+            android:textColor="#0871f1"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.95"
+            card_view:layout_constraintStart_toEndOf="@+id/linearLayout3"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.95" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/department_description"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/department_name"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:maxLines="2"
+            android:text="It's ........"
+            android:textColor="#000000"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.05"
+            card_view:layout_constraintStart_toEndOf="@+id/linearLayout3"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.95" />
+
+        <TextView
+            android:id="@+id/department_name"
+            android:layout_width="316dp"
+            android:layout_height="29dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Accounting"
+            android:textAppearance="@android:style/TextAppearance.DialogWindowTitle"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/linearLayout3"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.110000014" />
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="10dp"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
