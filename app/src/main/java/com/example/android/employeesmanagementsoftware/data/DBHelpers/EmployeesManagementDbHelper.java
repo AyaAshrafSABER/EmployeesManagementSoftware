@@ -62,7 +62,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 +TaskEntry.COLUMN_TASK_DESCRIPTION + " VARCHAR(300), "
                 +TaskEntry.COLUMN_TASK_DEADLINE + " DATETIME ,"
                 +TaskEntry.COLUMN_TASK_DATE + " DATETIME ,"
-                +TaskEntry.COLUMN_TASK_COMPLETED + " TINYINT(1) DEFAULT 0,"
+                +TaskEntry.COLUMN_TASK_COMPLETED + " TINYINT(1),"
                 +TaskEntry.COLUMN_TASK_EVALUATION+" INTEGER"
                 +");"
                 ;
@@ -116,9 +116,9 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         String select = "SELECT " +
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
-                TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
+                //TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
+                //TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
+                //TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_COMPLETED +" , "+
                 TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
@@ -141,7 +141,8 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 + " employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID
                 ;
         String where = " WHERE "+DepartmentContract.TABLE_NAME+"."+DepartmentEntry._ID + " = " + String.valueOf(department_id);
-        String query = select+from+where;
+        String group = " GROUP BY " + TaskContract.TABLE_NAME + "."+TaskEntry._ID + " ";
+        String query = select+from+where+group;
         return db.rawQuery(query,null); //don't forget to close the cursor after usage
 
     }
@@ -180,8 +181,10 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                     ;
 
             String where = " WHERE "+EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID + " = " + String.valueOf(employee_id);
+            String group = " GROUP BY " + TaskContract.TABLE_NAME + "."+TaskEntry._ID + " ";
+            String query = select+from+where+group;
 
-            String query = select+from+where;
+
             return db.rawQuery(query,null); //don't forget to close the cursor after usage
 
 
