@@ -13,6 +13,8 @@ import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContra
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
+import com.example.android.employeesmanagementsoftware.taskDB.Task;
+
 import java.util.ArrayList;
 // to use insert or get methods
 // Create  EmployeesManagementDbHelper instance first
@@ -366,28 +368,28 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addTask(String task_name, int task_evaluation , String task_description,String task_date, String task_deadline,boolean task_completed  ,ArrayList<Long> emplyee_ids)
+    public boolean addTask(Task task)
     {
         //adds task to db
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
         ContentValues cv  = new ContentValues(); //used for inserting an entry
 
-        cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
-        Log.i("cursor fi laddTask",task_name);
-        cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
+        cv.put(TaskEntry.COLUMN_TASK_NAME,task.getTaskName());
+        cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task.getEvaluation());
 
-        if(task_description!=null && !task_description.isEmpty()&&!task_description.trim().isEmpty())
-            cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
+        if(task.getTaskDetails()!=null && !task.getTaskDetails().isEmpty()&&!task.getTaskDetails().trim().isEmpty())
+            cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task.getTaskDetails());
 
-        if(task_deadline!=null && !task_deadline.isEmpty()&&!task_deadline.trim().isEmpty())
-            cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
-        cv.put(TaskEntry.COLUMN_TASK_COMPLETED,task_completed);
-        cv.put(TaskEntry.COLUMN_TASK_DATE,task_date);
+        if(task.getTaskDeadline()!=null && !task.getTaskDeadline().isEmpty()&&!task.getTaskDeadline().trim().isEmpty())
+            cv.put(TaskEntry.COLUMN_TASK_DEADLINE, task.getTaskDeadline());
+        cv.put(TaskEntry.COLUMN_TASK_COMPLETED,task.isDone());
+        cv.put(TaskEntry.COLUMN_TASK_DATE,task.getTaskDate());
         long task_id = db.insert(TaskContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
 
         if(task_id==-1) return false; //-1 if insert fails
 
         cv = new ContentValues();
+        ArrayList<Long> emplyee_ids = task.getEmployees_id();
         if (emplyee_ids!=null)
         {
             for(long emp_id:emplyee_ids){
@@ -507,20 +509,19 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateTask(int task_id, String task_name, int task_evaluation , String task_description, String task_deadline, ArrayList<Long> employee_ids){
-
+    public boolean updateTask(Task task){
+        int task_id = (int) task.getId();
+        ArrayList<Long> employee_ids = task.getEmployees_id();
         SQLiteDatabase db = this.getWritableDatabase();
-
         SQLiteDatabase db_ = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
         ArrayList <Long>list_of_current_ids= new ArrayList<>();
         ArrayList <Long>list1= new ArrayList<>();
         ArrayList <Long>list2= new ArrayList<>();
-
-        cv.put(TaskEntry.COLUMN_TASK_NAME,task_name);
-        cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task_evaluation);
-        cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task_description);
-        cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task_deadline);
+        cv.put(TaskEntry.COLUMN_TASK_NAME,task.getTaskName());
+        cv.put(TaskEntry.COLUMN_TASK_EVALUATION, task.getEvaluation());
+        cv.put(TaskEntry.COLUMN_TASK_DESCRIPTION,task.getTaskDetails());
+        cv.put(TaskEntry.COLUMN_TASK_DEADLINE,task.getTaskDeadline());
         db.update(TaskContract.TABLE_NAME, cv, TaskEntry._ID + "=" + task_id,null);
 
 

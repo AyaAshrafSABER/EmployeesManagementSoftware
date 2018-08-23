@@ -115,7 +115,7 @@ public class StartingPageActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new DepFragment(), "DEPARTMENTS");
-        adapter.addFragment(new TasksFragment(), "TASKS");
+        adapter.addFragment(TasksFragment.newInstance(), "TASKS");
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
     }

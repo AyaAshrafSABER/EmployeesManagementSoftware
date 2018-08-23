@@ -11,6 +11,7 @@ import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -66,7 +67,8 @@ public class EditCommand implements TaskCreationCommand {
 
     @Override
     public boolean saveData(String task_name, int task_evaluation, String task_description, String task_deadline, ArrayList<Long> employees_ids) {
-        return employeeDBHelper.updateTask((int)task_id,task_name,task_evaluation,task_description,task_deadline,employees_ids);
+        return TasksFragment.newInstance().updateTasksList();// this is should be updated 
+                employeeDBHelper.updateTask((int)task_id,task_name,task_evaluation,task_description,task_deadline,employees_ids);
 
     }
 }

@@ -2,6 +2,7 @@ package com.example.android.employeesmanagementsoftware.taskDB;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,11 +21,11 @@ made by menna
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
 
     private  Context context;
-    private ArrayList<Tasks> data;
+    private ArrayList<Task> data;
     private  Long id;
 
 
-    public TasksAdapter(Context context, ArrayList<Tasks> data)
+    public TasksAdapter(Context context, ArrayList<Task> data)
     {
         this.context=context;
         this.data=data;
@@ -42,22 +43,21 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
 
     //show each task in recycle list
     @Override
-    public void onBindViewHolder(@NonNull TasksViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull TasksViewHolder holder, final int position)
     {
-        final Tasks tasks = data.get(position);
+        final Task tasks = data.get(position);
         holder.titletask.setText(tasks.getTaskName());
         holder.disctask.setText(tasks.getTaskDetails());
         holder.datetask.setText(tasks.getTaskDate());
         holder.deadlinetask.setText(tasks.getTaskDeadline());
-
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
                 id = tasks.getId();
                 Intent in = new Intent(context, TaskActivity.class);
-                in.putExtra("task_id",(long)id);
+                in.putExtra("data",data);
+                in.putExtra("position", position);
                 context.startActivity(in);
             }
         });

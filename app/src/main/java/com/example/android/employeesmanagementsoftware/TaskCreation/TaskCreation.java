@@ -4,6 +4,7 @@ package com.example.android.employeesmanagementsoftware.TaskCreation;
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import android.widget.Spinner;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.taskDB.Task;
 import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +38,7 @@ public class TaskCreation extends AppCompatActivity {
     private TaskCreationCommand commander;
     private TaskCreationUtil util;
     private final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this);
-
+    private Task task;
     public TaskCreation() {
         employees = new TreeSet<>();
 
@@ -53,40 +55,13 @@ public class TaskCreation extends AppCompatActivity {
         long task_id=TaskCreationUtil.NEW_TASK_ID;
         if (taskData!=null)
             task_id = taskData.getLong("task_id");
+            task = (Task) taskData.get("task");
 
         util=new TaskCreationUtil(this,employeeDBHelper);
         commander=util.getCommander(task_id);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
                 commander.execute());
-
-
-
-          /*  employeeDBHelper.addDepartment("engineering", "en");
-
-            employeeDBHelper.addDepartment("marketing", "mk");
-            employeeDBHelper.addDepartment("accounting", "ac");
-            employeeDBHelper.addDepartment("medical", "md");
-
-            employeeDBHelper.addEmployee("aly", "55", 1,
-                    "engineer", "bvfs", "555", null);
-            employeeDBHelper.addEmployee("omar", "55", 1,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("ahmad", "55", 2,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("youssef", "55", 2,
-                    "engineer", "bvfg","565", null);
-            employeeDBHelper.addEmployee("yassin", "55", 3,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("mohamed", "55", 3,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("hassan", "55", 1,
-                    "engineer", "bvfg", "565", null);*/
-
-
-
-                    initSpinner(adapterPool);
-
-
+                initSpinner(adapterPool);
 
     }
     //class extending async task to do the query operation in the background
@@ -180,7 +155,6 @@ public class TaskCreation extends AppCompatActivity {
             //add a new task or update an existing one with the extracted data
             commander.saveData(nameLayout.getEditText().getText().toString(), 0, descriptionLayout.getEditText().getText().toString(),
                     deadlineLayout.getEditText().getText().toString(), new ArrayList<>(employees));
-            TasksFragment.newInstance(0).updateTasksList(employeeDBHelper);
            finish();
 
         }
