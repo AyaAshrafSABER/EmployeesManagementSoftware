@@ -1,6 +1,8 @@
 package com.example.android.employeesmanagementsoftware.DepartmentDB;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.android.employeesmanagementsoftware.DepartmentCreation;
 import com.example.android.employeesmanagementsoftware.EmployeeCreation;
 import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeActivity;
@@ -136,10 +140,7 @@ public class DepartmentActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-            boolean re = helper.deleteDepartment(departmentId);
-            this.finish();
-            depFragment.updateDepartmentList(helper);
-            return re;
+            showDeleteConfirmationDialog();
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(DepartmentActivity.this, DepartmentCreation.class);
@@ -150,6 +151,28 @@ public class DepartmentActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete this department ?");
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (helper.deleteDepartment(departmentId)){
+                    depFragment.updateDepartmentList(helper);
+                    finish();
+                }else
+                    Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

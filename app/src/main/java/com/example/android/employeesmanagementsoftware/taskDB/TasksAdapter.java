@@ -19,7 +19,7 @@ made by menna
  */
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
 
-    private Context context;
+    private  Context context;
     private ArrayList<Tasks> data;
     private  Long id;
 

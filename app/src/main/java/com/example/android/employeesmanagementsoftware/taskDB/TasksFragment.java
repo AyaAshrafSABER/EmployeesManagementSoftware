@@ -24,7 +24,7 @@ public class TasksFragment extends Fragment {
     private ArrayList<Tasks> mValues;
     private Cursor cursor;
     private static RecyclerView recyclerView;
-    private  TasksAdapter mAdapter;
+    private  static TasksAdapter mAdapter;
     public TasksFragment() {
 
     }
