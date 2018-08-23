@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,11 +86,11 @@ public class TasksFragment extends Fragment {
         mAdapter.notifyItemChanged(mValues.indexOf(updatedTask), updatedTask);
         return employeeDBHelper.updateTask(updatedTask);
     }
-    public boolean deleteTaskFromList(int id){
-        mValues.remove(id);
-        mAdapter.notifyItemRemoved(id);
-
-        return employeeDBHelper.deleteDepartment(id);
+    public boolean deleteTaskFromList(int position){
+        boolean remove = employeeDBHelper.deleteTask(mValues.get(position).getId());
+        mValues.remove(position);
+        mAdapter.notifyItemRemoved(position);
+        return remove;
     }
     public boolean addTaskToView(Task mTask){
         mValues.add(mTask);

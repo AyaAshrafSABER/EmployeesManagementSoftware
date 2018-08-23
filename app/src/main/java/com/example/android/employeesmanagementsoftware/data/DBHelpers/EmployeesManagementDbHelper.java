@@ -452,9 +452,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         db.execSQL("UPDATE SQLITE_SEQUENCE SET seq = " + String.valueOf(max_id+1) +" WHERE name ='  " + EmployeeContract.TABLE_NAME+" ' " );
         c2.close();
 
-
-
-
         db.delete(EmployeeContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null);
         int flag = db.delete(DepartmentContract.TABLE_NAME,DepartmentEntry._ID + "=" + department_id,null) ;
 

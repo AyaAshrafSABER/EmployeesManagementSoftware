@@ -1,14 +1,14 @@
 package com.example.android.employeesmanagementsoftware.taskDB;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /*
 made by menna
  */
 // you need to call database helper here
 // you will find your table in SQL_CREATE_EMPLOYEE_TASK_TABLE in EmployeesManagementDbHelper
-public  class Task
+public  class Task implements Serializable
 {
 
     private Long id;

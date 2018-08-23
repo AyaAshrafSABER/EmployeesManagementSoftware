@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,7 +86,7 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(TaskActivity.this, TaskCreation.class);
-            intent.putExtra("task", (Parcelable) tasks.get(position));
+            intent.putExtra("task", tasks.get(position));
             intent.putExtra("task_id",tasks.get(position).getId());
             intent.putExtra("IsEdit", true);
             startActivity(intent);
@@ -102,7 +103,9 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
     }
     @Override
     public void applyingRating(int rate) {
-        employeeDBHelper.updateTaskEvaluation(tasks.get(position).getId(),true,rate);
+        Log.v("ID From Activityr", "" + tasks.get(position).getId());
+        boolean re = employeeDBHelper.updateTaskEvaluation(tasks.get(position).getId(),true,rate);
+        Log.v("boolean", "" + re);
         tasks.get(position).setEvaluation(rate);
         mRatingBar.setRating(rate);
         mRatingBar.setVisibility(View.VISIBLE);
@@ -116,7 +119,7 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
                 if (tasksFragment.deleteTaskFromList(position)){
                     finish();
                 }else
-                    Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Can't close this department", Toast.LENGTH_LONG).show();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

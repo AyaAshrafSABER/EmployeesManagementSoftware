@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
 
     private  Context context;
     private ArrayList<Task> data;
-    private  Long id;
 
 
     public TasksAdapter(Context context, ArrayList<Task> data)
@@ -54,11 +54,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
             @Override
             public void onClick(View view)
             {
-                id = tasks.getId();
+                Log.v(" idfrom Ad", "" + tasks.getId());
                 Intent in = new Intent(context, TaskActivity.class);
                 in.putExtra("data",data);
                 in.putExtra("position", position);
-                context.startActivity(in);
+                 context.startActivity(in);
             }
         });
 
