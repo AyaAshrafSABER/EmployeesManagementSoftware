@@ -7,82 +7,119 @@
     tools:context=".taskDB.TaskActivity"
     android:background="#ece5db">
 
-
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:layout_marginBottom="10dp"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
 
         <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                >
+                android:layout_margin="15dp">
 
 
                 <TextView
+                    android:id="@+id/tasktitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tasktitle"
-                    android:textSize="@dimen/textsize"
                     android:gravity="center"
                     android:text="software engineering"
                     android:textColor="#317bf2"
-                    />
+                    android:textSize="@dimen/textsize" />
 
                 <TextView
                     android:id="@+id/taskdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
                     android:layout_below="@+id/tasktitle"
                     android:layout_marginTop="20dp"
-                    android:text="1/8/2018"/>
+                    android:text="1/8/2018"
+                    android:textSize="15sp" />
+
                 <TextView
                     android:id="@+id/deadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
                     android:layout_below="@+id/taskdate"
                     android:text="1/8/2018"
-                    />
+                    android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/tasktrainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/deadline"
-                    android:textSize="15sp"
-                    android:text="Mohamed Ahmed"
-                    />
                 <TextView
                     android:id="@+id/desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tasktrainer"
-                    android:textSize="18sp"
+                    android:layout_below="@+id/taskdate"
                     android:layout_marginTop="20dp"
                     android:text="Job Description: "
-                    android:textStyle="bold"
                     android:textColor="#2e79f2"
-                    />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/taskdesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/desc"
-                    android:textSize="18sp"
                     android:layout_marginTop="5dp"
                     android:text="hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+                    android:textSize="18sp">
 
-                    />
+                </TextView>
+
+                <TextView
+                    android:id="@+id/employees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/taskdesc"
+                    android:layout_marginTop="20dp"
+                    android:text="Employees"
+                    android:textColor="#2e79f2"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/employees_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_height"
+                    android:layout_below="@+id/employees"
+                    android:drawSelectorOnTop="true"
+                    android:orientation="vertical"></ListView>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="88dp"
+                    android:padding="4dp"
+                    android:layout_below="@id/employees_list">
+
+
+                    <TextView
+                        android:id="@+id/evaluation"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/padding_employee"
+                        android:text="Evaluation"
+                        android:visibility="invisible"/>
+                    <RatingBar
+                        android:id="@+id/ratingBar_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:rating="0"
+                        android:stepSize="0"
+                        android:visibility="invisible"/>
+                </LinearLayout>
+
+
             </RelativeLayout>
+
         </ScrollView>
     </android.support.v7.widget.CardView>
 

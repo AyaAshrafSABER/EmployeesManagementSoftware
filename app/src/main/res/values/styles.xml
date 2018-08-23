@@ -12,7 +12,6 @@
         <item name="colorControlNormal">#d3d3d3</item>
         <item name="colorControlActivated">#ffd700</item>
     </style>
-
     <style name="icon">
         <item name="android:background">#FFF7DA</item>
     </style>
@@ -22,7 +21,10 @@
         <item name="windowNoTitle">true</item>
         <item name="coordinatorLayoutStyle">@style/Widget.Design.CoordinatorLayout</item>
     </style>
-
+    <style name="RatingBarTask" parent="Theme.AppCompat">
+        <item name="colorControlActivated">#ffd700</item>
+        <item name="colorControlNormal">#d3d3d3</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

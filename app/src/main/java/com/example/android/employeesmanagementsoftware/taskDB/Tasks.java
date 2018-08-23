@@ -1,4 +1,7 @@
 package com.example.android.employeesmanagementsoftware.taskDB;
+
+import java.util.ArrayList;
+
 /*
 made by menna
  */
@@ -7,14 +10,25 @@ made by menna
 public  class Tasks
 {
 
-        private Long id;
-        private String taskName;
-        private String taskInstractor;
-        private String taskDetails;
-        private String taskDate;
-        private String taskdeadline;
-        private int  evaluation;
+    private Long id;
+    private String taskName;
+    private ArrayList<Long> employees_id;
+    private String taskDetails;
+    private String taskDate;
+    private String taskDeadLine;
+    private boolean done;
+    private int  evaluation;
+    public Tasks (){
+        employees_id = new ArrayList<>();
+        done = false;
+    }
 
+    public void addEmployee(Long id) {
+            employees_id.add(id);
+    }
+    public Long getEmployee (int position) {
+            return  employees_id.get(position);
+    }
     public int getEvaluation() {
         return evaluation;
     }
@@ -36,26 +50,19 @@ public  class Tasks
     }
 
     public void setTaskDeadline(String taskdeadline) {
-        this.taskdeadline=taskdeadline;}
+        this.taskDeadLine=taskdeadline;}
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
 
-    public String getTaskInstractor() {
-        return taskInstractor;
-    }
-
-    public void setTaskInstractor(String taskInstractor) {
-        this.taskInstractor = taskInstractor;
-    }
 
     public String getTaskDetails() {
         return taskDetails;
     }
 
     public String getTaskDeadline() {
-        return taskdeadline;
+        return taskDeadLine;
     }
 
     public void setTaskDetails(String taskDetails) {
@@ -68,5 +75,13 @@ public  class Tasks
 
     public void setTaskDate(String taskDate) {
         this.taskDate = taskDate;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public boolean  isDone() {
+        return done;
     }
 }

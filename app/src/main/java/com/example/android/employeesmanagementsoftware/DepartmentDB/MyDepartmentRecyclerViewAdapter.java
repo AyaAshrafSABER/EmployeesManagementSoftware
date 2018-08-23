@@ -2,6 +2,7 @@ package com.example.android.employeesmanagementsoftware.DepartmentDB;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,9 @@ public class MyDepartmentRecyclerViewAdapter extends RecyclerView.Adapter<MyDepa
 
     private final List<DepartmentItem> mValues;
     private final OnListFragmentInteractionListener mListener;
-
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     public MyDepartmentRecyclerViewAdapter(List<DepartmentItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;

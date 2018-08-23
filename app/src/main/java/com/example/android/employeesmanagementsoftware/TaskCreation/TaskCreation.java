@@ -1,7 +1,10 @@
 package com.example.android.employeesmanagementsoftware.TaskCreation;
 
+
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +18,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -28,15 +31,13 @@ import java.util.TreeSet;
 public class TaskCreation extends AppCompatActivity {
 
     private static final String TAG = "spinner";
-    private final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this); ;
     private Set<Long> employees;
     private TaskCreationCommand commander;
     private TaskCreationUtil util;
+    private TasksFragment tasksFragment = TasksFragment.newInstance(0);
 
     public TaskCreation() {
         employees = new TreeSet<>();
-
-
 
     }
 
@@ -45,13 +46,14 @@ public class TaskCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
 
+        final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this); ;
 
 
         Bundle taskData=getIntent().getExtras();
         long task_id=-1;
         if (taskData!=null)
             task_id = taskData.getLong("task_id");
-        Log.d(TAG, "onCreate: "+task_id);
+
         util=new TaskCreationUtil(this,employeeDBHelper);
         commander=util.getCommander(task_id);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
@@ -82,44 +84,60 @@ public class TaskCreation extends AppCompatActivity {
 
 
 
-                    initSpinner(adapterPool);
-
+                    initSpinner(adapterPool,employeeDBHelper);
 
 
 
     }
+    //class extending async task to do the query operation in the background
+    class SpinnerInitTask extends AsyncTask<SpinnerTaskParams,Void,SpinnerTaskParams>{
 
-    private void initSpinner(final TaskCreationAdapterPool adapterPool) {
+        @Override
+        protected SpinnerTaskParams doInBackground(SpinnerTaskParams... spinnerTaskParams) {
+            //return the the parameters after setting the cursor
+            return spinnerTaskParams[0].setCursor
+                    (spinnerTaskParams[0].getEmployeeDBHelper().getAllDepartments());
+        }
+        //after execution of doInBackground, initialize the spinner with the cursor
+        @Override
+        protected void onPostExecute(final SpinnerTaskParams spinnerTaskParams) {
+            super.onPostExecute(spinnerTaskParams);
+            //object of drop down menu
+            Spinner spinner = findViewById(R.id.departmentDropDown);
 
-        //object of drop down menu
-        Spinner spinner = findViewById(R.id.departmentDropDown);
-        final Cursor cursor = employeeDBHelper.getAllDepartments();
+            //an adapter to handle data viewed by the spinner
+            SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+                    TaskCreation.this, android.R.layout.simple_spinner_item, spinnerTaskParams.getCursor(),
+                    new String[]{DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME},
+                    new int[]{android.R.id.text1}, 0);
 
-        //an adapter to handle data viewed by the spinner
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-                this, android.R.layout.simple_spinner_item, cursor,
-                new String[]{DepartmentContract.DepartmentEntry.COLUMN_DEPARTMENT_NAME},
-                new int[]{android.R.id.text1}, 0);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+            //when a department is chosen a list of its employees would appear under the spinner
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        //when a department is chosen a list of its employees would appear under the spinner
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    //call the method to initialize the list view of the employees of this specific department chosen
+                    initListView(spinnerTaskParams.getCursor().getLong(spinnerTaskParams.getCursor().getColumnIndex(DepartmentContract.
+                                    DepartmentEntry._ID))
+                            , spinnerTaskParams.getAdapterPool());
+                }
 
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //call the method to initialize the list view of the employees of this specific department chosen
-                initListView(cursor.getLong(cursor.getColumnIndex(DepartmentContract.
-                                DepartmentEntry._ID))
-                        , adapterPool);
-            }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
 
-            }
-        });
+
+    }
+
+    private void initSpinner(final TaskCreationAdapterPool adapterPool,EmployeesManagementDbHelper employeeDBHelper) {
+
+       new SpinnerInitTask().execute(new SpinnerTaskParams(employeeDBHelper,adapterPool));
 
     }
 

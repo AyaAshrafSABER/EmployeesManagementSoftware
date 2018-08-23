@@ -2,13 +2,16 @@ package com.example.android.employeesmanagementsoftware;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
  import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,9 +20,14 @@ import android.view.ViewGroup;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
+import com.example.android.employeesmanagementsoftware.Utilities.SectionsPageAdapter;
 import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StartingPageActivity extends AppCompatActivity {
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -29,7 +37,7 @@ public class StartingPageActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private SectionsPageAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -46,18 +54,25 @@ public class StartingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_starting_page);
         //Add ACTION BAR
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Department");
+        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(0);
+        setupViewPager(mViewPager);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), TaskCreation.class);
-                intent.putExtra("task_id",(long)-1);
+                Intent intent = new Intent(getApplicationContext(), DepartmentCreation.class);
+                intent.putExtra("IsEdit", false);
                 startActivity(intent);
             }
         });
@@ -69,9 +84,10 @@ public class StartingPageActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
+                if (position == 1) {
                     toolbar.setTitle("Tasks");
                     setSupportActionBar(toolbar);
+                    fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -83,6 +99,7 @@ public class StartingPageActivity extends AppCompatActivity {
                 } else {
                     toolbar.setTitle("Departments");
                     setSupportActionBar(toolbar);
+                    fab = (FloatingActionButton) findViewById(R.id.fab);
                     fab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -102,6 +119,13 @@ public class StartingPageActivity extends AppCompatActivity {
 
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(new DepFragment(), "DEPARTMENTS");
+        adapter.addFragment(new TasksFragment(), "TASKS");
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(0);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,6 +143,7 @@ public class StartingPageActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            //TO-DO-
             return true;
         }
 
@@ -163,29 +188,7 @@ public class StartingPageActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-             mDepFregmant = new DepFragment();
-             mTaskFregmant = new TasksFragment();
-            if (position == 0) {
-                return mTaskFregmant;
-            } else {
-                return  mDepFregmant;
-            }
-        }
 
-        @Override
-        public int getCount() {
-            // Show 2 total pages.
-            return 2;
-        }
-    }
 }
