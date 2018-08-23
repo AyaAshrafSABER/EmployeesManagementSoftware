@@ -107,7 +107,7 @@
         android:background="@android:color/holo_green_dark"
         android:backgroundTint="@color/colorPrimaryDark"
         android:fontFamily="@font/roboto_mono"
-        android:text="DONE"
+        android:text="OK"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
