@@ -1,20 +1,17 @@
 package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
+import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -25,7 +22,10 @@ import com.example.android.employeesmanagementsoftware.data.Contracts.Department
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -186,6 +186,23 @@ public class TaskCreation extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void onDeadlinePick(View view){
+        final Calendar mCalendar=Calendar.getInstance();
+        final EditText editText=(EditText) view;
+        new DatePickerDialog(TaskCreation.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mCalendar.set(Calendar.YEAR, year);
+                mCalendar.set(Calendar.MONTH, month);
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "dd/MM/yy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+                editText.setText(sdf.format(mCalendar.getTime()));
+            }
+        }, mCalendar.get(Calendar.YEAR)
+                , mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
 
