@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -60,7 +61,7 @@ public class TaskCreation extends AppCompatActivity {
 
 
 
-           /* employeeDBHelper.addDepartment("engineering", "en");
+          /*  employeeDBHelper.addDepartment("engineering", "en");
 
             employeeDBHelper.addDepartment("marketing", "mk");
             employeeDBHelper.addDepartment("accounting", "ac");
@@ -162,22 +163,23 @@ public class TaskCreation extends AppCompatActivity {
     //method to handle the save button click
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //get references to all edit texts
-        EditText taskName = findViewById(R.id.task_name_edit);
-        EditText taskDescp = findViewById(R.id.department_description_edit_text);
-        EditText taskDeadline = findViewById(R.id.task_deadline_edit);
+        //get references to all text layouts wrapping the edit texts
+        TextInputLayout deadlineLayout=findViewById(R.id.task_deadline_text_layout);
+        TextInputLayout descriptionLayout=findViewById(R.id.task_description_text_layout);
+        TextInputLayout nameLayout=findViewById(R.id.task_name_text_layout);
+
+
 
         if (item.getItemId() == R.id.save_task_creation_button) {
 
-           if(util.isEmpty(taskName.getText().toString(), taskDescp.getText().toString(),
-                   taskDeadline.getText().toString())){
-               Snackbar.make(taskDeadline.getRootView(), "All fields must be filled", Snackbar.LENGTH_LONG).setAction("", null).show();
+           if(util.isEmpty(nameLayout, descriptionLayout, deadlineLayout)){
+
                return super.onOptionsItemSelected(item);
                 }
 
             //add a new task or update an existing one with the extracted data
-            commander.saveData(taskName.getText().toString(), 0, taskDescp.getText().toString(),
-                    taskDeadline.getText().toString(), new ArrayList<>(employees));
+            commander.saveData(nameLayout.getEditText().getText().toString(), 0, descriptionLayout.getEditText().getText().toString(),
+                    deadlineLayout.getEditText().getText().toString(), new ArrayList<>(employees));
             TasksFragment.newInstance(0).updateTasksList(employeeDBHelper);
            finish();
 
