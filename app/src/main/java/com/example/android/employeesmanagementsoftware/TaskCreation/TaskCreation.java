@@ -53,12 +53,14 @@ public class TaskCreation extends AppCompatActivity {
 
         Bundle taskData=getIntent().getExtras();
         long task_id=TaskCreationUtil.NEW_TASK_ID;
-        if (taskData!=null)
+        if (taskData!=null) {
             task_id = taskData.getLong("task_id");
             task = (Task) taskData.get("task");
+        }
+
 
         util=new TaskCreationUtil(this,employeeDBHelper);
-        commander=util.getCommander(task_id);
+        commander=util.getCommander(task_id,task);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
                 commander.execute());
                 initSpinner(adapterPool);

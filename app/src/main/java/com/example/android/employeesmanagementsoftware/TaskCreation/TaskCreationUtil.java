@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.taskDB.Task;
 
 class TaskCreationUtil {
 
@@ -20,9 +21,9 @@ class TaskCreationUtil {
     }
 
     //return a suitable TaskCreationCommandObject based on the task's id
-    TaskCreationCommand getCommander(long task_id) {
+    TaskCreationCommand getCommander(long task_id,Task task) {
 
-        return task_id == NEW_TASK_ID ? new NewCommand(employeeDBHelper) : new EditCommand(activity, employeeDBHelper, task_id);
+        return task_id == NEW_TASK_ID ? new NewCommand(employeeDBHelper) : new EditCommand(activity, employeeDBHelper, task_id,task);
 
     }
 
