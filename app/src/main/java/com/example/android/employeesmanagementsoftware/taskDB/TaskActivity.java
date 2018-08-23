@@ -1,5 +1,8 @@
 package com.example.android.employeesmanagementsoftware.taskDB;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
@@ -21,7 +26,6 @@ made by menna
 public class TaskActivity extends AppCompatActivity implements Evaluation.EvaluationListner{
     private EmployeesManagementDbHelper employeeDBHelper;
     private Long task_id;
-    private TextView titletext;
     private TextView datetext;
     private TextView descriptiontext;
     private TextView deadlinetext ;
@@ -34,7 +38,6 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
          employeeDBHelper = new EmployeesManagementDbHelper(this);
-         titletext =  findViewById(R.id.tasktitle);
          datetext = findViewById(R.id.taskdate);
          descriptiontext = findViewById(R.id.taskdesc);
          deadlinetext = findViewById(R.id.deadline);
@@ -48,10 +51,10 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
             String description = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DESCRIPTION));
             String deadline = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DEADLINE));
             String date = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE));
-            titletext.setText(title);
-            datetext.setText("Start Date: " + date);
+            setTitle(title);
+            datetext.setText(date);
             descriptiontext.setText(description);
-            deadlinetext.setText("Deadline: " + deadline);
+            deadlinetext.setText(deadline);
             if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_COMPLETED)))> 0) {
                 mRatingBar.setRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION))));
                 mRatingBar.setVisibility(View.VISIBLE);
@@ -77,9 +80,8 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-               employeeDBHelper.deleteTask(task_id );
-               tasksFragment.updateTasksList(employeeDBHelper);
-               this.finish();
+            showDeleteConfirmationDialog();
+
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(TaskActivity.this, TaskCreation.class);
@@ -104,5 +106,27 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         mRatingBar.setRating(rate);
         mRatingBar.setVisibility(View.VISIBLE);
         mEvaluation.setVisibility(View.VISIBLE);
+    }
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete this task ?");
+        builder.setPositiveButton("End", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (employeeDBHelper.deleteTask(task_id )){
+                    tasksFragment.updateTasksList(employeeDBHelper);
+                    finish();
+                }else
+                    Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

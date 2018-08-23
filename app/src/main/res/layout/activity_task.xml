@@ -21,31 +21,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp">
-
-
                 <TextView
-                    android:id="@+id/tasktitle"
+                    android:id="@+id/desc_task_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="software engineering"
-                    android:textColor="#317bf2"
-                    android:textSize="@dimen/textsize" />
-
+                    android:layout_marginTop="20dp"
+                    android:text="Start Date: "
+                    android:textColor="#2e79f2"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/taskdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tasktitle"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/desc_task_date"
                     android:text="1/8/2018"
                     android:textSize="15sp" />
-
+                <TextView
+                    android:id="@+id/dec_deadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/taskdate"
+                    android:layout_marginTop="20dp"
+                    android:text="DeadLine: "
+                    android:textColor="#2e79f2"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
                 <TextView
                     android:id="@+id/deadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/taskdate"
+                    android:layout_below="@+id/dec_deadline"
                     android:text="1/8/2018"
                     android:textSize="15sp" />
 
@@ -53,7 +59,7 @@
                     android:id="@+id/desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/taskdate"
+                    android:layout_below="@+id/deadline"
                     android:layout_marginTop="20dp"
                     android:text="Job Description: "
                     android:textColor="#2e79f2"
@@ -94,7 +100,8 @@
                     android:layout_height="wrap_content"
                     android:minHeight="88dp"
                     android:padding="4dp"
-                    android:layout_below="@id/employees_list">
+                    android:layout_below="@id/employees_list"
+                    android:orientation="vertical">
 
 
                     <TextView
@@ -102,14 +109,18 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:padding="@dimen/padding_employee"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
                         android:text="Evaluation"
+                        android:textColor="#2e79f2"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
                         android:visibility="invisible"/>
                     <RatingBar
                         android:id="@+id/ratingBar_task"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
+                        android:layout_gravity="center"
                         android:isIndicator="true"
                         android:numStars="5"
                         android:rating="0"

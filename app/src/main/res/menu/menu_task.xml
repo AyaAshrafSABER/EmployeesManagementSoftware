@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".taskDB.TaskActivity">
     <item
-        android:id="@+id/action_update"
-        android:title="@string/update_menu"
-        android:icon="@mipmap/add_task"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/action_done"
         android:title="@string/done_menu"
-        android:icon="@mipmap/save"
+        android:icon="@mipmap/ic_rate"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_update"
+        android:title="@string/update_menu"
+        android:icon="@mipmap/ic_edit"
+        app:showAsAction="always" />
+
 
     <item
         android:id="@+id/action_delete"
         android:title="@string/delete_menu"
-        android:icon="@mipmap/clear"
+        android:icon="@mipmap/ic_detete"
         app:showAsAction="always" />
 </menu>
