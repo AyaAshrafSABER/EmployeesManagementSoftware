@@ -17,7 +17,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.example.android.employeesmanagementsoftware.DepartmentDB.TaskAdapter;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.Utilities.CustomEditTextWithBullets;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
-import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 import java.io.File;
@@ -41,11 +39,6 @@ import java.io.File;
 /**
  * Created  by Monica on on 7/10/2018.
  */
-//TODO date mn calendar,validation
-//TODO  fragment task
-//TODO evaluation float msh int
-
-//delete ,scroll,tasks,performance,notify
 
 public class EmployeeActivity extends AppCompatActivity {
     private static final int PICK_FROM_GALLERY = 1;
@@ -108,7 +101,6 @@ public class EmployeeActivity extends AppCompatActivity {
         tasksList.setEmptyView(noTasks);
         setPerformance(cursor);
 
-        //    cursor.close();
     }
 
     private void setPerformance(Cursor cursor) {
@@ -117,8 +109,8 @@ public class EmployeeActivity extends AppCompatActivity {
 
         if (cursor.moveToFirst() && cursor.getCount() > 0) {
            do {
-               boolean value = cursor.getInt(cursor.getColumnIndex("Completed")) > 0;
-               evaluation = cursor.getInt(cursor.getColumnIndex("Evaluation"));
+               boolean value = cursor.getInt(cursor.getColumnIndex(getString(R.string.completed))) > 0;
+               evaluation = cursor.getInt(cursor.getColumnIndex(getString(R.string.evaluation)));
                if(value ){
                    count++;
                    performance += evaluation;
@@ -129,7 +121,6 @@ public class EmployeeActivity extends AppCompatActivity {
             performanceRatBar.setRating(res);
         }
 
-        // cursor.close();
     }
 
 
@@ -193,18 +184,18 @@ public class EmployeeActivity extends AppCompatActivity {
 
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to fire this employee ?");
-        builder.setPositiveButton("Fire", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.deleteEmp);
+        builder.setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (helper.deleteEmployee(employeeId)){
                     Intent returnIntent = new Intent();
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }else
-                    Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.not_deleteEmp, Toast.LENGTH_LONG).show();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (dialog != null) {
                     dialog.dismiss();

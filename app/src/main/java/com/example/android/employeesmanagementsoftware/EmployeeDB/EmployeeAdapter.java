@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +41,12 @@ public class EmployeeAdapter extends CursorAdapter {
         TextView job = (TextView)view.findViewById(R.id.post);
         String post = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_JOB)).trim();
         if(post.isEmpty() || post == null){
-            job.setText("Unknown Post");
+            job.setText(R.string.post);
         }else{
             job.setText(post);
         }
 
-
         ImageView icon = (ImageView)view.findViewById(R.id.icon);
-
         //saving img path in database as string
         //in case no img was chosen or chosen img is deleted , employee's img is set to default one "unknown"
         String path = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO));
