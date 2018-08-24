@@ -1,5 +1,6 @@
 package com.example.android.employeesmanagementsoftware.taskDB;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -7,7 +8,7 @@ made by menna
  */
 // you need to call database helper here
 // you will find your table in SQL_CREATE_EMPLOYEE_TASK_TABLE in EmployeesManagementDbHelper
-public  class Tasks
+public  class Task implements Serializable
 {
 
     private Long id;
@@ -18,17 +19,18 @@ public  class Tasks
     private String taskDeadLine;
     private boolean done;
     private int  evaluation;
-    public Tasks (){
+    public Task (){
         employees_id = new ArrayList<>();
         done = false;
     }
+      public void setEmployees_id(ArrayList<Long> ids){
+        employees_id = ids;
+      }
 
-    public void addEmployee(Long id) {
-            employees_id.add(id);
+    public ArrayList<Long> getEmployees_id() {
+        return employees_id;
     }
-    public Long getEmployee (int position) {
-            return  employees_id.get(position);
-    }
+
     public int getEvaluation() {
         return evaluation;
     }
@@ -37,7 +39,7 @@ public  class Tasks
         this.evaluation = evaluation;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -80,7 +82,6 @@ public  class Tasks
     public void setDone(boolean done) {
         this.done = done;
     }
-
     public boolean  isDone() {
         return done;
     }

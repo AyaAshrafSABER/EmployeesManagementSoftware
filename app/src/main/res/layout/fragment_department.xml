@@ -41,6 +41,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:tint="#4267b2"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.0"
+            card_view:layout_constraintStart_toEndOf="@+id/textView"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintVertical_bias="0.060000002"
+            card_view:srcCompat="@drawable/ic_arrow_right" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -50,15 +66,15 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/source_sans_pro"
-            android:text="Click to see more"
-            android:textColor="#0871f1"
+            android:fontFamily="@font/source_sans_pro_black"
+            android:text="MORE"
+            android:textColor="#4267b2"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.95"
             card_view:layout_constraintStart_toEndOf="@+id/linearLayout3"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.060000002" />
+            card_view:layout_constraintVertical_bias="0.065" />
 
         <TextView
             android:id="@+id/department_description"
@@ -80,11 +96,11 @@
 
         <TextView
             android:id="@+id/department_name"
-            android:layout_width="150dp"
-            android:layout_height="36dp"
+            android:layout_width="0dp"
+            android:layout_height="34dp"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="24dp"
             android:fontFamily="@font/source_sans_pro_bold"
             android:gravity="center"
             android:text="Accounting"

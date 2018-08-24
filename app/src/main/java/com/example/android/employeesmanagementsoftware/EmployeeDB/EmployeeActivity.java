@@ -93,7 +93,6 @@ public class EmployeeActivity extends AppCompatActivity {
 
 
         helper = new EmployeesManagementDbHelper(this);
-
         Intent intent = getIntent();
         employeeId = intent.getExtras().getLong("employeeId");
         setEmployee();
@@ -114,14 +113,18 @@ public class EmployeeActivity extends AppCompatActivity {
 
     private void setPerformance(Cursor cursor) {
 
-        int performance = 0;
+        int performance = 0,count = 0,evaluation = 0;
 
         if (cursor.moveToFirst() && cursor.getCount() > 0) {
            do {
-                performance += cursor.getInt(cursor.getColumnIndex("Evaluation"));
-                
+               boolean value = cursor.getInt(cursor.getColumnIndex("Completed")) > 0;
+               evaluation = cursor.getInt(cursor.getColumnIndex("Evaluation"));
+               if(value ){
+                   count++;
+                   performance += evaluation;
+               }
             }while (cursor.moveToNext());
-            float res = (float) performance / cursor.getCount();
+            float res = (float) performance / count;
             performanceRatBar =  findViewById(R.id.ratingBar_employee);
             performanceRatBar.setRating(res);
         }

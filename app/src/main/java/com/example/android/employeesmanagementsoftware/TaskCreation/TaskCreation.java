@@ -1,19 +1,18 @@
 package com.example.android.employeesmanagementsoftware.TaskCreation;
 
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
+import android.app.DatePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.os.Parcelable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -22,9 +21,13 @@ import android.widget.Spinner;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+import com.example.android.employeesmanagementsoftware.taskDB.Task;
 import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -34,8 +37,8 @@ public class TaskCreation extends AppCompatActivity {
     private Set<Long> employees;
     private TaskCreationCommand commander;
     private TaskCreationUtil util;
-    private TasksFragment tasksFragment = TasksFragment.newInstance(0);
-
+    private final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this);
+    private Task task;
     public TaskCreation() {
         employees = new TreeSet<>();
 
@@ -46,47 +49,21 @@ public class TaskCreation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
 
-        final EmployeesManagementDbHelper employeeDBHelper= new EmployeesManagementDbHelper(this); ;
 
 
         Bundle taskData=getIntent().getExtras();
-        long task_id=-1;
-        if (taskData!=null)
+        long task_id=TaskCreationUtil.NEW_TASK_ID;
+        if (taskData!=null) {
             task_id = taskData.getLong("task_id");
+            task = (Task) taskData.get("task");
+        }
+
 
         util=new TaskCreationUtil(this,employeeDBHelper);
-        commander=util.getCommander(task_id);
+        commander=util.getCommander(task_id,task);
         TaskCreationAdapterPool adapterPool = new TaskCreationAdapterPool(employeeDBHelper, this, employees,
                 commander.execute());
-
-
-
-           /* employeeDBHelper.addDepartment("engineering", "en");
-
-            employeeDBHelper.addDepartment("marketing", "mk");
-            employeeDBHelper.addDepartment("accounting", "ac");
-            employeeDBHelper.addDepartment("medical", "md");
-
-            employeeDBHelper.addEmployee("aly", "55", 1,
-                    "engineer", "bvfs", "555", null);
-            employeeDBHelper.addEmployee("omar", "55", 1,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("ahmad", "55", 2,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("youssef", "55", 2,
-                    "engineer", "bvfg","565", null);
-            employeeDBHelper.addEmployee("yassin", "55", 3,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("mohamed", "55", 3,
-                    "engineer", "bvfg", "565", null);
-            employeeDBHelper.addEmployee("hassan", "55", 1,
-                    "engineer", "bvfg", "565", null);*/
-
-
-
-                    initSpinner(adapterPool,employeeDBHelper);
-
-
+                initSpinner(adapterPool);
 
     }
     //class extending async task to do the query operation in the background
@@ -135,7 +112,7 @@ public class TaskCreation extends AppCompatActivity {
 
     }
 
-    private void initSpinner(final TaskCreationAdapterPool adapterPool,EmployeesManagementDbHelper employeeDBHelper) {
+    private void initSpinner(final TaskCreationAdapterPool adapterPool) {
 
        new SpinnerInitTask().execute(new SpinnerTaskParams(employeeDBHelper,adapterPool));
 
@@ -163,27 +140,45 @@ public class TaskCreation extends AppCompatActivity {
     //method to handle the save button click
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //get references to all edit texts
-        EditText taskName = findViewById(R.id.task_name_edit);
-        EditText taskDescp = findViewById(R.id.department_description_edit_text);
-        EditText taskDeadline = findViewById(R.id.task_deadline_edit);
+        //get references to all text layouts wrapping the edit texts
+        TextInputLayout deadlineLayout=findViewById(R.id.task_deadline_text_layout);
+        TextInputLayout descriptionLayout=findViewById(R.id.task_description_text_layout);
+        TextInputLayout nameLayout=findViewById(R.id.task_name_text_layout);
+
+
 
         if (item.getItemId() == R.id.save_task_creation_button) {
 
-           if(util.isEmpty(taskName.getText().toString(), taskDescp.getText().toString(),
-                   taskDeadline.getText().toString())){
-               Snackbar.make(taskDeadline.getRootView(), "All fields must be filled", Snackbar.LENGTH_LONG).setAction("", null).show();
+           if(util.isEmpty(nameLayout, descriptionLayout, deadlineLayout)){
+
                return super.onOptionsItemSelected(item);
                 }
 
             //add a new task or update an existing one with the extracted data
-            commander.saveData(taskName.getText().toString(), 5, taskDescp.getText().toString(),
-                    taskDeadline.getText().toString(), new ArrayList<>(employees));
-
+            commander.saveData(nameLayout.getEditText().getText().toString(), 0, descriptionLayout.getEditText().getText().toString(),
+                    deadlineLayout.getEditText().getText().toString(), new ArrayList<>(employees));
+           finish();
 
         }
-        finish();
+
         return super.onOptionsItemSelected(item);
+    }
+    public void onDeadlinePick(View view){
+        final Calendar mCalendar=Calendar.getInstance();
+        final EditText editText=(EditText) view;
+        new DatePickerDialog(TaskCreation.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mCalendar.set(Calendar.YEAR, year);
+                mCalendar.set(Calendar.MONTH, month);
+                mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "dd/MM/yyyy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+                editText.setText(sdf.format(mCalendar.getTime()));
+            }
+        }, mCalendar.get(Calendar.YEAR)
+                , mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
 

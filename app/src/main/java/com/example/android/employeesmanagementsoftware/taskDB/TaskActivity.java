@@ -1,9 +1,15 @@
 package com.example.android.employeesmanagementsoftware.taskDB;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,64 +17,66 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeAdapter;
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
 /*
 made by menna
  */
 //First you need to show departement and  the employees in this departement who work  in the task
 public class TaskActivity extends AppCompatActivity implements Evaluation.EvaluationListner{
     private EmployeesManagementDbHelper employeeDBHelper;
-    private Long task_id;
-    private TextView titletext;
     private TextView datetext;
     private TextView descriptiontext;
     private TextView deadlinetext ;
-    private TasksFragment tasksFragment = TasksFragment.newInstance(0);
+    private TasksFragment tasksFragment = TasksFragment.newInstance();
     private RatingBar mRatingBar;
     private TextView mEvaluation;
+    private int position;
+    private ArrayList<Task> tasks;
+    private long taskID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
          employeeDBHelper = new EmployeesManagementDbHelper(this);
-         titletext =  findViewById(R.id.tasktitle);
          datetext = findViewById(R.id.taskdate);
          descriptiontext = findViewById(R.id.taskdesc);
          deadlinetext = findViewById(R.id.deadline);
          mRatingBar = findViewById(R.id.ratingBar_task);
          mEvaluation = findViewById(R.id.evaluation);
-        Intent intent= getIntent();
-        task_id = intent.getExtras().getLong("task_id");
-        Cursor cursor = employeeDBHelper.getSpecifiTaskCursor(task_id);
-        if (cursor.moveToFirst()) {
-            String title = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_NAME));
-            String description = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DESCRIPTION));
-            String deadline = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DEADLINE));
-            String date = cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE));
-            titletext.setText(title);
-            datetext.setText("Start Date: " + date);
-            descriptiontext.setText(description);
-            deadlinetext.setText("Deadline: " + deadline);
-            if (Integer.parseInt(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_COMPLETED)))> 0) {
-                mRatingBar.setRating(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION))));
+         Intent intent= getIntent();
+         position = intent.getExtras().getInt("position");
+         tasks = (ArrayList<Task>) getIntent().getSerializableExtra("data");
+         taskID = getIntent().getExtras().getLong("taskId");
+            setTitle(tasks.get(position).getTaskName());
+            datetext.setText(tasks.get(position).getTaskDate());
+            descriptiontext.setText(tasks.get(position).getTaskDetails());
+            deadlinetext.setText(tasks.get(position).getTaskDeadline());
+            if (tasks.get(position).isDone()) {
+                mRatingBar.setRating(tasks.get(position).getEvaluation());
                 mRatingBar.setVisibility(View.VISIBLE);
                 mEvaluation.setVisibility(View.VISIBLE);
             }
-
-        }
         setEmployees();
 
-}
+        }
+
 
     private void setEmployees(){
 
-        Cursor cursor = employeeDBHelper.getEmployeesOfTask(task_id);
+        Cursor cursor = employeeDBHelper.getEmployeesOfTask(taskID);
         ListView employees = (ListView)findViewById(R.id.employees_list);
         EmployeeAdapter adapter = new EmployeeAdapter(this,cursor);
         employees.setAdapter(adapter);
@@ -76,6 +84,7 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         employees.setEmptyView(emptyView);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,16 +102,16 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
-               employeeDBHelper.deleteTask(task_id );
-               tasksFragment.updateTasksList(employeeDBHelper);
-               this.finish();
+            showDeleteConfirmationDialog();
+
         }
         if (id == R.id.action_update) {
             Intent intent = new Intent(TaskActivity.this, TaskCreation.class);
-            intent.putExtra("task_id",(long) task_id);
+            intent.putExtra("task", tasks.get(position));
+            intent.putExtra("task_id",tasks.get(position).getId());
             intent.putExtra("IsEdit", true);
+            finish();
             startActivity(intent);
-            tasksFragment.updateTasksList(employeeDBHelper);
         }
         if (id == R.id.action_done) {
             openDialog();
@@ -116,9 +125,36 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
     }
     @Override
     public void applyingRating(int rate) {
-        employeeDBHelper.updateTaskEvaluation(task_id,true,rate);
+        Log.v("ID From Activityr", "" + tasks.get(position).getId());
+        boolean re = employeeDBHelper.updateTaskEvaluation(tasks.get(position).getId(),true,rate);
+        Log.v("boolean", "" + re);
+        tasks.get(position).setEvaluation(rate);
+        tasks.get(position).setDone(true);
+        TasksFragment.newInstance().updateTasksList(tasks.get(position),(int)taskID);
         mRatingBar.setRating(rate);
         mRatingBar.setVisibility(View.VISIBLE);
         mEvaluation.setVisibility(View.VISIBLE);
     }
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to delete this task ?");
+        builder.setPositiveButton("End", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (tasksFragment.deleteTaskFromList((int)tasks.get(position).getId())){
+                    finish();
+                }else
+                    Toast.makeText(getApplicationContext(), "Can't close this department", Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 }

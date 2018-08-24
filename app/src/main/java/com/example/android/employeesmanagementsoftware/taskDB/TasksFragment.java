@@ -1,7 +1,9 @@
 package com.example.android.employeesmanagementsoftware.taskDB;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,45 +21,49 @@ made by menna
  */
 
 public class TasksFragment extends Fragment {
-    private static final String ARG_COLUMN_COUNT = "column-count";
+    private static TasksFragment fragment ;
     private EmployeesManagementDbHelper employeeDBHelper;
-    private ArrayList<Tasks> mValues;
-    private Cursor cursor;
-    private static RecyclerView recyclerView;
-    private  TasksAdapter mAdapter;
-    public TasksFragment() {
+    private ArrayList<Task> mValues;
+    private TasksAdapter mAdapter;
+    @SuppressLint("ValidFragment")
+    private TasksFragment() {
 
     }
-    public static TasksFragment newInstance(int columnCount) {
-        TasksFragment fragment = new TasksFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
+    public static TasksFragment newInstance() {
+        if (fragment == null){
+             fragment = new TasksFragment();
+        }
         return fragment;
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         employeeDBHelper = new EmployeesManagementDbHelper(this.getContext());
+        Cursor cursor =employeeDBHelper.getAllTasksCursor();
+        mValues = new ArrayList<>();
+        setmValues(cursor);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_tasks, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView =  view.findViewById(R.id.eventlist);
+        RecyclerView recyclerView =  view.findViewById(R.id.task_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<Tasks> tasks = new ArrayList<Tasks>();
-        Cursor cursor =employeeDBHelper.getAllTasksCursor();
-       if (cursor.moveToFirst()) {
+        mAdapter = new TasksAdapter(getActivity(),mValues);
+        recyclerView.setAdapter(mAdapter);
+    }
+
+    private void setmValues (Cursor cursor){
+        mValues = new ArrayList<>();
+        if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                Tasks task = new Tasks();
+                Task task = new Task();
                 task.setId(cursor.getString(cursor.getColumnIndex(TaskEntry._ID)));
                 task.setTaskName(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_NAME)));
                 task.setTaskDetails(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DESCRIPTION)));
@@ -69,36 +75,44 @@ public class TasksFragment extends Fragment {
                 }else {
                     task.setDone(true);
                 }
-                tasks.add(task);
+                mValues.add(task);
                 cursor.moveToNext();}
         }
         cursor.close();
-         mAdapter = new TasksAdapter(getActivity(),tasks);
-        recyclerView.setAdapter(mAdapter);
+
     }
-    public void updateTasksList(EmployeesManagementDbHelper mDataBase){
-        mValues = new ArrayList<>();
-        cursor =  mDataBase.getAllTasksCursor();
-        if (cursor.moveToFirst()) {
-            do {
-                Tasks task = new Tasks();
-                task.setId(cursor.getString(cursor.getColumnIndex(TaskEntry._ID)));
-                task.setTaskName(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_NAME)));
-                task.setTaskDetails(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DESCRIPTION)));
-                task.setTaskDeadline(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DEADLINE)));
-                task.setTaskDate(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_DATE)));
-                task.setEvaluation(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION)));
-                mValues.add(task);
-            } while (cursor.moveToNext());
+    public boolean updateTasksList(Task updatedTask, int id){
+        for(int i = 0; i < mValues.size(); i++) {
+            if (mValues.get(i).getId() == id) {
+                mValues.remove(i);
+                mValues.add(i,updatedTask);
+                break;
+            }
         }
-        if (mAdapter == null) {
-            mAdapter = new TasksAdapter(getActivity(),mValues);
-            recyclerView.setAdapter(mAdapter);
-        } else {
+        mAdapter.notifyItemChanged(mValues.indexOf(updatedTask), updatedTask);
+        return employeeDBHelper.updateTask(updatedTask);
+    }
+    public boolean deleteTaskFromList(int id ){
+        boolean remove = employeeDBHelper.deleteTask(id);
+        for(int i = 0; i < mValues.size(); i++) {
+            if (mValues.get(i).getId() == id) {
+                mValues.remove(i);
+                break;
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        return remove;
+    }
+    public boolean addTaskToView(Task mTask){
+        Long id  = employeeDBHelper.addTask(mTask);
+        mTask.setId(id.toString());
+        mValues.add(mTask);
+        if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }
-        cursor.close();
+        return id > 0;
     }
+
 
 
 }
