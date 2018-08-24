@@ -13,6 +13,6 @@ The app, at the current version, is a good nucleus for managment applications of
 
 <br />
 <br />
-> **Notes** <br />
+> **Notes**
 > Although the app is still under development, it already shows basic options and simple design. We are looking forword to receiving any 
 > suggestions or notes (regarding any aspect in the app) as they help as to produce applications of better quality. 
