@@ -75,8 +75,20 @@ public class TasksFragment extends Fragment {
                 }else {
                     task.setDone(true);
                 }
+                ArrayList<Long> ids = new ArrayList<>();
+                //set employees ids
+                Cursor employees = employeeDBHelper.getEmployeesOfTask(cursor.getLong(cursor.getColumnIndex(TaskEntry._ID)));
+                if (cursor.moveToFirst() && cursor.getCount() > 0) {
+                    do {
+                        ids.add(cursor.getLong(0));
+                    } while (cursor.moveToNext());
+                }
+                employees.close();
+                task.setEmployees_id(ids);
                 mValues.add(task);
                 cursor.moveToNext();}
+
+
         }
         cursor.close();
 
