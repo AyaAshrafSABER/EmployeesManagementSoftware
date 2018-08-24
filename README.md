@@ -13,7 +13,7 @@ To build this project, use the "gradlew build" command or use "Import Project" i
 Target API version: 21+
 
 
-# Development & Contribution
+## Development & Contribution
 
 The app, at the current version, is a good nucleus for managment applications of the same kind. We welcome any attempts for editing, enhancing, or even integrating this app into other projects.
 
