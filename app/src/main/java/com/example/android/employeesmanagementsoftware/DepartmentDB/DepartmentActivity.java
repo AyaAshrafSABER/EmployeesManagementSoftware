@@ -104,7 +104,6 @@ public class DepartmentActivity extends AppCompatActivity {
         employees.setAdapter(adapterEmp);
 
         RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_employees);
-
         employees.setEmptyView(emptyView);
         // cursorEmp.close();
     }

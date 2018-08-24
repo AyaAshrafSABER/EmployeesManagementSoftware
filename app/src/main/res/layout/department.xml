@@ -18,7 +18,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Departement's description"
-                android:visibility="gone" />
+style="@style/text"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,7 +36,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Departement's employees" />
+                    android:text="Departement's employees"
+                    style="@style/subtitle"/>
 
             </LinearLayout>
 
@@ -87,7 +89,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="Departement's tasks" />
+                    android:text="Departement's tasks"
+                    style="@style/subtitle"/>
 
             </LinearLayout>
 

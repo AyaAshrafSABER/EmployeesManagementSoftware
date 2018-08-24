@@ -30,7 +30,7 @@ android:layout_height="wrap_content"
 
 <TextView
     android:id="@+id/empty_subtitle"
-    android:text="Let's hire some brilliant employees !"
+    android:text="Let's add some brilliant employees !"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_below="@+id/empty_title"

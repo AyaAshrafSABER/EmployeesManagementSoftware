@@ -139,6 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                style="@style/subtitle"
                 android:text="Tasks" />
 
         </LinearLayout>
@@ -191,7 +192,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/padding_employee"
-                android:text="Performance" />
+                android:text="Performance"
+                style="@style/subtitle"/>
 
 
             <RatingBar

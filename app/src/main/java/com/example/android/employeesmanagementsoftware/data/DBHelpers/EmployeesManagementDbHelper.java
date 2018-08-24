@@ -96,33 +96,26 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     public Cursor getEmployeesOfTask(long task_id){
         SQLiteDatabase db  = this.getReadableDatabase();
-
-        String [] columns = {
-                EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID,
-                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME,
-                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_JOB,
-                EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_PHOTO
-        };
-        String selection = TaskContract.TABLE_NAME+"."+TaskEntry._ID + " =?"; //where TaskEntry._ID=task_id
-        String selectionArgs[] = { String.valueOf(task_id)  };
-
-
+        String select = "SELECT * ";
+        String from = " FROM employee_task inner join "+ EmployeeContract.TABLE_NAME + " on employee_task."
+                + EmployeeContract.TABLE_NAME+EmployeeEntry._ID + " = "+EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID;
+        String where = " WHERE employee_task."+TaskContract.TABLE_NAME+TaskEntry._ID + " = ?" ;
+        String query = select+from+where;      String selectionArgs[] = {String.valueOf(task_id)};
         //cursor is a table containing the rows returned form the query
+         Cursor c = db.rawQuery(query, selectionArgs  );
+          return c;       }
 
-        return db.query("employee_task",columns,selection,selectionArgs,null,null,null); //don't forget to close the cursor after usage
-
-    }
 
     public Cursor getTasksOfDepartment(long department_id){
         //gets tasks of a specific deparrtment
         SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
         String select = "SELECT DISTINCT " +
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " AS TaskName , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
                 //TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
                 //TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
                 //TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
-                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
+                TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" AS Evaluation , "+
                 TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_COMPLETED +" , "+
                 TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
                 EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+
@@ -156,12 +149,12 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
             SQLiteDatabase db  = this.getReadableDatabase(); //get readable instance of the db
 
             String select = "SELECT DISTINCT " +
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " , "+
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_NAME + " AS TaskName  , "+
                     EmployeeContract.TABLE_NAME+"."+EmployeeEntry.COLUMN_EMPLOYEE_NAME +" , "+
                     TaskContract.TABLE_NAME+"."+ TaskEntry.COLUMN_TASK_DESCRIPTION +" , "+
                     TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DEADLINE +" , "+
                     TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_DATE +" , "+
-                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" , "+
+                    TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_EVALUATION +" AS Evaluation , "+
                     TaskContract.TABLE_NAME+"."+TaskEntry.COLUMN_TASK_COMPLETED +" , "+
                     TaskContract.TABLE_NAME+TaskEntry._ID +" , "+
                     EmployeeContract.TABLE_NAME+"."+EmployeeEntry._ID +" , "+

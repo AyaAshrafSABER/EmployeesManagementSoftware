@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -116,9 +117,10 @@ public class EmployeeActivity extends AppCompatActivity {
         int performance = 0;
 
         if (cursor.moveToFirst() && cursor.getCount() > 0) {
-            for (int i = 1; i <= cursor.getCount(); i++) {
-                performance += cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_EVALUATION));
-            }
+           do {
+                performance += cursor.getInt(cursor.getColumnIndex("Evaluation"));
+                
+            }while (cursor.moveToNext());
             float res = (float) performance / cursor.getCount();
             performanceRatBar =  findViewById(R.id.ratingBar_employee);
             performanceRatBar.setRating(res);

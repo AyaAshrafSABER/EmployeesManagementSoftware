@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeAdapter;
@@ -71,6 +72,8 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         ListView employees = (ListView)findViewById(R.id.employees_list);
         EmployeeAdapter adapter = new EmployeeAdapter(this,cursor);
         employees.setAdapter(adapter);
+        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_employees);
+        employees.setEmptyView(emptyView);
 
     }
 

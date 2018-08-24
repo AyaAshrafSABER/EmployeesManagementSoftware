@@ -82,19 +82,34 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <ListView
-                    android:id="@+id/employees_list"
+                <RelativeLayout
+                    android:id="@+id/employeesList"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/list_height"
-                    android:layout_below="@+id/employees"
-                    android:drawSelectorOnTop="true"
-                    android:orientation="vertical"></ListView>
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/employees">
+
+                    <include
+                        android:id="@+id/empty_employees"
+                        layout="@layout/empty_employees_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        ></include>
+
+                    <ListView
+                        android:id="@+id/employees_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/list_height"
+                        android:drawSelectorOnTop="true"
+                        android:orientation="vertical"></ListView>
+                </RelativeLayout>
+
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="88dp"
                     android:padding="4dp"
-                    android:layout_below="@id/employees_list">
+                    android:layout_below="@id/employeesList">
 
 
                     <TextView

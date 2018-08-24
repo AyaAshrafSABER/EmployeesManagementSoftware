@@ -35,9 +35,9 @@ public class TaskAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         TextView name = (TextView)view.findViewById(R.id.taskName);
-        name.setText(cursor.getString(0));
+        name.setText(cursor.getString(cursor.getColumnIndex("TaskName")));
         RatingBar ratingBar = (RatingBar)view.findViewById(R.id.ratingBar_task);
-        ratingBar.setRating(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_EVALUATION)));
+        ratingBar.setRating(cursor.getInt(cursor.getColumnIndex("Evaluation")));
 
     }
 }

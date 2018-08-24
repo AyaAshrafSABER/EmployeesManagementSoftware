@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +37,10 @@ public class EmployeeAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
 
         TextView name = (TextView)view.findViewById(R.id.name);
-        name.setText(cursor.getString(1));
+        name.setText(cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_NAME)));
 
         TextView job = (TextView)view.findViewById(R.id.post);
-        String post = cursor.getString(2).trim();
+        String post = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_JOB)).trim();
         if(post.isEmpty() || post == null){
             job.setText("Unknown Post");
         }else{
@@ -51,7 +52,7 @@ public class EmployeeAdapter extends CursorAdapter {
 
         //saving img path in database as string
         //in case no img was chosen or chosen img is deleted , employee's img is set to default one "unknown"
-        String path = cursor.getString(3);
+        String path = cursor.getString(cursor.getColumnIndex(EmployeeEntry.COLUMN_EMPLOYEE_PHOTO));
         if(!TextUtils.isEmpty(path) && (new File(path)).exists()){
             icon.setImageBitmap(BitmapFactory.decodeFile(path));
         }else{
