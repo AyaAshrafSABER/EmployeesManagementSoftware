@@ -6,6 +6,12 @@ This android app is for employees managment system with the following features
 3. Employees average evaluation based upon their cumulative tasks evaluation 
 4. Ability to update or delete any entity in the app
 
+### Usage
+To build this project, use the "gradlew build" command or use "Import Project" in Android Studio.
+
+### Perequisties
+Target API version: 21+
+
 
 # Development & Contribution
 
