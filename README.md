@@ -9,7 +9,7 @@ This android app is for employees managment system with the following features
 
 # Development & Contribution
 
-The app, at the current version, is a good nucleus for managment applications of the same kind. We welcome any attempts for editing, enhancing, or even integrating this app into another projects.
+The app, at the current version, is a good nucleus for managment applications of the same kind. We welcome any attempts for editing, enhancing, or even integrating this app into other projects.
 
 <br />
 <br />
