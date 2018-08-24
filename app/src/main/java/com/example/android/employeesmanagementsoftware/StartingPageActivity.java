@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 import com.example.android.employeesmanagementsoftware.Utilities.SectionsPageAdapter;
+import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 import com.example.android.employeesmanagementsoftware.taskDB.TasksFragment;
 
 
@@ -57,7 +58,6 @@ public class StartingPageActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(0);
         setupViewPager(mViewPager);
-
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
         fab =  findViewById(R.id.fab);
@@ -120,27 +120,7 @@ public class StartingPageActivity extends AppCompatActivity {
         viewPager.setCurrentItem(0);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_starting_page, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * A placeholder fragment containing a simple view.
