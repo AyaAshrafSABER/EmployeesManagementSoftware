@@ -45,6 +45,7 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
     private int position;
     private ArrayList<Task> tasks;
     private long taskID;
+    private  EmployeeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +124,8 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         Evaluation evaluation = new Evaluation();
         evaluation.show(getSupportFragmentManager(),"EvaluationTaskDialog");
     }
+
+
     @Override
     public void applyingRating(int rate) {
         Log.v("ID From Activityr", "" + tasks.get(position).getId());

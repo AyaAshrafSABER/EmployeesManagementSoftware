@@ -122,7 +122,6 @@ public class DepartmentActivity extends AppCompatActivity {
                 adapterEmp.swapCursor(cursor);
                 adapterEmp.notifyDataSetChanged();
             }
-
         }
     }
 
