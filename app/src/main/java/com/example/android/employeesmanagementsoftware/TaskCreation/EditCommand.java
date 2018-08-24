@@ -71,7 +71,6 @@ public class EditCommand implements TaskCreationCommand {
     @Override
     public boolean saveData(String task_name, int task_evaluation, String task_description, String task_deadline, ArrayList<Long> employees_ids) {
         task.setTaskName(task_name);
-        task.setEvaluation(task_evaluation);
         task.setTaskDeadline(task_deadline);
         task.setEmployees_id(employees_ids);
         return TasksFragment.newInstance().updateTasksList(task,(int)task_id);// this is should be updated
