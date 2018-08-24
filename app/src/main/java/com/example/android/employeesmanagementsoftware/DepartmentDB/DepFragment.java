@@ -14,9 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentItem;
 import com.example.android.employeesmanagementsoftware.R;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
+import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeActivity;
 import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeAdapter;
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
@@ -83,6 +86,15 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         employees.setAdapter(adapter);
         RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_employees);
         employees.setEmptyView(emptyView);
+        employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(TaskActivity.this, EmployeeActivity.class);
+                intent.putExtra("employeeId", id);
+                startActivity(intent);
+            }
+        });
 
     }
 

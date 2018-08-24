@@ -16,7 +16,7 @@ import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment;
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartmentActivity;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentItem;
 
 public class DepartmentCreation extends AppCompatActivity {
     private EditText description;

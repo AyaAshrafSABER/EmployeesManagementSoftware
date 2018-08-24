@@ -40,4 +40,5 @@
     <string name="ok">OK</string>
     <string name="completed">Completed</string>
     <string name="evaluation">Evaluation</string>
+    <string name="choose_employees">Choose Employees:</string>
 </resources>
