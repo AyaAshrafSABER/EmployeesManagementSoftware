@@ -71,7 +71,7 @@
             android:textColor="#4267b2"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.95"
+            card_view:layout_constraintHorizontal_bias="0.892"
             card_view:layout_constraintStart_toEndOf="@+id/linearLayout3"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintVertical_bias="0.065" />
@@ -114,7 +114,8 @@
             card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintStart_toStartOf="@+id/textView10"
             card_view:layout_constraintTop_toBottomOf="@+id/textView10"
-            card_view:layout_constraintVertical_bias="0.0" />
+            card_view:layout_constraintVertical_bias="0.0"
+            tools:ignore="RtlCompat" />
 
         <LinearLayout
             android:id="@+id/linearLayout3"

@@ -34,7 +34,8 @@
         <activity
             android:name=".DepartmentCreation"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation='portrait'>
         </activity>
 
         <activity
@@ -52,7 +53,8 @@
         <activity
             android:name=".StartingPageActivity"
             android:label="@string/title_activity_starting_page"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation='portrait'>
         </activity>
 
         <meta-data

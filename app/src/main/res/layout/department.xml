@@ -18,7 +18,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Departement's description"
-style="@style/text"
+                android:padding="16dp"
+                style="@style/text"
                 />
 
             <LinearLayout
