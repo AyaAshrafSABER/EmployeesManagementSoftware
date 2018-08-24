@@ -2,6 +2,7 @@ package com.example.android.employeesmanagementsoftware.taskDB;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -40,6 +41,7 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
     private TextView mEvaluation;
     private int position;
     private ArrayList<Task> tasks;
+    private long taskID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,12 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
          Intent intent= getIntent();
          position = intent.getExtras().getInt("position");
          tasks = (ArrayList<Task>) getIntent().getSerializableExtra("data");
+         taskID = getIntent().getExtras().getLong("taskId");
             setTitle(tasks.get(position).getTaskName());
             datetext.setText(tasks.get(position).getTaskDate());
             descriptiontext.setText(tasks.get(position).getTaskDetails());
             deadlinetext.setText(tasks.get(position).getTaskDeadline());
-            if (tasks.get(position).getEvaluation()> 0) {
+            if (tasks.get(position).isDone()) {
                 mRatingBar.setRating(tasks.get(position).getEvaluation());
                 mRatingBar.setVisibility(View.VISIBLE);
                 mEvaluation.setVisibility(View.VISIBLE);
@@ -89,6 +92,7 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
             intent.putExtra("task", tasks.get(position));
             intent.putExtra("task_id",tasks.get(position).getId());
             intent.putExtra("IsEdit", true);
+            finish();
             startActivity(intent);
         }
         if (id == R.id.action_done) {
@@ -107,6 +111,8 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         boolean re = employeeDBHelper.updateTaskEvaluation(tasks.get(position).getId(),true,rate);
         Log.v("boolean", "" + re);
         tasks.get(position).setEvaluation(rate);
+        tasks.get(position).setDone(true);
+        TasksFragment.newInstance().updateTasksList(tasks.get(position),(int)taskID);
         mRatingBar.setRating(rate);
         mRatingBar.setVisibility(View.VISIBLE);
         mEvaluation.setVisibility(View.VISIBLE);
@@ -116,7 +122,7 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         builder.setMessage("Are you sure you want to delete this task ?");
         builder.setPositiveButton("End", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if (tasksFragment.deleteTaskFromList(position)){
+                if (tasksFragment.deleteTaskFromList((int)tasks.get(position).getId())){
                     finish();
                 }else
                     Toast.makeText(getApplicationContext(), "Can't close this department", Toast.LENGTH_LONG).show();
@@ -132,4 +138,5 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 }

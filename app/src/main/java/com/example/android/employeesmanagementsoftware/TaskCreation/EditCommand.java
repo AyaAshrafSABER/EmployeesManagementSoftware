@@ -74,9 +74,7 @@ public class EditCommand implements TaskCreationCommand {
         task.setEvaluation(task_evaluation);
         task.setTaskDeadline(task_deadline);
         task.setEmployees_id(employees_ids);
-
-
-        return TasksFragment.newInstance().updateTasksList(task);// this is should be updated
+        return TasksFragment.newInstance().updateTasksList(task,(int)task_id);// this is should be updated
 
     }
 }

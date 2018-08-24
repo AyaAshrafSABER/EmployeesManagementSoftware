@@ -368,7 +368,7 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addTask(Task task)
+    public Long addTask(Task task)
     {
         //adds task to db
         SQLiteDatabase db = this.getWritableDatabase(); //gets writeable instance of database
@@ -386,7 +386,6 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
         cv.put(TaskEntry.COLUMN_TASK_DATE,task.getTaskDate());
         long task_id = db.insert(TaskContract.TABLE_NAME,null,cv); //reutrns a flag to indicate succes of insertion
 
-        if(task_id==-1) return false; //-1 if insert fails
 
         cv = new ContentValues();
         ArrayList<Long> emplyee_ids = task.getEmployees_id();
@@ -396,11 +395,9 @@ public class EmployeesManagementDbHelper extends SQLiteOpenHelper {
                 cv.put(EmployeeContract.TABLE_NAME+EmployeeEntry._ID,emp_id);
                 cv.put(TaskContract.TABLE_NAME+TaskEntry._ID,task_id);
                 long flag = db.insert("employee_task",null,cv); //reutrns a flag to indicate succes of insertion
-                if(flag==-1) return false;
             }
         }
-        else return false;
-        return true;
+        return task_id;
     }
 
     public boolean deleteEmployee(long employee_id){

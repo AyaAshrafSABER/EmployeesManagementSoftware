@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.R;
 
@@ -45,23 +46,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     @Override
     public void onBindViewHolder(@NonNull TasksViewHolder holder, final int position)
     {
-        final Task tasks = data.get(position);
-        holder.titletask.setText(tasks.getTaskName());
-        holder.disctask.setText(tasks.getTaskDetails());
-        holder.datetask.setText(tasks.getTaskDate());
-        holder.deadlinetask.setText(tasks.getTaskDeadline());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Log.v(" idfrom Ad", "" + tasks.getId());
-                Intent in = new Intent(context, TaskActivity.class);
-                in.putExtra("data",data);
-                in.putExtra("position", position);
-                 context.startActivity(in);
-            }
-        });
-
+        final Task task = data.get(position);
+        holder.titletask.setText(task.getTaskName());
+        holder.disctask.setText(task.getTaskDetails());
+        holder.datetask.setText(task.getTaskDate());
+        holder.deadlinetask.setText(task.getTaskDeadline());
     }
 
     @Override
@@ -71,7 +60,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
 
 
 
-    public class TasksViewHolder extends RecyclerView.ViewHolder {
+    public class TasksViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
         TextView titletask;
         TextView disctask;
         TextView datetask;
@@ -84,7 +73,19 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
             disctask = itemView.findViewById(R.id.disc_card);
             datetask = itemView.findViewById(R.id.date);
             deadlinetask= itemView.findViewById(R.id.deadline);
+            itemView.setOnClickListener(this);
         }
+        @Override
+        public void onClick(View v) {
+            Log.v(" idfrom Ad", "" +  data.get(getAdapterPosition()).getId());
+            Intent in = new Intent(context, TaskActivity.class);
+            in.putExtra("data",data);
+            Log.v("position", "" +  data.get(getAdapterPosition()));
+            in.putExtra("position",  getAdapterPosition());
+            in.putExtra("taskId", data.get(getAdapterPosition()).getId());
+            context.startActivity(in);
+        }
+
     }
 
 
