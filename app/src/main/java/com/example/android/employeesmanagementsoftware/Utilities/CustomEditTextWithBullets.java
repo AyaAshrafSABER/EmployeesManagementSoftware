@@ -1,14 +1,8 @@
 package com.example.android.employeesmanagementsoftware.Utilities;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.animation.AnimationUtils;
-import android.support.v7.widget.AppCompatEditText;
-import android.widget.EditText;
 
 import com.example.android.employeesmanagementsoftware.R;
 

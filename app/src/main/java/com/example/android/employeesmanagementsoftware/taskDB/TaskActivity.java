@@ -13,11 +13,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.android.employeesmanagementsoftware.EmployeeDB.EmployeeAdapter;
 import com.example.android.employeesmanagementsoftware.TaskCreation.TaskCreation;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.R;
@@ -66,8 +69,23 @@ public class TaskActivity extends AppCompatActivity implements Evaluation.Evalua
                 mRatingBar.setVisibility(View.VISIBLE);
                 mEvaluation.setVisibility(View.VISIBLE);
             }
+        setEmployees();
+
+        }
+
+
+    private void setEmployees(){
+
+        Cursor cursor = employeeDBHelper.getEmployeesOfTask(taskID);
+        ListView employees = (ListView)findViewById(R.id.employees_list);
+        EmployeeAdapter adapter = new EmployeeAdapter(this,cursor);
+        employees.setAdapter(adapter);
+        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_employees);
+        employees.setEmptyView(emptyView);
 
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
