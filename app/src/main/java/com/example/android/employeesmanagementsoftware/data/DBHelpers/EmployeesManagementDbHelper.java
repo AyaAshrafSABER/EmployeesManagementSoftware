@@ -12,7 +12,7 @@ import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeCo
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract.TaskEntry;
 import com.example.android.employeesmanagementsoftware.data.Contracts.DepartmentContract.DepartmentEntry;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentItem;
 import com.example.android.employeesmanagementsoftware.taskDB.Task;
 
 import java.util.ArrayList;

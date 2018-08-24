@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.DepFragment.OnListFragmentInteractionListener;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData;
-import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentData.DepartmentItem;
+import com.example.android.employeesmanagementsoftware.DepartmentDB.DepartementRowData.DepartmentItem;
 import com.example.android.employeesmanagementsoftware.R;
 
 import java.util.List;
