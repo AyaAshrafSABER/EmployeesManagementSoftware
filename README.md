@@ -1,5 +1,5 @@
 # EmployeesManagementSoftware
-***
+
 This android app is for employees managment system with the following features
 1. Departments and employees insertion along with corresponding information
 2. Tasks assigning for both employees and departments along with specified deadlines 
@@ -8,7 +8,7 @@ This android app is for employees managment system with the following features
 
 
 # Development & Contribution
-***
+
 The app, at the current version, is a good nucleus for managment applications of the same kind. We welcome any attempts for editing, enhancing, or even integrating this app into another projects.
 
 
