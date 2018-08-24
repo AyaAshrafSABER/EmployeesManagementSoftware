@@ -12,6 +12,9 @@ To build this project, use the "gradlew build" command or use "Import Project" i
 ### Perequisties
 Target API version: 21+
 
+### License
+[!(https://img.shields.io/badge/free-no%20warranty-blue.svg)]()
+
 
 ## Development & Contribution
 
