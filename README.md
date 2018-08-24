@@ -12,6 +12,12 @@ To build this project, use the "gradlew build" command or use "Import Project" i
 ### Perequisties
 Target API version: 21+
 
+## Resources
+
+We benefited from this piece of code to create an EditText with bullets to give the employee notes an organized look.
+https://gist.github.com/outlander24/771d8d6f0801cb6e9fabc1c03a9f5c5b#file-customedittextwithbullets-java
+
+
 ### License
 [![](https://img.shields.io/badge/free-no%20warranty-blue.svg)](https://github.com/AyaAshrafSABER/EmployeesManagementSoftware)
 
@@ -19,14 +25,6 @@ Target API version: 21+
 ## Development & Contribution
 
 The app, at the current version, is a good nucleus for managment applications of the same kind. We welcome any attempts for editing, enhancing, or even integrating this app into other projects.
-
-<br />
-<br />
-
-## Resources
-
-We benefited from this piece of code to create an EditText with bullets to give the employee notes an organized look.
-https://gist.github.com/outlander24/771d8d6f0801cb6e9fabc1c03a9f5c5b#file-customedittextwithbullets-java
 
 
 > **Notes**
