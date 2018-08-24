@@ -52,7 +52,9 @@ public class DepartmentActivity extends AppCompatActivity {
         helper = new EmployeesManagementDbHelper(this);
         setDepatementParameter();
         setEmployeeList();
+
         employees.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(DepartmentActivity.this, EmployeeActivity.class);
@@ -97,9 +99,9 @@ public class DepartmentActivity extends AppCompatActivity {
 
         adapterEmp = new EmployeeAdapter(this, cursorEmp);
         employees.setAdapter(adapterEmp);
-        RelativeLayout emptyView =  findViewById(R.id.empty_view);
+
+        RelativeLayout emptyView = (RelativeLayout) findViewById(R.id.empty_employees);
         employees.setEmptyView(emptyView);
-        // cursorEmp.close();
     }
 
     private void displayTaskList() {
@@ -107,9 +109,9 @@ public class DepartmentActivity extends AppCompatActivity {
         ListView tasksList = findViewById(R.id.tasks_list);
         TaskAdapter adapterTask = new TaskAdapter(this, cursorTask);
         tasksList.setAdapter(adapterTask);
-        RelativeLayout emptyTasks = findViewById(R.id.empty_tasks);
+
+        RelativeLayout emptyTasks = (RelativeLayout) findViewById(R.id.empty_tasks_dep);
         tasksList.setEmptyView(emptyTasks);
-        //    cursorTask.close();
     }
 
     @Override
@@ -154,17 +156,17 @@ public class DepartmentActivity extends AppCompatActivity {
     }
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete this department ?");
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.deleteDep);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (helper.deleteDepartment(departmentId)){
                     depFragment.updateDepartmentList(helper);
                     finish();
                 }else
-                    Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.not_deleteDep, Toast.LENGTH_LONG).show();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (dialog != null) {
                     dialog.dismiss();

@@ -25,14 +25,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.android.employeesmanagementsoftware.DepartmentDB.TaskAdapter;
 import com.example.android.employeesmanagementsoftware.R;
 import com.example.android.employeesmanagementsoftware.Utilities.CustomEditTextWithBullets;
 import com.example.android.employeesmanagementsoftware.data.Contracts.EmployeeContract.EmployeeEntry;
-import com.example.android.employeesmanagementsoftware.data.Contracts.TaskContract;
 import com.example.android.employeesmanagementsoftware.data.DBHelpers.EmployeesManagementDbHelper;
 
 import java.io.File;
@@ -40,11 +39,6 @@ import java.io.File;
 /**
  * Created  by Monica on on 7/10/2018.
  */
-//TODO date mn calendar,validation
-//TODO  fragment task
-//TODO evaluation float msh int
-
-//delete ,scroll,tasks,performance,notify
 
 public class EmployeeActivity extends AppCompatActivity {
     private static final int PICK_FROM_GALLERY = 1;
@@ -92,7 +86,6 @@ public class EmployeeActivity extends AppCompatActivity {
 
 
         helper = new EmployeesManagementDbHelper(this);
-
         Intent intent = getIntent();
         employeeId = intent.getExtras().getLong("employeeId");
         setEmployee();
@@ -104,25 +97,30 @@ public class EmployeeActivity extends AppCompatActivity {
         Cursor cursor = helper.getTasksOfEmployee(employeeId);
         CursorAdapter tasksAdapter = new TaskAdapter(this, cursor);
         tasksList.setAdapter(tasksAdapter);
+        RelativeLayout noTasks = findViewById(R.id.empty_view_task);
+        tasksList.setEmptyView(noTasks);
         setPerformance(cursor);
 
-        //    cursor.close();
     }
 
     private void setPerformance(Cursor cursor) {
 
-        int performance = 0;
+        int performance = 0,count = 0,evaluation = 0;
 
         if (cursor.moveToFirst() && cursor.getCount() > 0) {
-            for (int i = 1; i <= cursor.getCount(); i++) {
-                performance += cursor.getInt(cursor.getColumnIndex(TaskContract.TaskEntry.COLUMN_TASK_EVALUATION));
-            }
-            float res = (float) performance / cursor.getCount();
+           do {
+               boolean value = cursor.getInt(cursor.getColumnIndex(getString(R.string.completed))) > 0;
+               evaluation = cursor.getInt(cursor.getColumnIndex(getString(R.string.evaluation)));
+               if(value ){
+                   count++;
+                   performance += evaluation;
+               }
+            }while (cursor.moveToNext());
+            float res = (float) performance / count;
             performanceRatBar =  findViewById(R.id.ratingBar_employee);
             performanceRatBar.setRating(res);
         }
 
-        // cursor.close();
     }
 
 
@@ -186,18 +184,18 @@ public class EmployeeActivity extends AppCompatActivity {
 
     private void showDeleteConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to fire this employee ?");
-        builder.setPositiveButton("Fire", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.deleteEmp);
+        builder.setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (helper.deleteEmployee(employeeId)){
                     Intent returnIntent = new Intent();
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 }else
-                    Toast.makeText(getApplicationContext(), "Can't fire this employee", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.not_deleteEmp, Toast.LENGTH_LONG).show();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (dialog != null) {
                     dialog.dismiss();

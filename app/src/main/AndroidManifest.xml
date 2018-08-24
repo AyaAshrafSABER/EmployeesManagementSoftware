@@ -27,6 +27,10 @@
             android:theme="@style/AppTheme">
 
         </activity>
+
+        <activity android:name=".DepartmentDB.DepartmentActivity"
+            android:label="Department"></activity>
+
         <activity
             android:name=".DepartmentCreation"
             android:label="@string/title_activity_main2"
@@ -43,8 +47,8 @@
             android:label="Employee"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme"></activity>
-        <activity android:name=".DepartmentDB.DepartmentActivity"
-            android:label="Department"></activity>
+
+
         <activity
             android:name=".StartingPageActivity"
             android:label="@string/title_activity_starting_page"
