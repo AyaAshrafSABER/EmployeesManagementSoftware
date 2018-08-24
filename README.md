@@ -23,6 +23,12 @@ The app, at the current version, is a good nucleus for managment applications of
 <br />
 <br />
 
+## Resources
+
+We benefited from this piece of code to create an EditText with bullets to give the employee notes an organized look.
+https://gist.github.com/outlander24/771d8d6f0801cb6e9fabc1c03a9f5c5b#file-customedittextwithbullets-java
+
+
 > **Notes**
 
 > Although the app is still under development, it already shows basic options and simple design. We are looking forword to receiving any 
