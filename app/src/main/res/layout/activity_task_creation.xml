@@ -114,6 +114,12 @@
             android:saveEnabled="false"
             android:textAlignment="textStart"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_employees"
+            android:textColor="@android:color/background_dark"
+            android:textSize="17sp"/>
 
         <ListView
             android:id="@+id/employees_List"
