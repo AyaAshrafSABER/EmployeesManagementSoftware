@@ -9,7 +9,7 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">#d3d3d3</item>
+        <item name="colorControlNormal">#d3d3d3</item> #ffd700
         <item name="colorControlActivated">#ffd700</item>
     </style>
     <style name="icon">
@@ -23,7 +23,7 @@
     </style>
     <style name="RatingBarTask" parent="Theme.AppCompat">
         <item name="colorControlActivated">#ffd700</item>
-        <item name="colorControlNormal">#d3d3d3</item>
+        <item name="colorControlNormal">#ffd700</item>
     </style>
 
     <style name="text">

@@ -140,6 +140,7 @@
                         android:numStars="5"
                         android:rating="0"
                         android:stepSize="0"
+                        android:theme="@style/RatingBar"
                         android:visibility="invisible"/>
                 </LinearLayout>
 
