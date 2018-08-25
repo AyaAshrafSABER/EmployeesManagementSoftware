@@ -18,11 +18,8 @@ Target API version: 21+
 We benefited from this piece of code to create an EditText with bullets to give the employee notes an organized look.
 https://gist.github.com/outlander24/771d8d6f0801cb6e9fabc1c03a9f5c5b#file-customedittextwithbullets-java
 ### Screenshot
-![screenshot_2018-08-24-23-39-49](https://user-images.githubusercontent.com/24296815/44612960-825d6480-a80d-11e8-9798-b2b183a52b5b.png)
-
-![screenshot_2018-08-24-23-41-01](https://user-images.githubusercontent.com/24296815/44612993-d36d5880-a80d-11e8-9e2e-9c474ef000ef.png)
-
-
+<img src="https://user-images.githubusercontent.com/24296815/44612960-825d6480-a80d-11e8-9798-b2b183a52b5b.png" width="100" height="200">
+<img src="https://user-images.githubusercontent.com/24296815/44612993-d36d5880-a80d-11e8-9e2e-9c474ef000ef.png" width="100" height="200">
 
 ### License
 [![](https://img.shields.io/badge/free-no%20warranty-blue.svg)](https://github.com/AyaAshrafSABER/EmployeesManagementSoftware)
