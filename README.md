@@ -18,8 +18,15 @@ Target API version: 21+
 We benefited from this piece of code to create an EditText with bullets to give the employee notes an organized look.
 https://gist.github.com/outlander24/771d8d6f0801cb6e9fabc1c03a9f5c5b#file-customedittextwithbullets-java
 ### Screenshot
-<img src="https://user-images.githubusercontent.com/24296815/44612960-825d6480-a80d-11e8-9798-b2b183a52b5b.png" width="100" height="200">
-<img src="https://user-images.githubusercontent.com/24296815/44612993-d36d5880-a80d-11e8-9e2e-9c474ef000ef.png" width="100" height="200">
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/24296815/44612960-825d6480-a80d-11e8-9798-b2b183a52b5b.png" width="150" height="250">
+<img src="https://user-images.githubusercontent.com/24296815/44612993-d36d5880-a80d-11e8-9e2e-9c474ef000ef.png" width="150" height="250">
+<img src="https://user-images.githubusercontent.com/24296815/44613121-a621aa00-a80f-11e8-9d65-8ee1cf5af9fc.png" width="150" height="250">
+  <img src="https://user-images.githubusercontent.com/24296815/44613128-b20d6c00-a80f-11e8-87bd-5302b18d223d.png" width="150" height="250">
+  <img src="https://user-images.githubusercontent.com/24296815/44613137-c487a580-a80f-11e8-949d-7e574bad2fef.png" width="150" height="250">
+  <img src="https://user-images.githubusercontent.com/24296815/44613140-cf423a80-a80f-11e8-9330-01e3e284c38c.png" width="150" height="250">
+</p>
 
 ### License
 [![](https://img.shields.io/badge/free-no%20warranty-blue.svg)](https://github.com/AyaAshrafSABER/EmployeesManagementSoftware)
